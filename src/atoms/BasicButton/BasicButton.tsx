@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 export interface BasicButtonProps
 	extends ButtonHTMLAttributes<HTMLButtonElement> {
-	children: ReactNode
+	children?: ReactNode
   isWide?: boolean 
 }
 
