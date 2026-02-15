@@ -1,10 +1,15 @@
 import BasicButton , {BasicButtonProps}  from '../../atoms/BasicButton/BasicButton'
 
+interface TextButtonProps extends BasicButtonProps {
+  text: string
+}
 
-const Button = (props : BasicButtonProps) => {
+const TextButton = ({ text, ...props } : TextButtonProps) => {
 	return (
-		<BasicButton {...props}/>
+		<BasicButton {...props}>
+      {text}
+    </BasicButton>
 	)
 }
 
-export default Button
+export default TextButton
