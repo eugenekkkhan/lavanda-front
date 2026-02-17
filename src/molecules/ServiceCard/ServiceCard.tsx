@@ -4,7 +4,6 @@ interface ServiceCardProps {
 	title: string
 	description?: string
 	onLearnMore?: () => void
-  
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -29,9 +28,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 						{description}
 					</p>
 				</div>
-
-        
-
 				{/* Learn more button */}
 				<ButtonWithArrow className='' onClick={onLearnMore}>
 					Подробнее
