@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { scroller } from "react-scroll";
 import HeroSection from "./organisms/HeroSection/HeroSection";
 import ServiceSection from "./organisms/ServiceSection/ServiceSection";
+import ContactSection from "./organisms/ContactSection/ContactSection";
 
 const RouterComponent = () => {
   // Handle hash changes with react-scroll
@@ -28,7 +29,7 @@ const RouterComponent = () => {
 
   // Intersection Observer to detect which section is in view and update URL
   useEffect(() => {
-    const sections = ["home", "services"];
+    const sections = ["home", "services", "contacts"];
     const observerOptions = {
       threshold: 0.3,
     };
@@ -71,6 +72,9 @@ const RouterComponent = () => {
       </section>
       <section id="services">
         <ServiceSection />
+      </section>
+      <section id="contacts">
+        <ContactSection />
       </section>
     </>
   );
