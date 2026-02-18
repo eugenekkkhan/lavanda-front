@@ -1,6 +1,8 @@
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import IconButton from "../../molecules/Buttons/IconButton";
 import { contactsData } from "./contacts.data";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import TextButton from "../../molecules/Buttons/TextButton";
 
 const ContactSection = () => {
   return (
@@ -25,7 +27,27 @@ const ContactSection = () => {
             ))}
           </div>
           <span>Mail:</span>
+          <a href="mail:info@lavandamed.ru">
+            <IconButton 
+              icon={MdOutlineAlternateEmail}
+              className="flex flex-row !w-[230px] !p-[2px] !text-black border border-black border-solid"
+            >
+              info@lavandamed.ru
+            </IconButton>
+          </a>
           <span>Телефоны:</span>
+          <a href="tel:+79802444401">
+            <TextButton 
+              text="+ 7&nbsp;(980)&nbsp;244&#8209;44&#8209;01"
+              className="!w-[205px] !p-[2px] !text-black border border-black border-solid"
+            />
+          </a>
+          <a href="tel:+79802444400">
+            <TextButton 
+              text="+ 7&nbsp;(980)&nbsp;244&#8209;44&#8209;00"
+              className="!w-[205px] !p-[2px] !text-black border border-black border-solid"
+            />
+          </a>
           <span>Адрес:
           г. Лиски, Воронежская область, ул Титова д.20 помещение XI</span>
         </div>
