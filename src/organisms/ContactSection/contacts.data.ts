@@ -13,13 +13,13 @@ export const contactsData = [
     href: "",
     label: "WhatsApp"
   },
-    {
+  {
     id: "vk",
     icon: FaVk,
     href: "https://vk.com/lavanda_liski",
     label: "VK"
   },
-    {
+  {
     id: "ok",
     icon: FaOdnoklassniki,
     href: "",
