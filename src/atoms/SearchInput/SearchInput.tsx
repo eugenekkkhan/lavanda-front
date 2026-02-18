@@ -1,27 +1,40 @@
-import { InputHTMLAttributes } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { RxCross1 } from 'react-icons/rx'
 
-interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface SearchInputProps {
 	placeholder?: string
+	value: string
+	onChange: (text: string) => void
+	onClear?: () => void
+	className?: string
 }
-
+//найти более подходящую иконку для лупы
 const SearchInput = ({
 	placeholder = 'Поиск',
 	className = '',
+	onChange,
+	onClear,
+	value,
 }: SearchInputProps) => {
 	return (
 		<div className='border-b-[1px] border-white w-fit mx-3'>
-
-			<div className='flex items-center justify-between gap-1 p-3'>
-		
+			<div className='flex items-center justify-between  pt-3 pb-2  px-3'>
 				<CiSearch color='white' size={24} />
 				<input
-					className={`${className} bg-transparent text-white text-base focus:outline-none flex-1 mx-2`}
+					className={`${className} bg-transparent text-white text-base focus:outline-none w-full mx-2`}
 					type='text'
 					placeholder={placeholder}
+					value={value}
+					onChange={e => onChange(e.target.value)}
 				/>
-				<RxCross1 color='white' size={24} className='cursor-pointer' />
+				{value && (
+					<RxCross1
+						color='white'
+						size={24}
+						className='cursor-pointer'
+						onClick={onClear}
+					/>
+				)}
 			</div>
 		</div>
 	)
