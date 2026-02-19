@@ -18,7 +18,7 @@ export const usePageTheme = () => {
 			primaryColor: '#bdb2ff',
 			secondaryColor: '#404040',
 		},
-		doctors: {
+		'#doctors': {
 			primaryColor: '#ECFFE8',
 			secondaryColor: '#000000',
 		},
@@ -26,18 +26,19 @@ export const usePageTheme = () => {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const sections = ['home', 'services']
+			const sections = ['home', 'services', 'doctors']
 
 			for (const id of sections) {
 				const element = document.getElementById(id)
 				if (element) {
 					const rect = element.getBoundingClientRect()
-					if (rect.top >= -300 && rect.top <= 700) {
-						const newHash = `#${id}`
-						if (activeHash !== newHash) {
-							setActiveHash(newHash)
-						}
-						break
+					const windowHeight = window.innerHeight
+
+					const isVisible =
+						rect.top < windowHeight * 0.7 && rect.bottom > windowHeight * 0.3
+
+					if (isVisible) {
+						setActiveHash(`#${id}`)
 					}
 				}
 			}
@@ -52,6 +53,7 @@ export const usePageTheme = () => {
 		root.style.setProperty('--color-primary', currentTheme.primaryColor)
 		root.style.setProperty('--color-secondary', currentTheme.secondaryColor)
 		console.log(currentTheme.primaryColor)
-	}, [activeHash , pathname])
+		console.log(currentTheme.secondaryColor)
+	}, [activeHash, pathname])
 }
 export default usePageTheme
