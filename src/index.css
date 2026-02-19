@@ -1,30 +1,36 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-gray-400: #404040;
-  --color-purple-400: #bdb2ff;
+	/* --color-gray-400: #404040;
+	--color-purple-400: #bdb2ff; */
 
-  --radius-3xl: 21px;
-  --radius-2xl: 19px;
-  --text-base: 18px;
-  --text-base--line-height: 20px;
-  --spacing-10\.5: 42px;
+	--color-primary: #bdb2ff;
+  --color-secondary: #404040
+
+	--radius-3xl: 21px;
+	--radius-2xl: 19px;
+	--text-base: 18px;
+	--text-base--line-height: 20px;
+	--spacing-10\.5: 42px;
 }
 @layer base {
-  html {
-    @apply text-base;
+	html {
+		@apply text-base;
+	}
+  html, body, section, div {
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   }
-  a,
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  span {
-    font-weight: 300;
-    margin: 0;
-    margin-bottom: 0;
-  }
+	a,
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	span {
+		font-weight: 300;
+		margin: 0;
+		margin-bottom: 0;
+	}
 }
