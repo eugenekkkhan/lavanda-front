@@ -1,49 +1,53 @@
 import TextButton from '../Buttons/TextButton'
 
 export interface BaseCardProps {
-  title: string
-  image?: string
-  description?: string
-  onLearnMore?: () => void 
-  children?: React.ReactNode 
+	title: string
+	image?: string
+	description?: string
+	onLearnMore?: () => void
+	children?: React.ReactNode
 }
 
 const BaseCard: React.FC<BaseCardProps> = ({
-  title,
-  image,
-  description,
-  onLearnMore,
-  children,
+	title,
+	image,
+	description,
+	onLearnMore,
+	children,
 }) => {
-  return (
-    <div className='flex gap-4 p-3'>
-      {image && (
-        <div className={`w-[196px] h-[226px] flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 flex items-center m-auto justify-center overflow-hidden`}>
-          <img src={image} alt={title} className='w-full h-full object-cover' />
-        </div>
-      )}
+	return (
+		<div className='flex flex-col md:flex-row gap-4 p-3'>
+			{image && (
+				<div className=' w-full h-[200px] md:w-[196px] md:h-[226px] flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 flex items-center justify-center overflow-hidden'>
+					<img src={image} alt={title} className='w-full h-full object-cover' />
+				</div>
+			)}
 
-      <div className='flex-1 flex flex-col justify-between'>
-        <div>
-          <h3 className='text-lg md:text-2xl font-semibold text-white'>
-            {title}
-          </h3>
-          {description && (
-            <p className='text-sm md:text-base text-white/90 leading-snug mt-2'>
-              {description}
-            </p>
-          )}
-          {children}
-        </div>
-        
-        {onLearnMore && (
-          <div className='mt-auto'>
-            <TextButton text='Подробнее' className='my-3' onClick={onLearnMore} />
-          </div>
-        )}
-      </div>
-    </div>
-  )
+			<div className='flex-1 flex flex-col justify-between'>
+				<div className='mb-4 md:mb-0'>
+					<h3 className='text-lg md:text-2xl font-semibold text-white'>
+						{title}
+					</h3>
+					{description && (
+						<p className='text-sm md:text-base text-white/90 leading-snug mt-2'>
+							{description}
+						</p>
+					)}
+					{children}
+				</div>
+
+				{onLearnMore && (
+					<div className='mt-auto'>
+						<TextButton
+							text='Подробнее'
+							className='my-3 w-full md:w-auto'
+							onClick={onLearnMore}
+						/>
+					</div>
+				)}
+			</div>
+		</div>
+	)
 }
 
 export default BaseCard

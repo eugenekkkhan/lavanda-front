@@ -17,8 +17,8 @@ const SearchInput = ({
 	value,
 }: SearchInputProps) => {
 	return (
-		<div className='border-b-[1px] border-white w-fit mx-3'>
-			<div className='flex items-center justify-between  pt-3 pb-2  px-3'>
+		<div className='border-b-[1px] border-white w-auto md:w-fit mx-4 md:mx-3'>
+			<div className='flex items-center justify-between pt-3 pb-2  px-3'>
 				<CiSearch color='white' size={24} />
 				<input
 					className={`${className} bg-transparent text-white text-base focus:outline-none w-full mx-2`}
