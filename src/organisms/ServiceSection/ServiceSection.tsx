@@ -1,7 +1,13 @@
+import { useState } from 'react'
 import { servicesData } from './services.data'
+import InformationCard from '../../molecules/Cards/InformationCard'
 import { useNavigate } from 'react-router'
-import ServicesList from '../ServicesList/ServicesList'
+import type { Service } from './services.data'
+import InformationList from '../ServicesList/InformationList'
 const ServiceSection = () => {
+	const [searchQuery, setSearchQuery] = useState<string>('')
+	//const [data, setData] = useState<Service[] | []>([])
+
 	const navigate = useNavigate()
 	const handleLearnMore = (serviceId: string) => {
 		console.log(`Learn more about service: ${serviceId}`)
@@ -9,6 +15,21 @@ const ServiceSection = () => {
 			navigate(`/service/${serviceId}`)
 		}
 	}
+	const createCards = (items: Service[]) =>
+		items.map(item => (
+			<InformationCard
+				key={item.id}
+				item={item}
+				handleLearnMore={handleLearnMore}
+			/>
+		))
+
+	const filteredData = servicesData.filter((s: Service) =>
+		s.title.toLowerCase().includes(searchQuery.toLowerCase()),
+	)
+
+	const filteredServicesCards = createCards(filteredData)
+
 	return (
 		<section className='w-full bg-[#BDB2FF] py-16 md:py-24 px-4'>
 			<div className='max-w-[1104px] mx-auto'>
@@ -30,7 +51,12 @@ const ServiceSection = () => {
 
 				{/* Services List */}
 				<div>
-					<ServicesList servicesData={servicesData} handleLearnMore={handleLearnMore}/>
+					<InformationList
+						data={filteredServicesCards}
+						showSearch
+						searchQuery={searchQuery}
+						onSearchChange={setSearchQuery}
+					/>
 				</div>
 			</div>
 		</section>
