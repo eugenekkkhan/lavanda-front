@@ -25,11 +25,11 @@ const BaseCard: React.FC<BaseCardProps> = ({
 
 			<div className='flex-1 flex flex-col justify-between'>
 				<div className='mb-4 md:mb-0'>
-					<h3 className='text-lg md:text-2xl font-semibold text-white'>
+					<h3 className='text-lg md:text-2xl font-semibold text-secondary'>
 						{title}
 					</h3>
 					{description && (
-						<p className='text-sm md:text-base text-white/90 leading-snug mt-2'>
+						<p className='text-sm md:text-base text-secondary/90 leading-snug mt-2'>
 							{description}
 						</p>
 					)}

@@ -15,7 +15,7 @@ const BasicButton = ({
 	...props
 }: BasicButtonProps) => {
 	const base =
-		'pt-[10px] w-fit pb-[12px] text-base bg-transparent text-lg rounded-[21px] shadow-[inset_0_0_0_1px_#ffffff] text-white hover:bg-white hover:text-[#BDB2FF]  transition-color'
+		'pt-[10px] w-fit pb-[12px] text-base bg-transparent text-lg rounded-[21px] shadow-[inset_0_0_0_1px_var(--color-secondary)] text-secondary hover:bg-secondary hover:text-primary  transition-color'
 
 	const paddingXMap = {
 		sm: 'px-3',

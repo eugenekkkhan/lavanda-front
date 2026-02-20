@@ -10,13 +10,17 @@ export const usePageTheme = () => {
 	const { pathname } = useLocation()
 	const [activeHash, setActiveHash] = useState(window.location.hash)
 	const THEMES: Record<string, ThemeConfig> = {
+		'/':{
+			primaryColor: '#ffffff',
+			secondaryColor: '#404040',
+		},
 		'#home': {
 			primaryColor: '#ffffff',
 			secondaryColor: '#404040',
 		},
 		'#services': {
 			primaryColor: '#bdb2ff',
-			secondaryColor: '#404040',
+			secondaryColor: '#ffffff',
 		},
 		'#doctors': {
 			primaryColor: '#ECFFE8',
