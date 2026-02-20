@@ -17,7 +17,7 @@ const BasicButton = ({
 	...props
 }: BasicButtonProps) => {
 	const base =
-		'pt-[10px] w-fit pb-[12px] text-base text-lg rounded-[21px] transition-color'
+		'pt-[10px] w-fit pb-[12px] text-base text-lg rounded-[21px] transition-colors'
 
 	const themeMap = {
 		'primary': 'bg-white text-purple-400 shadow-[inset_0_0_0_1px_#ffffff]',
