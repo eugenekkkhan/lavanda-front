@@ -1,4 +1,4 @@
-import SearchInput from '../../atoms/SearchInput/SearchInput'
+import SearchInput from '../../../atoms/SearchInput/SearchInput'
 
 interface InformationListProps {
 	data: React.ReactNode[]
@@ -14,7 +14,7 @@ const InformationList = ({
 	onSearchChange,
 }: InformationListProps) => {
 	return (
-		<div className='border-[1px] border-white rounded-3xl mb-12 overflow-hidden'>
+		<div className='border border-white rounded-3xl mb-12 overflow-hidden'>
 			{showSearch && (
 				<div className=''>
 					<SearchInput
@@ -29,7 +29,7 @@ const InformationList = ({
 				{data.map((item, index) => (
 					<div
 						key={index}
-						className='border-b-[1px] last:border-b-0 border-white'
+						className='border-b last:border-b-0 border-white'
 					>
 						{item}
 					</div>

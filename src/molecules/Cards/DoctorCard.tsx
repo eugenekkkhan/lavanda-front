@@ -1,5 +1,5 @@
-import BaseCard from './BasicCard'
-import type { Service } from '../../organisms/ServiceSection/services.data'
+import BaseCard from '../../atoms/BaseCard/BaseCard'
+import type { Service } from '../../organisms/Services/data/services.data'
 
 interface DoctorCardProps {
 	doctor: Service

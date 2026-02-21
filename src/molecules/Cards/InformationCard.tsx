@@ -1,5 +1,6 @@
-import BaseCard from './BasicCard'
-import type { Service } from '../../organisms/ServiceSection/services.data'
+import BaseCard from '../../atoms/BaseCard/BaseCard'
+import type { Service } from '../../organisms/Services/data/services.data'
+import TextButton from '../Buttons/TextButton'
 
 interface InformationCardProps {
 	item: Service
@@ -15,7 +16,15 @@ const InformationCard: React.FC<InformationCardProps> = ({
 			title={item.title}
 			description={item.description}
 			image={item.icon}
-			onLearnMore={handleLearnMore ? () => handleLearnMore(item.id) : undefined}
+			actions={
+				handleLearnMore && (
+					<TextButton
+						text='Подробнее'
+						className='my-3 w-full md:w-auto'
+						onClick={() => handleLearnMore(item.id)}
+					/>
+				)
+			}
 		></BaseCard>
 	)
 }

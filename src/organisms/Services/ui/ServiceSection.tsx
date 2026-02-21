@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { servicesData } from './services.data'
-import InformationCard from '../../molecules/Cards/InformationCard'
 import { useNavigate } from 'react-router'
-import type { Service } from './services.data'
-import InformationList from '../ServicesList/InformationList'
+import InformationCard from '../../../molecules/Cards/InformationCard'
+import InformationList from './InformationList'
+import type { Service } from '../data/services.data'
+import { servicesData } from '../data/services.data'
 const ServiceSection = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('')
 	//const [data, setData] = useState<Service[] | []>([])
