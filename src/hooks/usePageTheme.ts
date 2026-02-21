@@ -52,7 +52,7 @@ export const usePageTheme = () => {
 		})
 
 		return () => observer.disconnect()
-	})
+	},[])
 	useEffect(() => {
 		const currentTheme = THEMES[activeHash] || THEMES['/']
 		const root = document.documentElement
