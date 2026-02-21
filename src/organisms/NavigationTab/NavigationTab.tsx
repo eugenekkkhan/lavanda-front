@@ -60,6 +60,7 @@ const NavigationTab = () => {
     e.preventDefault();
     const sectionName = sections[index].link;
     setActiveSectionIndex(index);
+    window.history.replaceState(null, "", `#${sectionName}`);
 
     // Scroll to section with react-scroll
     scroller.scrollTo(sectionName, {
@@ -67,9 +68,6 @@ const NavigationTab = () => {
       delay: 0,
       smooth: true,
       offset: -30, // Account for navbar height
-      onSrcollEnd: () => {
-        window.location.hash = sectionName;
-      }
     });
   };
 
