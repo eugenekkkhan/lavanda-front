@@ -6,58 +6,59 @@ interface ThemeConfig {
 	secondaryColor: string
 }
 
+const THEMES: Record<string, ThemeConfig> = {
+	'/': {
+		primaryColor: '#ffffff',
+		secondaryColor: '#404040',
+	},
+	'#home': {
+		primaryColor: '#ffffff',
+		secondaryColor: '#404040',
+	},
+	'#services': {
+		primaryColor: '#bdb2ff',
+		secondaryColor: '#ffffff',
+	},
+	'#doctors': {
+		primaryColor: '#ECFFE8',
+		secondaryColor: '#000000',
+	},
+}
+const SECTIONS = ['home', 'services', 'doctors']
 export const usePageTheme = () => {
 	const { pathname } = useLocation()
-	const [activeHash, setActiveHash] = useState(window.location.hash)
-	const THEMES: Record<string, ThemeConfig> = {
-		'/':{
-			primaryColor: '#ffffff',
-			secondaryColor: '#404040',
-		},
-		'#home': {
-			primaryColor: '#ffffff',
-			secondaryColor: '#404040',
-		},
-		'#services': {
-			primaryColor: '#bdb2ff',
-			secondaryColor: '#ffffff',
-		},
-		'#doctors': {
-			primaryColor: '#ECFFE8',
-			secondaryColor: '#000000',
-		},
-	}
+	const [activeHash, setActiveHash] = useState(window.location.hash || '#home')
 
 	useEffect(() => {
-		const handleScroll = () => {
-			const sections = ['home', 'services', 'doctors']
-
-			for (const id of sections) {
-				const element = document.getElementById(id)
-				if (element) {
-					const rect = element.getBoundingClientRect()
-					const windowHeight = window.innerHeight
-
-					const isVisible =
-						rect.top < windowHeight * 0.7 && rect.bottom > windowHeight * 0.3
-
-					if (isVisible) {
-						setActiveHash(`#${id}`)
-					}
-				}
-			}
+		const observerOptions = {
+			root: null,
+			rootMargin: '-49% 0px -49% 0px',
+			threshold: 0,
 		}
-		window.addEventListener('scroll', handleScroll)
-		return () => window.removeEventListener('scroll', handleScroll)
-	}, [activeHash])
+
+		const callback: IntersectionObserverCallback = entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					setActiveHash(`#${entry.target.id}`)
+				}
+			})
+		}
+
+		const observer = new IntersectionObserver(callback, observerOptions)
+
+		SECTIONS.forEach(id => {
+			const el = document.getElementById(id)
+			if (el) observer.observe(el)
+		})
+
+		return () => observer.disconnect()
+	})
 	useEffect(() => {
 		const currentTheme = THEMES[activeHash] || THEMES['/']
 		const root = document.documentElement
 
 		root.style.setProperty('--color-primary', currentTheme.primaryColor)
 		root.style.setProperty('--color-secondary', currentTheme.secondaryColor)
-		console.log(currentTheme.primaryColor)
-		console.log(currentTheme.secondaryColor)
 	}, [activeHash, pathname])
 }
 export default usePageTheme

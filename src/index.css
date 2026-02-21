@@ -1,12 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-	/* --color-gray-400: #404040;
-	--color-purple-400: #bdb2ff; */
-
-	--color-primary: #bdb2ff;
-  --color-secondary: #404040
-
+	--color-primary: var(--color-primary);
+	--color-secondary: var(--color-secondary);
 	--radius-3xl: 21px;
 	--radius-2xl: 19px;
 	--text-base: 18px;
@@ -17,9 +13,25 @@
 	html {
 		@apply text-base;
 	}
-  html, body, section, div {
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-  }
+	html,
+	body {
+		background-color: var(--color-primary);
+		color: var(--color-secondary);
+		transition:
+			background-color 0.5s ease-in-out,
+			color 0.5s ease-in-out;
+	}
+	section {
+		transition:
+			background-color 0.5s ease-in-out,
+			border-color 0.5s ease-in-out;
+	}
+	.themed {
+		transition:
+			background-color 0.5s ease-in-out,
+			color 0.5s ease-in-out,
+			border-color 0.5s ease-in-out;
+	}
 	a,
 	p,
 	h1,
