@@ -4,8 +4,9 @@ import InformationCard from '../../../molecules/Cards/InformationCard'
 import InformationList from './InformationList'
 import type { Service } from '../data/services.data'
 import { servicesData } from '../data/services.data'
+import { motion } from 'framer-motion'
+
 const ServiceSection = () => {
-	const [searchQuery, setSearchQuery] = useState<string>('')
 	//const [data, setData] = useState<Service[] | []>([])
 
 	const navigate = useNavigate()
@@ -24,42 +25,29 @@ const ServiceSection = () => {
 			/>
 		))
 
-	const filteredData = servicesData.filter((s: Service) =>
-		s.title.toLowerCase().includes(searchQuery.toLowerCase()),
-	)
-
-	const filteredServicesCards = createCards(filteredData)
-
 	return (
-		<section className='w-full bg-[#BDB2FF] py-16 md:py-24 px-4'>
-			<div className='max-w-[1104px] mx-auto'>
+		<motion.section className='w-full bg-primary py-16 md:py-24 px-4'>
+			<motion.div className='max-w-[1104px] mx-auto'>
 				{/* Section Header */}
-				<div className='mb-12'>
-					<h2 className='text-4xl md:text-5xl font-bold text-white mb-4'>
+				<motion.div className='mb-12'>
+					<h2 className='text-4xl md:text-5xl font-bold text-secondary mb-4'>
 						Услуги
 					</h2>
-					<p className='w-full text-base md:text-lg text-white/90 leading-relaxed'>
+					<p className='w-full text-base md:text-lg text-secondary/90 leading-relaxed'>
 						Медицинский центр предлагает широкий спектр услуг: консультации
-						профильных специалистов для взрослых и детей, диагностику,
-						процедурный кабинет, а также комплексные программы профилактики и
-						лечения. Приемы ведут опытные врачи с использованием современного
-						оборудования, а так же доступные услуги, такие как выезд специалиста
-						на дом и оформление справок, а также дополнительные сервисы, такие
-						как выезд
+						профильных специалистов для взрослых и детей, современные методы
+						диагностики, УЗИ-исследования, физиопроцедуры, лечебные манипуляции
+						и процедуры в процедурном кабинете, а также комплексные программы
+						профилактики и лечения.
 					</p>
-				</div>
+				</motion.div>
 
 				{/* Services List */}
-				<div>
-					<InformationList
-						data={filteredServicesCards}
-						showSearch
-						searchQuery={searchQuery}
-						onSearchChange={setSearchQuery}
-					/>
-				</div>
-			</div>
-		</section>
+				<motion.div>
+					<InformationList data={createCards(servicesData)} />
+				</motion.div>
+			</motion.div>
+		</motion.section>
 	)
 }
 

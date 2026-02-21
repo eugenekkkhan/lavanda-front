@@ -17,11 +17,11 @@ const SearchInput = ({
 	value,
 }: SearchInputProps) => {
 	return (
-		<div className='border-b-[1px] border-white w-auto md:w-fit mx-4 md:mx-3'>
+		<div className='border-b-[1px] border-secondary w-auto md:w-fit mx-4 md:mx-3'>
 			<div className='flex items-center justify-between pt-3 pb-2  px-3'>
-				<CiSearch color='white' size={24} />
+				<CiSearch color='var(--color-secondary)' size={24} />
 				<input
-					className={`${className} bg-transparent text-white text-base focus:outline-none w-full mx-2`}
+					className={`${className} bg-transparent text-secondary text-base focus:outline-none w-full mx-2`}
 					type='text'
 					placeholder={placeholder}
 					value={value}
@@ -29,9 +29,9 @@ const SearchInput = ({
 				/>
 				{value && (
 					<RxCross1
-						color='white'
+						color='var(--color-secondary)'
 						size={24}
-						className='cursor-pointer'
+						className='cursor-pointer '
 						onClick={onClear}
 					/>
 				)}

@@ -10,6 +10,7 @@ export const uziData: Service[] = [
 		id: '2',
 		title: 'Д-ЭХО-КГ',
 		description: 'от 2200 р.',
+
 	},
 	{
 		id: '3',
