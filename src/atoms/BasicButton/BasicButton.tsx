@@ -5,6 +5,7 @@ export interface BasicButtonProps
 	children?: ReactNode
 	isWide?: boolean
 	size?: 'sm' | 'base' | 'lg'
+	theme?: 'primary' | 'outline-light' | 'outline-dark' | 'ghost'
 }
 
 const BasicButton = ({
@@ -12,10 +13,17 @@ const BasicButton = ({
 	className = '',
 	isWide = false,
 	size = 'base',
+	theme = 'outline-light',
 	...props
 }: BasicButtonProps) => {
-	const base =
-		'pt-[10px] w-fit pb-[12px] text-base bg-transparent text-lg rounded-[21px] shadow-[inset_0_0_0_1px_var(--color-secondary)] text-secondary hover:bg-secondary hover:text-primary  transition-color'
+	const base = 'pt-[10px] w-fit pb-[12px] text-base text-lg rounded-[21px] transition-colors'
+
+	const themeMap = {
+		'primary': 'bg-white text-purple-400 shadow-[inset_0_0_0_1px_#ffffff]',
+		'outline-light': 'bg-transparent text-white shadow-[inset_0_0_0_1px_#ffffff] hover:bg-white hover:text-purple-400',
+		'outline-dark': 'bg-transparent text-black shadow-[inset_0_0_0_1px_#000000] hover:bg-black/70 hover:text-[#ECFFE8]',
+		'ghost': 'bg-transparent text-black shadow-[inset_0_0_0_1px_#000000]'
+	}
 
 	const paddingXMap = {
 		sm: 'px-3',
@@ -24,9 +32,10 @@ const BasicButton = ({
 	}
 
 	const paddingX = paddingXMap[size] || paddingXMap.base
+	const themeStyle = themeMap[theme] || themeMap['outline-light']
 	return (
 		<button
-			className={`${className} ${base} ${paddingX} ${isWide ? 'w-full' : ''} `}
+			className={`${base} ${themeStyle} ${paddingX} ${isWide ? 'w-full' : ''} ${className}`}
 			{...props}
 		>
 			{children}

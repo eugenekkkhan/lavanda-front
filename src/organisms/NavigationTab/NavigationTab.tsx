@@ -60,14 +60,14 @@ const NavigationTab = () => {
     e.preventDefault();
     const sectionName = sections[index].link;
     setActiveSectionIndex(index);
-    window.location.hash = sectionName;
+    window.history.replaceState(null, "", `#${sectionName}`);
 
     // Scroll to section with react-scroll
     scroller.scrollTo(sectionName, {
       duration: 800,
       delay: 0,
       smooth: true,
-      offset: -80, // Account for navbar height
+      offset: -30, // Account for navbar height
     });
   };
 
