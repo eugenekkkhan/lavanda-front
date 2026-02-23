@@ -14,7 +14,7 @@ const RouterComponent = () => {
           duration: 800,
           delay: 0,
           smooth: true,
-          offset: -80, // Account for navbar height
+          offset: -30, // Account for navbar height
         });
       }
     };
