@@ -4,28 +4,34 @@ import HeroSection from './organisms/HeroSection/HeroSection'
 import ServiceSection from './organisms/Services/ui/ServiceSection'
 import usePageTheme from './hooks/usePageTheme'
 import ServiceChosenSection from './organisms/Services/ui/ServiceChosenSection'
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
+
+const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
+
 const RouterComponent = () => {
-	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
-		null,
-	)
+	const [serviceId, setServiceId] = useState<string | null>(null)
+	const [doctorId, setDoctorId] = useState<string | null>(null)
 	usePageTheme()
 	// Handle hash changes with react-scroll
 	useEffect(() => {
 		const handleHashChange = () => {
 			const hash = window.location.hash
-			if (hash.startsWith('#services/')) {
-				setSelectedServiceId(hash.split('/')[1])
-			} else if (hash === '#services') {
-				setSelectedServiceId(null)
+			const [mainPart, ...rest] = hash.split('/')
+			const section = mainPart.slice(1)
+			const subId = rest.join('/') || null
+			if (section === 'services') {
+				setServiceId(subId)
+			} else if (section === 'doctors') {
+				setDoctorId(subId)
 			}
 
 			const targetSection = hash.split('/')[0].slice(1)
 			if (targetSection) {
 				scroller.scrollTo(targetSection, {
 					duration: 800,
+					delay: 0,
 					smooth: true,
-					offset: -80,
+					offset: -30,
 				})
 			}
 		}
@@ -40,7 +46,6 @@ const RouterComponent = () => {
 
 	// Intersection Observer to detect which section is in view and update URL
 	useEffect(() => {
-		const sections = ['home', 'services']
 		const observerOptions = {
 			threshold: 0.3,
 		}
@@ -49,11 +54,13 @@ const RouterComponent = () => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
 					const sectionId = entry.target.id
+					let newHash = `#${sectionId}`
 
-					const newHash =
-						sectionId === 'services' && selectedServiceId
-							? `#services/${selectedServiceId}`
-							: `#${sectionId}`
+					if (sectionId === 'services' && serviceId) {
+						newHash = `#services/${serviceId}`
+					} else if (sectionId === 'doctors' && doctorId) {
+						newHash = `#doctors/${doctorId}`
+					}
 
 					window.history.replaceState(null, '', newHash)
 				}
@@ -62,7 +69,7 @@ const RouterComponent = () => {
 
 		const observer = new IntersectionObserver(observerCallback, observerOptions)
 
-		sections.forEach(sectionId => {
+		SECTIONS.forEach(sectionId => {
 			const element = document.getElementById(sectionId)
 			if (element) {
 				observer.observe(element)
@@ -72,35 +79,35 @@ const RouterComponent = () => {
 		return () => {
 			observer.disconnect()
 		}
-	}, [selectedServiceId])
+	}, [doctorId, serviceId])
 
 	return (
 		<>
 			<section id='home'>
 				<HeroSection />
 			</section>
-			<section
-				id='services'
-			>
+			<section id='services'>
 				<AnimatePresence mode='wait'>
-					{selectedServiceId ? (
-						<motion.div
-							key='details'
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -20 }}
-							transition={{ duration: 0.4 }}
-						>
+					{serviceId ? (
+						<motion.div key='s-details' {...animProps}>
 							<ServiceChosenSection />
 						</motion.div>
 					) : (
-						<motion.div
-							key='list'
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.4 }}
-						>
+						<motion.div key='s-list' {...animProps}>
+							<ServiceSection />
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</section>
+
+			<section id='doctors'>
+				<AnimatePresence mode='wait'>
+					{doctorId ? (
+						<motion.div key='d-details' {...animProps}>
+							<ServiceChosenSection />
+						</motion.div>
+					) : (
+						<motion.div key='d-list' {...animProps}>
 							<ServiceSection />
 						</motion.div>
 					)}
@@ -110,4 +117,10 @@ const RouterComponent = () => {
 	)
 }
 
+const animProps = {
+	initial: { opacity: 0, y: 20 },
+	animate: { opacity: 1, y: 0 },
+	exit: { opacity: 0, y: -20 },
+	transition: { duration: 0.4 },
+}
 export default RouterComponent
