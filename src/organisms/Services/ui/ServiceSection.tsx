@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
 import InformationCard from '../../../molecules/Cards/InformationCard'
 import InformationList from './InformationList'
 import type { Service } from '../data/services.data'
@@ -9,12 +8,9 @@ import { motion } from 'framer-motion'
 const ServiceSection = () => {
 	//const [data, setData] = useState<Service[] | []>([])
 
-	const navigate = useNavigate()
-	const handleLearnMore = (serviceId: string) => {
-		console.log(`Learn more about service: ${serviceId}`)
-		if (serviceId) {
-			navigate(`/service/${serviceId}`)
-		}
+	
+	const handleLearnMore = (id: string) => {
+		window.location.hash = `services/${id}`
 	}
 	const createCards = (items: Service[]) =>
 		items.map(item => (

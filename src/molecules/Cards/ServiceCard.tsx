@@ -1,12 +1,13 @@
 import BaseCard from '../../atoms/BaseCard/BaseCard'
 import type { Service } from '../../organisms/Services/data/services.data'
 
-interface DoctorCardProps {
+interface ServiceCardProps {
 	item: Service
 }
 
-const DoctorCard: React.FC<DoctorCardProps> = ({ item }) => {
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ item }) => {
 	return <BaseCard title={item.title}></BaseCard>
 }
 
-export default DoctorCard
+export default ServiceCard

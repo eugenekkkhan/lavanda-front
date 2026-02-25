@@ -6,6 +6,8 @@ import InformationList from './InformationList'
 import IconButton from '../../../molecules/Buttons/IconButton'
 import { HiArrowLongLeft } from 'react-icons/hi2'
 
+
+
 const ServiceChosenSection = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('')
 

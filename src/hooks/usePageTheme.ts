@@ -32,7 +32,7 @@ export const usePageTheme = () => {
 	useEffect(() => {
 		const observerOptions = {
 			root: null,
-			rootMargin: '-49% 0px -49% 0px',
+			rootMargin: '-69.5% 0px -29.5% 0px',
 			threshold: 0,
 		}
 
