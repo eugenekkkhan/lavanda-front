@@ -1,19 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { scroller } from 'react-scroll'
 import HeroSection from './organisms/HeroSection/HeroSection'
 import ServiceSection from './organisms/Services/ui/ServiceSection'
-
+import usePageTheme from './hooks/usePageTheme'
+import ServiceChosenSection from './organisms/Services/ui/ServiceChosenSection'
 const RouterComponent = () => {
+	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+		null,
+	)
+	usePageTheme()
 	// Handle hash changes with react-scroll
 	useEffect(() => {
 		const handleHashChange = () => {
-			const hash = window.location.hash.slice(1)
-			if (hash) {
-				scroller.scrollTo(hash, {
+			const hash = window.location.hash
+			if (hash.startsWith('#services/')) {
+				setSelectedServiceId(hash.split('/')[1])
+			} else if (hash === '#services') {
+				setSelectedServiceId(null) 
+			}
+
+			const targetSection = hash.split('/')[0].slice(1)
+			if (targetSection) {
+				scroller.scrollTo(targetSection, {
 					duration: 800,
-					delay: 0,
 					smooth: true,
-					offset: -80, // Account for navbar height
+					offset: -80,
 				})
 			}
 		}
@@ -37,7 +48,12 @@ const RouterComponent = () => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
 					const sectionId = entry.target.id
-					window.history.replaceState(null, '', `#${sectionId}`)
+
+					const newHash = (sectionId === 'services' && selectedServiceId)
+            ? `#services/${selectedServiceId}`
+            : `#${sectionId}`
+
+          window.history.replaceState(null, '', newHash)
 				}
 			})
 		}
@@ -52,14 +68,9 @@ const RouterComponent = () => {
 		})
 
 		return () => {
-			sections.forEach(sectionId => {
-				const element = document.getElementById(sectionId)
-				if (element) {
-					observer.unobserve(element)
-				}
-			})
-		}
-	}, [])
+      observer.disconnect() 
+    }
+	}, [selectedServiceId])
 
 	return (
 		<>
@@ -67,7 +78,7 @@ const RouterComponent = () => {
 				<HeroSection />
 			</section>
 			<section id='services'>
-				<ServiceSection />
+				{selectedServiceId ? <ServiceChosenSection /> : <ServiceSection />}
 			</section>
 		</>
 	)
