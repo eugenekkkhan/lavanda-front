@@ -13,7 +13,7 @@ const ServiceSection = () => {
 	const handleLearnMore = (serviceId: string) => {
 		console.log(`Learn more about service: ${serviceId}`)
 		if (serviceId) {
-			navigate(`/service/${serviceId}`)
+			window.location.hash = `services/${serviceId}`;
 		}
 	}
 	const createCards = (items: Service[]) =>

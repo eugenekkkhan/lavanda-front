@@ -4,6 +4,7 @@ import HeroSection from './organisms/HeroSection/HeroSection'
 import ServiceSection from './organisms/Services/ui/ServiceSection'
 import usePageTheme from './hooks/usePageTheme'
 import ServiceChosenSection from './organisms/Services/ui/ServiceChosenSection'
+import { motion, AnimatePresence } from 'framer-motion';
 const RouterComponent = () => {
 	const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
 		null,
@@ -16,7 +17,7 @@ const RouterComponent = () => {
 			if (hash.startsWith('#services/')) {
 				setSelectedServiceId(hash.split('/')[1])
 			} else if (hash === '#services') {
-				setSelectedServiceId(null) 
+				setSelectedServiceId(null)
 			}
 
 			const targetSection = hash.split('/')[0].slice(1)
@@ -49,11 +50,12 @@ const RouterComponent = () => {
 				if (entry.isIntersecting) {
 					const sectionId = entry.target.id
 
-					const newHash = (sectionId === 'services' && selectedServiceId)
-            ? `#services/${selectedServiceId}`
-            : `#${sectionId}`
+					const newHash =
+						sectionId === 'services' && selectedServiceId
+							? `#services/${selectedServiceId}`
+							: `#${sectionId}`
 
-          window.history.replaceState(null, '', newHash)
+					window.history.replaceState(null, '', newHash)
 				}
 			})
 		}
@@ -68,8 +70,8 @@ const RouterComponent = () => {
 		})
 
 		return () => {
-      observer.disconnect() 
-    }
+			observer.disconnect()
+		}
 	}, [selectedServiceId])
 
 	return (
@@ -77,8 +79,32 @@ const RouterComponent = () => {
 			<section id='home'>
 				<HeroSection />
 			</section>
-			<section id='services'>
-				{selectedServiceId ? <ServiceChosenSection /> : <ServiceSection />}
+			<section
+				id='services'
+			>
+				<AnimatePresence mode='wait'>
+					{selectedServiceId ? (
+						<motion.div
+							key='details'
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -20 }}
+							transition={{ duration: 0.4 }}
+						>
+							<ServiceChosenSection />
+						</motion.div>
+					) : (
+						<motion.div
+							key='list'
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.4 }}
+						>
+							<ServiceSection />
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</section>
 		</>
 	)
