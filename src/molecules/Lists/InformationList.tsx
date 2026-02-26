@@ -1,5 +1,5 @@
-import SearchInput from '../../../atoms/SearchInput/SearchInput'
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion'
+import SearchInput from '../../atoms/SearchInput/SearchInput'
 
 interface InformationListProps {
 	data: React.ReactNode[]

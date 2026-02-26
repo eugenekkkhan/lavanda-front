@@ -4,6 +4,8 @@ import HeroSection from './organisms/HeroSection/HeroSection'
 import ServiceSection from './organisms/Services/ui/ServiceSection'
 import usePageTheme from './hooks/usePageTheme'
 import ServiceChosenSection from './organisms/Services/ui/ServiceChosenSection'
+import DoctorSection from './organisms/Doctors/ui/DoctorSection'
+import DoctorChosenSection from './organisms/Doctors/ui/DoctorChosenSection'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
@@ -104,11 +106,11 @@ const RouterComponent = () => {
 				<AnimatePresence mode='wait'>
 					{doctorId ? (
 						<motion.div key='d-details' {...animProps}>
-							<ServiceChosenSection />
+							<DoctorChosenSection />
 						</motion.div>
 					) : (
 						<motion.div key='d-list' {...animProps}>
-							<ServiceSection />
+							<DoctorSection />
 						</motion.div>
 					)}
 				</AnimatePresence>

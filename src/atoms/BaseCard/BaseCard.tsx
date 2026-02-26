@@ -11,12 +11,12 @@ const BaseCard: React.FC<BaseCardProps> = ({
 	image,
 	description,
 	children,
-	actions
+	actions,
 }) => {
 	return (
 		<div className='flex flex-col md:flex-row gap-4 p-3'>
 			{image && (
-				<div className=' w-full h-[200px] md:w-[196px] md:h-[226px] flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 flex items-center justify-center overflow-hidden'>
+				<div className=' w-full h-[200px] md:w-[196px] flex items-center md:h-[226px] flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 justify-center overflow-hidden '>
 					<img src={image} alt={title} className='w-full h-full object-cover' />
 				</div>
 			)}
@@ -34,11 +34,7 @@ const BaseCard: React.FC<BaseCardProps> = ({
 					{children}
 				</div>
 
-				{actions && (
-          <div className='mt-auto'>
-            {actions}
-          </div>
-        )}
+				{actions && <div className='mt-auto'>{actions}</div>}
 			</div>
 		</div>
 	)
