@@ -6,6 +6,7 @@ import usePageTheme from './hooks/usePageTheme'
 import ServiceChosenSection from './organisms/Services/ui/ServiceChosenSection'
 import DoctorSection from './organisms/Doctors/ui/DoctorSection'
 import DoctorChosenSection from './organisms/Doctors/ui/DoctorChosenSection'
+import DoctorPage from './organisms/Doctors/ui/DoctorPage'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
@@ -13,18 +14,21 @@ const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
 const RouterComponent = () => {
 	const [serviceId, setServiceId] = useState<string | null>(null)
 	const [doctorId, setDoctorId] = useState<string | null>(null)
+	const [pathSegments, setPathSegments] = useState<string[]>([])
 	usePageTheme()
 	// Handle hash changes with react-scroll
 	useEffect(() => {
 		const handleHashChange = () => {
 			const hash = window.location.hash
-			const [mainPart, ...rest] = hash.split('/')
-			const section = mainPart.slice(1)
-			const subId = rest.join('/') || null
+			console.log(hash)
+			const parts = hash.replace('#', '').split('/').filter(Boolean)
+			const [section, ...rest] = parts
+			setPathSegments(parts)
+			console.log(parts.length)
 			if (section === 'services') {
-				setServiceId(subId)
+				setServiceId(rest.length > 0 ? rest.join('/') : null)
 			} else if (section === 'doctors') {
-				setDoctorId(subId)
+				setDoctorId(rest.length > 0 ? rest.join('/') : null)
 			}
 
 			const targetSection = hash.split('/')[0].slice(1)
@@ -104,13 +108,21 @@ const RouterComponent = () => {
 
 			<section id='doctors'>
 				<AnimatePresence mode='wait'>
-					{doctorId ? (
-						<motion.div key='d-details' {...animProps}>
+					{!doctorId && (
+						<motion.div  key='d-list' {...animProps}>
+							<DoctorSection />
+						</motion.div>
+					)}
+
+					{doctorId && pathSegments.length === 2 && (
+						<motion.div key='d-category' {...animProps}>
 							<DoctorChosenSection />
 						</motion.div>
-					) : (
-						<motion.div key='d-list' {...animProps}>
-							<DoctorSection />
+					)}
+
+					{doctorId && pathSegments.length === 3 && (
+						<motion.div key='d-profile' {...animProps}>
+							<DoctorPage />
 						</motion.div>
 					)}
 				</AnimatePresence>

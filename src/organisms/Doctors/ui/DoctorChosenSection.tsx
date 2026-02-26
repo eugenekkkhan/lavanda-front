@@ -6,16 +6,24 @@ import IconButton from '../../../molecules/Buttons/IconButton'
 import InformationList from '../../../molecules/Lists/InformationList'
 import type { Service } from '../../Services/data/services.data'
 import { therapistsData } from '../data/therapists.data'
-
+import { Link } from 'react-router'
 const DoctorChosenSection = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('')
 	const navigate = useNavigate()
-
 	const createCards = (items: Service[]) =>
 		items.map(item => (
-			<div className='py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-2'>
-				<p className=''>{item.title}</p>
-			</div>
+			<a
+				key={item.id}
+				href={`${window.location.hash}/${item.id}`}
+				className='block group'
+			>
+				<div
+					key={item.id}
+					className='py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-2'
+				>
+					<p className=''>{item.title}</p>
+				</div>
+			</a>
 		))
 
 	const filteredData = therapistsData.filter((s: Service) =>
@@ -47,7 +55,7 @@ const DoctorChosenSection = () => {
 				</motion.div>
 			</div>
 
-			<motion.div className='max-w-[1104px] mx-auto w-full'>
+			<motion.div className='max-w-[1104px] mx-auto w-full min-h-[800px]'>
 				<InformationList
 					showSearch
 					data={filteredServicesCards}
