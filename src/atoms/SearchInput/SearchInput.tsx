@@ -27,11 +27,12 @@ const SearchInput = ({
 					value={value}
 					onChange={e => onChange(e.target.value)}
 				/>
+
 				{value && (
 					<RxCross1
 						color='var(--color-secondary)'
 						size={24}
-						className='cursor-pointer '
+						className='cursor-pointer'
 						onClick={onClear}
 					/>
 				)}

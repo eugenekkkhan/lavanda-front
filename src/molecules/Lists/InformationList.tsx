@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import SearchInput from '../../atoms/SearchInput/SearchInput'
 
 interface InformationListProps {
@@ -14,28 +15,28 @@ const InformationList = ({
 	onSearchChange,
 }: InformationListProps) => {
 	return (
-		<div className='border-[1px] border-secondary rounded-3xl mb-12 overflow-hidden'>
+		<motion.div className='border border-secondary rounded-3xl mb-12 overflow-hidden'>
 			{showSearch && (
-				<div className=''>
+				<motion.div className=''>
 					<SearchInput
 						value={searchQuery}
 						onChange={val => onSearchChange?.(val)}
 						onClear={() => onSearchChange?.('')}
 					/>
-				</div>
+				</motion.div>
 			)}
 
-			<div className='px-[11px]'>
+			<motion.div className='px-[11px]'>
 				{data.map((item, index) => (
-					<div
+					<motion.div
 						key={index}
-						className='border-b-[1px] last:border-b-0 border-secondary'
+						className='border-b last:border-b-0 border-secondary'
 					>
 						{item}
-					</div>
+					</motion.div>
 				))}
-			</div>
-		</div>
+			</motion.div>
+		</motion.div>
 	)
 }
 
