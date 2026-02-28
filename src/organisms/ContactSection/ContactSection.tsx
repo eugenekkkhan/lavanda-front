@@ -24,9 +24,7 @@ const ContactSection = () => {
                 defaultState={{ center: [50.985008, 39.480560], zoom: 16.5 }}
                 className="w-full h-full"
               >
-                <Placemark geometry={[50.985008, 39.480560]} options={{ 
-                  iconColor: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() 
-                }}/>
+                <Placemark geometry={[50.985008, 39.480560]} options={{ iconColor: "#bdb2ff" }}/>
               </Map>
             </YMaps>
           </div>
