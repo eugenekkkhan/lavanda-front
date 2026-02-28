@@ -14,7 +14,7 @@ const ServiceChosenSection = () => {
 
 	const createCards = (items: Service[]) =>
 		items.map(item => (
-			<div className='py-2 flex items-center justify-between text-lg md:text-2xl font-semibold text-secondary px-2'>
+			<div className='py-2 flex items-center justify-between text-lg md:text-2xl font-semibold text-secondary px-[18px]'>
 				<p className=''>{item.title}</p>
 				<p>{item.description}</p>
 			</div>
@@ -27,7 +27,7 @@ const ServiceChosenSection = () => {
 	const filteredServicesCards = createCards(filteredData)
 
 	return (
-		<motion.section className='w-full bg-primary'>
+		<motion.section className='w-full bg-primary py-16 '>
 			<div className='relative w-full  flex items-center mt-[58px] mb-6 overflow-hidden'>
 				<div
 					className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity'
@@ -63,7 +63,7 @@ const ServiceChosenSection = () => {
 				</motion.div>
 			</div>
 
-			<motion.div className='max-w-[1104px] mx-auto w-full'>
+			<motion.div className='max-w-[1104px] mx-auto w-full px-4'>
 				<InformationList
 					showSearch
 					data={filteredServicesCards}

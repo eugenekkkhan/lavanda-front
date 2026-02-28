@@ -15,7 +15,7 @@ const InformationList = ({
 	onSearchChange,
 }: InformationListProps) => {
 	return (
-		<motion.div className='border border-secondary rounded-3xl mb-12 overflow-hidden'>
+		<motion.div className='border border-secondary rounded-3xl overflow-hidden '>
 			{showSearch && (
 				<motion.div className=''>
 					<SearchInput
@@ -26,7 +26,7 @@ const InformationList = ({
 				</motion.div>
 			)}
 
-			<motion.div className='px-[11px]'>
+			<motion.div >
 				{data.map((item, index) => (
 					<motion.div
 						key={index}
