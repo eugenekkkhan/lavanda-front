@@ -8,7 +8,7 @@ const ContactSection = () => {
       <motion.div className='max-w-[1104px] mx-auto'>
         <div className="flex flex-col lg:flex-row justify-evenly gap-5">
           <div className="flex flex-col gap-[18px]">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary">
               Контакты
             </h2>
             <div className="hidden sm:block">
