@@ -6,6 +6,7 @@ export interface BasicButtonProps
 	isWide?: boolean
 	size?: 'sm' | 'base' | 'lg'
 	theme?: 'primary' | 'outline-light' | 'outline-dark' | 'ghost'
+  rounding?: 'none' | 'sm' | 'base' | 'full'
 }
 
 const BasicButton = ({
@@ -16,7 +17,7 @@ const BasicButton = ({
 	theme = 'outline-light',
 	...props
 }: BasicButtonProps) => {
-	const base = 'pt-[10px] w-fit pb-[12px] text-base text-lg rounded-[21px] transition-colors'
+	const base = 'pt-[10px] w-fit pb-[12px] text-base rounded-[21px] transition-colors'
 
 	const themeMap = {
 		'primary': 'bg-white text-purple-400 shadow-[inset_0_0_0_1px_#ffffff]',
@@ -26,9 +27,9 @@ const BasicButton = ({
 	}
 
 	const paddingXMap = {
-		sm: 'px-3',
-		base: 'px-6',
-		lg: 'px-10',
+		sm: 'px-[12px]',
+		base: 'px-[18px]',
+		lg: 'px-[30px]',
 	}
 
 	const paddingX = paddingXMap[size] || paddingXMap.base
