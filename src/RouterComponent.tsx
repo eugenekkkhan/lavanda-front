@@ -38,7 +38,7 @@ const RouterComponent = () => {
 					duration: 800,
 					delay: 0,
 					smooth: true,
-					offset: -30,
+					offset: 0,
 				})
 			}
 		}

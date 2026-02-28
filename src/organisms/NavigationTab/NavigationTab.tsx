@@ -67,7 +67,7 @@ const NavigationTab = () => {
       duration: 800,
       delay: 0,
       smooth: true,
-      offset: -30, // Account for navbar height
+      offset: 0, // Account for navbar height
     });
   };
 
