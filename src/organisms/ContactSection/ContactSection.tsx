@@ -4,7 +4,7 @@ import ContactPill from "../../molecules/Contacts/ContactPill";
 const ContactSection = () => {
   return (
     <section className="w-full min-h-screen bg-white">
-      <div className="flex flex-row justify-evenly">
+      <div className="flex flex-col lg:flex-row justify-evenly gap-5">
         <div className="flex flex-col gap-[15px]">
           <h2 className="text-4xl md:text-5xl font-bold text-purple-400 mb-4">
             Контакты
@@ -16,7 +16,7 @@ const ContactSection = () => {
             <ContactPill displayAddress={true} displayText={false}/>
           </div>
         </div>
-        <div className="w-fit lg:w-[641px] h-[520px] rounded-3xl overflow-hidden">
+        <div className="w-full lg:w-[641px] h-[520px] rounded-3xl overflow-hidden">
           <YMaps>
             <Map 
               defaultState={{ center: [50.985008, 39.480560], zoom: 16.5 }}

@@ -39,7 +39,7 @@ const ContactPill: React.FC<ContactPillProps> = ({
             <a href="mailto:info@lavandamed.ru" className="block w-full">
               <IconButton 
                 icon={MdOutlineAlternateEmail} 
-                className="!p-[4px] w-full justify-center items-center" 
+                className="cursor-pointer !p-[4px] w-full justify-center items-center" 
                 theme="primary"
               >
                 <span className="truncate">info@lavandamed.ru</span>
@@ -60,14 +60,14 @@ const ContactPill: React.FC<ContactPillProps> = ({
             <a href="tel:+79802444401" className="flex-1 w-full sm:w-auto">
               <TextButton 
                 text="+ 7&nbsp;(980)&nbsp;244&#8209;44&#8209;01" 
-                className="!p-[4px] w-full justify-center" 
+                className="cursor-pointer !p-[4px] w-full justify-center" 
                 theme="primary" 
               />
             </a>
             <a href="tel:+79802444400" className="flex-1 w-full sm:w-auto">
               <TextButton 
                 text="+ 7&nbsp;(980)&nbsp;244&#8209;44&#8209;00" 
-                className="!p-[4px] w-full justify-center" 
+                className="cursor-pointer !p-[4px] w-full justify-center" 
                 theme="primary" 
               />
             </a>
@@ -86,6 +86,7 @@ const ContactPill: React.FC<ContactPillProps> = ({
             <TextButton 
               text="г. Лиски, Воронежская область, ул Титова д. 20 помещение XI"
               theme="primary"
+              className="w-full justify-center"
               size="lg"
             />
           </div>
