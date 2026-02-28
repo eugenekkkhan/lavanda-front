@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-scroll";
 
 type Section = {
   title: string;
@@ -10,13 +11,13 @@ type Section = {
 interface MobileNavProps {
   sections: Section[];
   activeSectionIndex: number;
-  onNavClick: (index: number, e: React.MouseEvent) => void;
+  onSetActive: (sectionLink: string) => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
   activeSectionIndex,
-  onNavClick,
+  onSetActive,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobilePillDimensions, setMobilePillDimensions] = useState({
@@ -48,8 +49,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       window.removeEventListener("resize", updateMobilePillDimensions);
   }, [activeSectionIndex, sections, isMobileMenuOpen]);
 
-  const handleNavClick = (index: number, e: React.MouseEvent) => {
-    onNavClick(index, e);
+  const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -145,19 +145,23 @@ const MobileNav: React.FC<MobileNavProps> = ({
             <div className="flex flex-col items-end gap-[10px]">
               {/* Mobile menu items */}
               {sections.map((section, index) => (
-                <a
+                <Link
                   key={section.title}
-                  href={section.link}
-                  ref={section.mobileRef}
-                  onClick={(e) => handleNavClick(index, e)}
+                  to={section.link}
+                  spy={true}
+                  smooth={true}
+                  duration={800}
+                  offset={0}
+                  onSetActive={onSetActive}
+                  onClick={handleLinkClick}
                   className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors ${
                     activeSectionIndex === index
                       ? "text-[var(--color-primary)]"
                       : "text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
                   }`}
                 >
-                  {section.title}
-                </a>
+                  <span ref={section.mobileRef}>{section.title}</span>
+                </Link>
               ))}
             </div>
           </motion.div>

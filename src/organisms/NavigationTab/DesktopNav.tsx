@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-scroll";
 
 type Section = {
   title: string;
@@ -10,13 +11,13 @@ type Section = {
 interface DesktopNavProps {
   sections: Section[];
   activeSectionIndex: number;
-  onNavClick: (index: number, e: React.MouseEvent) => void;
+  onSetActive: (sectionLink: string) => void;
 }
 
 const DesktopNav: React.FC<DesktopNavProps> = ({
   sections,
   activeSectionIndex,
-  onNavClick,
+  onSetActive,
 }) => {
   const [pillDimensions, setPillDimensions] = useState({
     width: 0,
@@ -81,19 +82,22 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
 
       {/* Nav links */}
       {sections.map((section, index) => (
-        <a
+        <Link
           key={section.title}
-          href={section.link}
-          ref={section.ref}
-          onClick={(e) => onNavClick(index, e)}
+          to={section.link}
+          spy={true}
+          smooth={true}
+          duration={800}
+          offset={0}
+          onSetActive={onSetActive}
           className={`relative z-20 transition-colors duration-200 cursor-pointer ${
             activeSectionIndex === index
               ? "text-[var(--color-primary)]"
               : "text-[var(--color-secondary)]"
           }`}
         >
-          {section.title}
-        </a>
+          <span ref={section.ref}>{section.title}</span>
+        </Link>
       ))}
     </motion.div>
   );
