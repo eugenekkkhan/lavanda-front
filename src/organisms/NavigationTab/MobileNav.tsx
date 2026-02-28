@@ -42,6 +42,10 @@ const MobileNav: React.FC<MobileNavProps> = ({
     };
 
     updateMobilePillDimensions();
+    window.addEventListener("resize", updateMobilePillDimensions);
+
+    return () =>
+      window.removeEventListener("resize", updateMobilePillDimensions);
   }, [activeSectionIndex, sections, isMobileMenuOpen]);
 
   const handleNavClick = (index: number, e: React.MouseEvent) => {
