@@ -15,7 +15,7 @@ const InformationList = ({
 	onSearchChange,
 }: InformationListProps) => {
 	return (
-		<motion.div className='border border-secondary rounded-3xl mb-12 overflow-hidden'>
+		<motion.div className='border border-secondary rounded-3xl overflow-hidden '>
 			{showSearch && (
 				<motion.div className=''>
 					<SearchInput

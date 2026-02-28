@@ -19,7 +19,7 @@ const DoctorChosenSection = () => {
 			>
 				<div
 					key={item.id}
-					className='py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-2'
+					className='py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]'
 				>
 					<p className=''>{item.title}</p>
 				</div>
@@ -33,35 +33,37 @@ const DoctorChosenSection = () => {
 	const filteredServicesCards = createCards(filteredData)
 
 	return (
-		<motion.section className='w-full bg-primary'>
-			<div className='relative w-full  flex items-center mt-[58px]  mb-4 overflow-hidden'>
-				<motion.div className='relative z-10 max-w-[1104px] mx-auto px-4 w-full '>
-					<motion.div className='flex items-center gap-4 mb-6'>
-						<IconButton
-							icon={HiArrowLongLeft}
-							className='flex-shrink-0'
-							onClick={() => navigate(-1)}
-						>
-							Назад
-						</IconButton>
+		<motion.section className='w-full bg-primary py-16 md:py-24 px-4'>
+			<motion.div className='max-w-[1104px] mx-auto min-h-[800px]'>
+				<div className='w-full flex items-center mt-[58px]  mb-4 overflow-hidden '>
+					<motion.div className=''>
+						<motion.div className='flex items-center gap-4 mb-6'>
+							<IconButton
+								icon={HiArrowLongLeft}
+								className='flex-shrink-0'
+								onClick={() => navigate(-1)}
+							>
+								Назад
+							</IconButton>
 
-						<h2 className='text-4xl md:text-5xl font-bold text-secondary leading-none'>
-							Терапевты
-						</h2>
+							<h2 className='text-4xl md:text-5xl font-bold text-secondary leading-none'>
+								Терапевты
+							</h2>
+						</motion.div>
+						<p className='w-full text-base md:text-lg text-secondary/90 leading-relaxed'>
+							Какой-то текст про терапевтов.
+						</p>
 					</motion.div>
-					<p className='w-full text-base md:text-lg text-secondary/90 leading-relaxed'>
-						Какой-то текст про терапевтов.
-					</p>
-				</motion.div>
-			</div>
+				</div>
 
-			<motion.div className='max-w-[1104px] mx-auto w-full min-h-[800px]'>
-				<InformationList
-					showSearch
-					data={filteredServicesCards}
-					searchQuery={searchQuery}
-					onSearchChange={setSearchQuery}
-				/>
+				<motion.div className=''>
+					<InformationList
+						showSearch
+						data={filteredServicesCards}
+						searchQuery={searchQuery}
+						onSearchChange={setSearchQuery}
+					/>
+				</motion.div>
 			</motion.div>
 		</motion.section>
 	)
