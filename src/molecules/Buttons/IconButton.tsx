@@ -25,13 +25,13 @@ const IconButton = ({
 			{...props}
 		>
 			{side === 'left' && (
-				<Icon size={iconSize} className={iconClassName} />
+				<Icon size={iconSize} className={iconClassName+ " -my-[4px] -ml-[4px]"} />
 			)}
 
 			{children}
 
 			{side === 'right' && (
-				<Icon size={iconSize} className={iconClassName} />
+				<Icon size={iconSize} className={iconClassName+ " -my-[4px] -mr-[4px]"} />
 			)}
 		</BasicButton>
 	)

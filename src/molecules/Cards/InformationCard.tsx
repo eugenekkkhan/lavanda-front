@@ -20,7 +20,7 @@ const InformationCard: React.FC<InformationCardProps> = ({
 				handleLearnMore && (
 					<TextButton
 						text='Подробнее'
-						className='my-3 w-full md:w-auto'
+						className='md:my-3 w-full md:w-auto'
 						onClick={() => handleLearnMore(item.id)}
 					/>
 				)

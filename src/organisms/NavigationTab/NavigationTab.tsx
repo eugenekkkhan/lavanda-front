@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { scroller } from "react-scroll";
 import Stack from "../../atoms/Stack/Stack";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
@@ -12,30 +11,26 @@ type Section = {
   mobileRef: React.RefObject<HTMLAnchorElement>;
 };
 
+const NAV_SECTIONS = [
+  { title: "Главная", link: "home" },
+  { title: "Услуги", link: "services" },
+  { title: "Врачи", link: "doctors" },
+  { title: "Расписание", link: "schedule" },
+  { title: "Контакты", link: "contacts" },
+];
+
 const NavigationTab = () => {
   const [sections, setSections] = useState<Section[]>([]);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  const navSections = [
-    { title: "Главная", link: "home" },
-    { title: "Услуги", link: "services" },
-    { title: "Врачи", link: "doctors" },
-    { title: "Расписание", link: "schedule" },
-    { title: "Контакты", link: "contacts" },
-  ];
-
   useEffect(() => {
-    const newSections = navSections.map((sec) => ({
+    const newSections = NAV_SECTIONS.map((sec) => ({
       ...sec,
       ref: React.createRef<HTMLAnchorElement>(),
       mobileRef: React.createRef<HTMLAnchorElement>(),
     }));
     setSections(newSections);
-
-    const hash = window.location.hash.slice(1) || "home";
-    const index = newSections.findIndex((sec) => sec.link === hash);
-    setActiveSectionIndex(index >= 0 ? index : 0);
 
     // Check if mobile on mount and on resize
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -44,31 +39,12 @@ const NavigationTab = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Listen for hash changes and update active section
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1) || "home";
-      const index = sections.findIndex((sec) => sec.link === hash);
-      setActiveSectionIndex(index >= 0 ? index : 0);
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [sections]);
-
-  const handleNavClick = (index: number, e: React.MouseEvent) => {
-    e.preventDefault();
-    const sectionName = sections[index].link;
-    setActiveSectionIndex(index);
-    window.history.replaceState(null, "", `#${sectionName}`);
-
-    // Scroll to section with react-scroll
-    scroller.scrollTo(sectionName, {
-      duration: 800,
-      delay: 0,
-      smooth: true,
-      offset: -30, // Account for navbar height
-    });
+  // Called by react-scroll's onSetActive callback
+  const handleSetActive = (sectionLink: string) => {
+    const index = NAV_SECTIONS.findIndex((sec) => sec.link === sectionLink);
+    if (index >= 0) {
+      setActiveSectionIndex(index);
+    }
   };
 
   return (
@@ -78,7 +54,7 @@ const NavigationTab = () => {
     >
       <AnimatePresence>
         <Stack
-          className="absolute bg-gray-400/30 text-white rounded-3xl z-100 backdrop-blur-md shadow-md"
+          className="absolute bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
           initial={{ opacity: 0, scale: 0.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -92,14 +68,14 @@ const NavigationTab = () => {
             <DesktopNav
               sections={sections}
               activeSectionIndex={activeSectionIndex}
-              onNavClick={handleNavClick}
+              onSetActive={handleSetActive}
             />
           )}
           {isMobile && (
             <MobileNav
               sections={sections}
               activeSectionIndex={activeSectionIndex}
-              onNavClick={handleNavClick}
+              onSetActive={handleSetActive}
             />
           )}
         </Stack>

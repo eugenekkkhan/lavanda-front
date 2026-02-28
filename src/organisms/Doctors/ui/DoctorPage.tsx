@@ -13,7 +13,7 @@ const DoctorPage = () => {
 
 	if (!therapist) {
 		return (
-			<motion.div className='max-w-[1104px] mx-auto min-h-[800px] flex flex-col py-4'>
+			<motion.div className='max-w-[1104px] mx-auto min-h-[800px] flex flex-col py-4 px-4'>
 				<div className='flex justify-start'>
 					<IconButton
 						icon={HiArrowLongLeft}
@@ -33,9 +33,9 @@ const DoctorPage = () => {
 		)
 	}
 	return (
-		<motion.section className='w-full bg-primary'>
+		<motion.section className='w-full bg-primary px-4'>
 			<motion.div className='max-w-[1104px] mx-auto min-h-[800px]'>
-				<motion.div className='flex flex-col md:flex-row items-start mb-4'>
+				<motion.div className='flex flex-col md:flex-row gap-6 items-start mb-4'>
 					<motion.div className='flex-1'>
 						<motion.div className='flex items-center gap-4 mb-4'>
 							<IconButton
@@ -56,7 +56,7 @@ const DoctorPage = () => {
 						</p>
 					</motion.div>
 
-					<motion.div className='w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 overflow-hidden'>
+					<motion.div className='w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden'>
 						<img
 							src={therapist?.icon}
 							alt={therapist?.id}
