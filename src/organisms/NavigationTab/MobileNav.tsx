@@ -60,7 +60,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       aria-label="Toggle menu"
     >
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? 45 : 0,
           top: isOpen ? "18px" : "12px",
@@ -72,7 +72,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{ opacity: isOpen ? 0 : 1, top: "18px" }}
         transition={{
           type: "spring",
@@ -81,7 +81,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? -45 : 0,
           top: isOpen ? "18px" : "24px",
@@ -109,7 +109,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {isMobileMenuOpen && (
         <motion.div
           ref={mobileContainerRef}
-          className="absolute h-[38px] rounded-2xl bg-purple-400 top-[2px]"
+          className="absolute h-[38px] rounded-2xl bg-[var(--color-secondary)] top-[2px]"
           animate={{
             width: mobilePillDimensions.width,
             top: mobilePillDimensions.top,
@@ -126,7 +126,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {/* Purple circle background when closed */}
       {!isMobileMenuOpen && (
         <motion.div
-          className="absolute inset-[2px] rounded-full bg-purple-400"
+          className="absolute inset-[2px] rounded-full bg-[var(--color-secondary)]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{ zIndex: 10 }}
@@ -152,8 +152,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                   onClick={(e) => handleNavClick(index, e)}
                   className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors ${
                     activeSectionIndex === index
-                      ? "text-white"
-                      : "text-white hover:text-white"
+                      ? "text-[var(--color-primary)]"
+                      : "text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
                   }`}
                 >
                   {section.title}
