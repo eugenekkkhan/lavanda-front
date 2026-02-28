@@ -4,11 +4,11 @@ import { motion } from 'framer-motion'
 
 const ContactSection = () => {
   return (
-    <motion.section className='w-full bg-white py-16 md:py-24 px-4'>
+    <motion.section className='w-full bg-secondary py-16 md:py-24 px-4'>
       <motion.div className='max-w-[1104px] mx-auto'>
         <div className="flex flex-col lg:flex-row justify-evenly gap-5">
           <div className="flex flex-col gap-[18px]">
-            <h2 className="text-4xl md:text-5xl font-bold text-purple-400 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
               Контакты
             </h2>
             <div className="hidden sm:block">
@@ -24,7 +24,9 @@ const ContactSection = () => {
                 defaultState={{ center: [50.985008, 39.480560], zoom: 16.5 }}
                 className="w-full h-full"
               >
-                <Placemark geometry={[50.985008, 39.480560]} options={{ iconColor: "#bdb2ff" }}/>
+                <Placemark geometry={[50.985008, 39.480560]} options={{ 
+                  iconColor: getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() 
+                }}/>
               </Map>
             </YMaps>
           </div>

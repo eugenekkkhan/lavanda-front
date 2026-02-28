@@ -16,7 +16,7 @@ const ContactPill: React.FC<ContactPillProps> = ({
 }) => {
   return (
     <motion.div 
-      className="bg-purple-400 rounded-[28px] text-white p-2 overflow-hidden"
+      className="bg-primary rounded-[28px] text-secondary p-2 overflow-hidden"
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: "auto", opacity: 1 }}
       transition={{ duration: 0.5 }}
