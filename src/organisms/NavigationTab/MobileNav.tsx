@@ -29,11 +29,15 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   useEffect(() => {
     if (mobileContainerRef.current && isMobileMenuOpen) {
-      setContainerHeight(mobileContainerRef.current.getBoundingClientRect().height);
+      setContainerHeight(
+        mobileContainerRef.current.getBoundingClientRect().height,
+      );
     }
     const intervalId = setInterval(() => {
       if (mobileContainerRef.current && isMobileMenuOpen) {
-        setContainerHeight(mobileContainerRef.current.getBoundingClientRect().height);
+        setContainerHeight(
+          mobileContainerRef.current.getBoundingClientRect().height,
+        );
       }
     }, 100);
     setTimeout(() => clearInterval(intervalId), 1000);
@@ -45,7 +49,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
       const activeRef = sections[activeSectionIndex]?.mobileRef;
       if (activeRef?.current && mobileContainerRef.current) {
         const activeElement = activeRef.current;
-        const containerRect = mobileContainerRef.current.getBoundingClientRect();
+        const containerRect =
+          mobileContainerRef.current.getBoundingClientRect();
         const elementRect = activeElement.getBoundingClientRect();
 
         setMobilePillDimensions({
@@ -58,7 +63,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
     updateMobilePillDimensions();
     window.addEventListener("resize", updateMobilePillDimensions);
 
-    return () => window.removeEventListener("resize", updateMobilePillDimensions);
+    return () =>
+      window.removeEventListener("resize", updateMobilePillDimensions);
   }, [activeSectionIndex, sections, containerHeight, isMobileMenuOpen]);
 
   const handleLinkClick = () => {
