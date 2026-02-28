@@ -26,7 +26,7 @@ const InformationList = ({
 				</motion.div>
 			)}
 
-			<motion.div className='px-[11px]'>
+			<motion.div >
 				{data.map((item, index) => (
 					<motion.div
 						key={index}
