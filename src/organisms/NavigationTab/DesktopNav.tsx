@@ -51,10 +51,9 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           left: elementRect.left - containerRect.left - 10,
         });
       }
-      return { activeRef };
     };
 
-    const { activeRef } = updatePillDimensions();
+    updatePillDimensions();
     window.addEventListener("resize", updatePillDimensions);
 
     return () => window.removeEventListener("resize", updatePillDimensions);
