@@ -19,9 +19,9 @@ const BasicButton = ({
 	const base = 'pt-[10px] w-fit pb-[12px] text-base text-lg rounded-[21px] transition-colors'
 
 	const themeMap = {
-		'primary': 'bg-white text-purple-400 shadow-[inset_0_0_0_1px_#ffffff]',
-		'outline-light': 'bg-transparent text-white shadow-[inset_0_0_0_1px_#ffffff] hover:bg-white hover:text-purple-400',
-		'outline-dark': 'bg-transparent text-black shadow-[inset_0_0_0_1px_#000000] hover:bg-black/70 hover:text-[#ECFFE8]',
+		'primary': 'bg-white text-[#bdb2ff] shadow-[inset_0_0_0_1px_#ffffff]',
+		'outline-light': 'bg-transparent text-white shadow-[inset_0_0_0_1px_#ffffff] hover:bg-white hover:text-[#bdb2ff]',
+		'outline-dark': 'bg-transparent text-black shadow-[inset_0_0_0_1px_#000000] hover:bg-black/70 hover:text-[#ecffe8]',
 		'ghost': 'bg-transparent text-black shadow-[inset_0_0_0_1px_#000000]'
 	}
 
