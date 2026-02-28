@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-scroll";
 
 type Section = {
   title: string;
@@ -10,13 +11,13 @@ type Section = {
 interface MobileNavProps {
   sections: Section[];
   activeSectionIndex: number;
-  onNavClick: (index: number, e: React.MouseEvent) => void;
+  onSetActive: (sectionLink: string) => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
   activeSectionIndex,
-  onNavClick,
+  onSetActive,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobilePillDimensions, setMobilePillDimensions] = useState({
@@ -24,6 +25,24 @@ const MobileNav: React.FC<MobileNavProps> = ({
     top: 0,
   });
   const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState(0);
+
+  useEffect(() => {
+    if (mobileContainerRef.current && isMobileMenuOpen) {
+      setContainerHeight(
+        mobileContainerRef.current.getBoundingClientRect().height,
+      );
+    }
+    const intervalId = setInterval(() => {
+      if (mobileContainerRef.current && isMobileMenuOpen) {
+        setContainerHeight(
+          mobileContainerRef.current.getBoundingClientRect().height,
+        );
+      }
+    }, 100);
+    setTimeout(() => clearInterval(intervalId), 1000);
+    return () => clearInterval(intervalId);
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const updateMobilePillDimensions = () => {
@@ -35,17 +54,20 @@ const MobileNav: React.FC<MobileNavProps> = ({
         const elementRect = activeElement.getBoundingClientRect();
 
         setMobilePillDimensions({
-          width: elementRect.width,
-          top: elementRect.top - containerRect.top + 22,
+          width: elementRect.width + 22,
+          top: elementRect.top - containerRect.top - 8,
         });
       }
     };
 
     updateMobilePillDimensions();
-  }, [activeSectionIndex, sections, isMobileMenuOpen]);
+    window.addEventListener("resize", updateMobilePillDimensions);
 
-  const handleNavClick = (index: number, e: React.MouseEvent) => {
-    onNavClick(index, e);
+    return () =>
+      window.removeEventListener("resize", updateMobilePillDimensions);
+  }, [activeSectionIndex, sections, containerHeight, isMobileMenuOpen]);
+
+  const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -56,7 +78,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       aria-label="Toggle menu"
     >
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? 45 : 0,
           top: isOpen ? "18px" : "12px",
@@ -68,7 +90,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{ opacity: isOpen ? 0 : 1, top: "18px" }}
         transition={{
           type: "spring",
@@ -77,7 +99,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-white absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? -45 : 0,
           top: isOpen ? "18px" : "24px",
@@ -93,6 +115,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   return (
     <motion.div
+      ref={mobileContainerRef}
       className="flex flex-col items-end justify-between p-[2px] overflow-hidden"
       initial={false}
       animate={{
@@ -104,8 +127,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {/* Mobile pill background */}
       {isMobileMenuOpen && (
         <motion.div
-          ref={mobileContainerRef}
-          className="absolute h-[38px] rounded-2xl bg-purple-400 top-[2px]"
+          className="absolute h-[38px] rounded-2xl bg-[var(--color-secondary)] right-[2px]"
           animate={{
             width: mobilePillDimensions.width,
             top: mobilePillDimensions.top,
@@ -122,7 +144,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {/* Purple circle background when closed */}
       {!isMobileMenuOpen && (
         <motion.div
-          className="absolute inset-[2px] rounded-full bg-purple-400"
+          className="absolute inset-[2px] rounded-full bg-[var(--color-secondary)]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{ zIndex: 10 }}
@@ -141,19 +163,23 @@ const MobileNav: React.FC<MobileNavProps> = ({
             <div className="flex flex-col items-end gap-[10px]">
               {/* Mobile menu items */}
               {sections.map((section, index) => (
-                <a
+                <Link
                   key={section.title}
-                  href={section.link}
-                  ref={section.mobileRef}
-                  onClick={(e) => handleNavClick(index, e)}
+                  to={section.link}
+                  spy={true}
+                  smooth={true}
+                  duration={800}
+                  offset={0}
+                  onSetActive={onSetActive}
+                  onClick={handleLinkClick}
                   className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors ${
                     activeSectionIndex === index
-                      ? "text-white"
-                      : "text-white hover:text-white"
+                      ? "text-[var(--color-primary)]"
+                      : "text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
                   }`}
                 >
-                  {section.title}
-                </a>
+                  <span ref={section.mobileRef}>{section.title}</span>
+                </Link>
               ))}
             </div>
           </motion.div>

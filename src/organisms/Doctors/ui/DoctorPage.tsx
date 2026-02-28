@@ -56,7 +56,7 @@ const DoctorPage = () => {
 						</p>
 					</motion.div>
 
-					<motion.div className='w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center  flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden'>
+					<motion.div className='w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden'>
 						<img
 							src={therapist?.icon}
 							alt={therapist?.id}

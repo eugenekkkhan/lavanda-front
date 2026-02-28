@@ -1,48 +1,49 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-	--color-primary: var(--color-primary);
-	--color-secondary: var(--color-secondary);
-	--radius-3xl: 21px;
-	--radius-2xl: 19px;
-	--text-base: 18px;
-	--text-base--line-height: 20px;
-	--spacing-10\.5: 42px;
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --radius-4xl: 31px;
+  --radius-3xl: 21px;
+  --radius-2xl: 19px;
+  --text-base: 18px;
+  --text-base--line-height: 20px;
+  --spacing-10\.5: 42px;
 }
 @layer base {
-	html {
-		@apply text-base;
-	}
-	html,
-	body {
-		background-color: var(--color-primary);
-		color: var(--color-secondary);
-		transition:
-			background-color 0.5s ease-in-out,
-			color 0.5s ease-in-out;
-	}
-	section {
-		transition:
-			background-color 0.5s ease-in-out,
-			border-color 0.5s ease-in-out;
-	}
-	.themed {
-		transition:
-			background-color 0.5s ease-in-out,
-			color 0.5s ease-in-out,
-			border-color 0.5s ease-in-out;
-	}
-	a,
-	p,
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	span {
-		font-weight: 300;
-		margin: 0;
-		margin-bottom: 0;
-	}
+  html {
+    @apply text-base;
+  }
+  html,
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    transition:
+      background-color 0.5s ease-in-out,
+      color 0.5s ease-in-out;
+  }
+  section {
+    transition:
+      background-color 0.5s ease-in-out,
+      border-color 0.5s ease-in-out;
+  }
+  .themed {
+    transition:
+      background-color 0.5s ease-in-out,
+      color 0.5s ease-in-out,
+      border-color 0.5s ease-in-out;
+  }
+  a,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  span {
+    font-weight: 300;
+    margin: 0;
+    margin-bottom: 0;
+  }
 }

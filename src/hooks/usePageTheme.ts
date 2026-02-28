@@ -21,7 +21,7 @@ const THEMES: Record<string, ThemeConfig> = {
 	},
 	'#doctors': {
 		primaryColor: '#ECFFE8',
-		secondaryColor: '#000000',
+		secondaryColor: '#000000B3',
 	},
 }
 const SECTIONS = ['home', 'services', 'doctors']

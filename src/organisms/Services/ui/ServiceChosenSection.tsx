@@ -27,8 +27,8 @@ const ServiceChosenSection = () => {
 	const filteredServicesCards = createCards(filteredData)
 
 	return (
-		<motion.section className='w-full bg-primary py-16 '>
-			<div className='relative w-full  flex items-center mt-[58px] mb-6 overflow-hidden'>
+		<motion.section className='w-full bg-primary pt-[78px]'>
+			<div className='relative w-full  flex items-center mb-6 overflow-hidden'>
 				<div
 					className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity'
 					style={{
