@@ -8,6 +8,7 @@ import DoctorSection from './organisms/Doctors/ui/DoctorSection'
 import DoctorChosenSection from './organisms/Doctors/ui/DoctorChosenSection'
 import DoctorPage from './organisms/Doctors/ui/DoctorPage'
 import { motion, AnimatePresence } from 'framer-motion'
+import NavigationTab from './organisms/NavigationTab/NavigationTab'
 
 const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
 
@@ -89,6 +90,7 @@ const RouterComponent = () => {
 
 	return (
 		<>
+    <NavigationTab />
 			<section id='home'>
 				<HeroSection />
 			</section>
