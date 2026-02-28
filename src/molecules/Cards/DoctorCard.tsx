@@ -6,7 +6,7 @@ interface DoctorCardProps {
 }
 
 const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => {
-	return <BaseCard title={doctor.title}></BaseCard>
+	return <BaseCard title={doctor.title} />
 }
 
 export default DoctorCard
