@@ -7,7 +7,7 @@ interface IconButtonProps extends BasicButtonProps {
 	icon: IconType
 	iconSize?: number | string
 	iconClassName?: string
-	side?: 'left' | 'right'
+	side?: 'left' | 'right' | "only"
 }
 
 const IconButton = ({
@@ -28,11 +28,15 @@ const IconButton = ({
 				<Icon size={iconSize} className={iconClassName+ " -my-[4px] -ml-[4px]"} />
 			)}
 
-			{children}
+			{side !== 'only' && children}
 
 			{side === 'right' && (
 				<Icon size={iconSize} className={iconClassName+ " -my-[4px] -mr-[4px]"} />
 			)}
+
+      {side === 'only' && (
+        <Icon size={iconSize} className={iconClassName} />
+      )}
 		</BasicButton>
 	)
 }
