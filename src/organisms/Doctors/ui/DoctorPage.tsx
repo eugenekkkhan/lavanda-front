@@ -8,8 +8,6 @@ const DoctorPage = () => {
   const { goBack } = useBackNavigation()
   const { doctorId } = useParams<{ doctorId: string }>()
 
-  console.log("Текущий ID доктора из URL:", doctorId)
-
   const therapist = currentTherapistData.find(
     (t) => t.id === doctorId
   )

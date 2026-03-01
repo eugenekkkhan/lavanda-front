@@ -15,7 +15,6 @@ const MainLayout = () => {
   const { serviceId, categoryId, doctorId } = useParams();
 
   const componentContextValue = useContext(ComponentContext);
-  console.log(componentContextValue);
 
   return (
     <main>
