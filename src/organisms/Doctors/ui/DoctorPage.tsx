@@ -1,31 +1,30 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import { currentTherapistData } from "../data/currentTherapist.data";
+import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorPage = () => {
-  const navigate = useNavigate();
-  const currentId = window.location.hash.split("/");
-  console.log(currentId);
-  const therapist = currentTherapistData.find(
-    (t) => t.id === currentId[currentId.length - 1],
-  );
+  const { goBack } = useBackNavigation();
+  const { doctorId } = useParams<{ doctorId: string }>();
+
+  const therapist = currentTherapistData.find((t) => t.id === doctorId);
 
   if (!therapist) {
     return (
-      <motion.div className="max-w-[1104px] mx-auto min-h-[800px] flex flex-col py-4 px-4">
+      <motion.div className="max-w-[1104px] py-16 md:py-24 mx-auto min-h-[1000px] flex flex-col py-4 px-4 snap-start snap-always ">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
             className="flex-shrink-0"
-            onClick={() => navigate(-1)}
+            onClick={goBack}
           >
             Назад
           </IconButton>
         </div>
 
         <div className="flex-1 flex items-center justify-center">
-          <h2 className="text-5xl font-bold text-secondary text-center">
+          <h2 className="text-5xl font-bold text-secondary/70 text-center">
             Данных нет
           </h2>
         </div>
@@ -33,7 +32,8 @@ const DoctorPage = () => {
     );
   }
   return (
-    <motion.section className="w-full bg-primary px-4">
+    <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
+      {" "}
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
         <motion.div className="flex flex-col md:flex-row gap-6 items-start mb-4">
           <motion.div className="flex-1">
@@ -41,7 +41,7 @@ const DoctorPage = () => {
               <IconButton
                 icon={HiArrowLongLeft}
                 className="flex-shrink-0"
-                onClick={() => navigate(-1)}
+                onClick={goBack}
               >
                 Назад
               </IconButton>

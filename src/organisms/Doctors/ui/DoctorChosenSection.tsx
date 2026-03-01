@@ -1,33 +1,44 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { useNavigate } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { Service } from "../../Services/data/services.data";
 import { therapistsData } from "../data/therapists.data";
+import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorChosenSection = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState<string>(
+    () => searchParams.get("search") ?? "",
+  );
+  const { goBack } = useBackNavigation();
+  const { categoryId } = useParams();
   const createCards = (items: Service[]) =>
     items.map((item) => (
-      <a
-        key={item.id}
-        href={`${window.location.hash}/${item.id}`}
-        className="block group"
-      >
-        <div
-          key={item.id}
-          className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]"
-        >
+      <Link to={`/doctors/${categoryId}/${item.id}`} key={item.id}>
+        <div className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]">
           <p className="">{item.title}</p>
         </div>
-      </a>
+      </Link>
     ));
 
   const filteredData = therapistsData.filter((s: Service) =>
     s.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+
+    const nextParams = new URLSearchParams(searchParams);
+    if (value) {
+      nextParams.set("search", value);
+    } else {
+      nextParams.delete("search");
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  };
 
   const filteredServicesCards = createCards(filteredData);
 
@@ -40,7 +51,7 @@ const DoctorChosenSection = () => {
               <IconButton
                 icon={HiArrowLongLeft}
                 className="flex-shrink-0"
-                onClick={() => navigate(-1)}
+                onClick={goBack}
               >
                 Назад
               </IconButton>
@@ -60,7 +71,7 @@ const DoctorChosenSection = () => {
             showSearch
             data={filteredServicesCards}
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onSearchChange={handleSearchChange}
           />
         </motion.div>
       </motion.div>
