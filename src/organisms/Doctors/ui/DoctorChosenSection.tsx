@@ -1,72 +1,72 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { HiArrowLongLeft } from 'react-icons/hi2'
-import { useNavigate } from 'react-router'
-import IconButton from '../../../molecules/Buttons/IconButton'
-import InformationList from '../../../molecules/Lists/InformationList'
-import type { Service } from '../../Services/data/services.data'
-import { therapistsData } from '../data/therapists.data'
-import { Link } from 'react-router'
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { useNavigate } from "react-router";
+import IconButton from "../../../molecules/Buttons/IconButton";
+import InformationList from "../../../molecules/Lists/InformationList";
+import type { Service } from "../../Services/data/services.data";
+import { therapistsData } from "../data/therapists.data";
+import { Link } from "react-router";
 const DoctorChosenSection = () => {
-	const [searchQuery, setSearchQuery] = useState<string>('')
-	const navigate = useNavigate()
-	const createCards = (items: Service[]) =>
-		items.map(item => (
-			<a
-				key={item.id}
-				href={`${window.location.hash}/${item.id}`}
-				className='block group'
-			>
-				<div
-					key={item.id}
-					className='py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]'
-				>
-					<p className=''>{item.title}</p>
-				</div>
-			</a>
-		))
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const navigate = useNavigate();
+  const createCards = (items: Service[]) =>
+    items.map((item) => (
+      <a
+        key={item.id}
+        href={`${window.location.hash}/${item.id}`}
+        className="block group"
+      >
+        <div
+          key={item.id}
+          className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]"
+        >
+          <p className="">{item.title}</p>
+        </div>
+      </a>
+    ));
 
-	const filteredData = therapistsData.filter((s: Service) =>
-		s.title.toLowerCase().includes(searchQuery.toLowerCase()),
-	)
+  const filteredData = therapistsData.filter((s: Service) =>
+    s.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
-	const filteredServicesCards = createCards(filteredData)
+  const filteredServicesCards = createCards(filteredData);
 
-	return (
-		<motion.section className='w-full bg-primary py-16 md:py-24 px-4'>
-			<motion.div className='max-w-[1104px] mx-auto min-h-[800px]'>
-				<div className='w-full flex items-center mt-[58px]  mb-4 overflow-hidden '>
-					<motion.div className=''>
-						<motion.div className='flex items-center gap-4 mb-6'>
-							<IconButton
-								icon={HiArrowLongLeft}
-								className='flex-shrink-0'
-								onClick={() => navigate(-1)}
-							>
-								Назад
-							</IconButton>
+  return (
+    <motion.section className="w-full bg-primary py-16 md:py-24 px-4">
+      <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
+        <div className="w-full flex items-center mt-[58px]  mb-4 overflow-hidden ">
+          <motion.div className="">
+            <motion.div className="flex items-center gap-4 mb-6">
+              <IconButton
+                icon={HiArrowLongLeft}
+                className="flex-shrink-0"
+                onClick={() => navigate(-1)}
+              >
+                Назад
+              </IconButton>
 
-							<h2 className='text-4xl md:text-5xl font-bold text-secondary leading-none'>
-								Терапевты
-							</h2>
-						</motion.div>
-						<p className='w-full text-base md:text-lg text-secondary/90 leading-relaxed'>
-							Какой-то текст про терапевтов.
-						</p>
-					</motion.div>
-				</div>
+              <h2 className="text-4xl md:text-5xl font-bold text-secondary leading-none">
+                Терапевты
+              </h2>
+            </motion.div>
+            <p className="w-full text-base md:text-lg text-secondary/90 leading-relaxed">
+              Какой-то текст про терапевтов.
+            </p>
+          </motion.div>
+        </div>
 
-				<motion.div className=''>
-					<InformationList
-						showSearch
-						data={filteredServicesCards}
-						searchQuery={searchQuery}
-						onSearchChange={setSearchQuery}
-					/>
-				</motion.div>
-			</motion.div>
-		</motion.section>
-	)
-}
+        <motion.div className="">
+          <InformationList
+            showSearch
+            data={filteredServicesCards}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+        </motion.div>
+      </motion.div>
+    </motion.section>
+  );
+};
 
-export default DoctorChosenSection
+export default DoctorChosenSection;
