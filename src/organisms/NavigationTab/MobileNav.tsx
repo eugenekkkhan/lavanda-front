@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-scroll";
+import React, { useRef, useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { Link } from "react-scroll"
 
 type Section = {
   title: string
@@ -9,18 +9,18 @@ type Section = {
 }
 
 interface MobileNavProps {
-  sections: Section[];
-  activeSectionIndex: number;
-  onSetActive: (sectionLink: string) => void;
-  onNavigate?: () => void;
+  sections: Section[]
+  activeSectionIndex: number
+  onSetActive: (sectionLink: string) => void
+  onNavigate?: () => void
 }
 
 const HamburgerIcon = ({
   isOpen,
   onClick,
 }: {
-  isOpen: boolean;
-  onClick: () => void;
+  isOpen: boolean
+  onClick: () => void
 }) => (
   <button
     onClick={onClick}
@@ -61,7 +61,7 @@ const HamburgerIcon = ({
       }}
     ></motion.span>
   </button>
-);
+)
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
@@ -69,16 +69,14 @@ const MobileNav: React.FC<MobileNavProps> = ({
   onSetActive,
   onNavigate,
 }) => {
-  const ITEM_HEIGHT = 30
-  const GAP = 10
-  const BUTTON_HEIGHT = 38
-  const EXTRA_PADDING = 12
-
-  const menuHeight = BUTTON_HEIGHT +
+  const ITEM_HEIGHT = 38
+  const GAP = 8
+  const PADDING = 2  
+  const menuHeight =
     sections.length * ITEM_HEIGHT +
     (sections.length - 1) * GAP +
-    EXTRA_PADDING
-
+    PADDING * 2 +
+    50
 
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -132,9 +130,9 @@ const MobileNav: React.FC<MobileNavProps> = ({
   }, [activeSectionIndex, sections, containerHeight, isMobileMenuOpen])
 
   const handleLinkClick = () => {
-    setIsMobileMenuOpen(false);
-    onNavigate?.();
-  };
+    setIsMobileMenuOpen(false)
+    onNavigate?.()
+  }
 
   return (
     <motion.div
