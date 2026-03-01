@@ -1,20 +1,19 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { useNavigate } from "react-router";
-import IconButton from "../../../molecules/Buttons/IconButton";
-import InformationList from "../../../molecules/Lists/InformationList";
-import type { Service } from "../../Services/data/services.data";
-import { therapistsData } from "../data/therapists.data";
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { HiArrowLongLeft } from "react-icons/hi2"
+import { useNavigate, Link } from "react-router"
+import IconButton from "../../../molecules/Buttons/IconButton"
+import InformationList from "../../../molecules/Lists/InformationList"
+import type { Service } from "../../Services/data/services.data"
+import { therapistsData } from "../data/therapists.data"
 const DoctorChosenSection = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState<string>("")
+  const navigate = useNavigate()
   const createCards = (items: Service[]) =>
     items.map((item) => (
-      <a
+      <Link to={`/doctors/${item.id}`}
         key={item.id}
-        href={`${window.location.hash}/${item.id}`}
-        className="block group"
+
       >
         <div
           key={item.id}
@@ -22,14 +21,14 @@ const DoctorChosenSection = () => {
         >
           <p className="">{item.title}</p>
         </div>
-      </a>
-    ));
+      </Link>
+    ))
 
   const filteredData = therapistsData.filter((s: Service) =>
     s.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  )
 
-  const filteredServicesCards = createCards(filteredData);
+  const filteredServicesCards = createCards(filteredData)
 
   return (
     <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
@@ -65,7 +64,7 @@ const DoctorChosenSection = () => {
         </motion.div>
       </motion.div>
     </motion.section>
-  );
-};
+  )
+}
 
-export default DoctorChosenSection;
+export default DoctorChosenSection
