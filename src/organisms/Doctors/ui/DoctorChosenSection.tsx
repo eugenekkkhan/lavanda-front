@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { HiArrowLongLeft } from "react-icons/hi2"
-import { useNavigate, Link } from "react-router"
+import { useNavigate, Link, useParams } from "react-router"
 import IconButton from "../../../molecules/Buttons/IconButton"
 import InformationList from "../../../molecules/Lists/InformationList"
 import type { Service } from "../../Services/data/services.data"
@@ -9,14 +9,14 @@ import { therapistsData } from "../data/therapists.data"
 const DoctorChosenSection = () => {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const navigate = useNavigate()
+  const { categoryId } = useParams();
   const createCards = (items: Service[]) =>
     items.map((item) => (
-      <Link to={`/doctors/${item.id}`}
-        key={item.id}
-
-      >
+      <Link 
+      to={`/doctors/${categoryId}/${item.id}`} 
+      key={item.id}
+    >
         <div
-          key={item.id}
           className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]"
         >
           <p className="">{item.title}</p>

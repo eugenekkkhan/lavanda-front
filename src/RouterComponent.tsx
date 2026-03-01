@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-import { Route, Routes } from 'react-router'
+import { useEffect, useRef } from "react"
+import { Route, Routes, useLocation } from 'react-router'
 import { scroller } from "react-scroll"
 import usePageTheme from "./hooks/usePageTheme"
 import NavigationTab from "./organisms/NavigationTab/NavigationTab"
@@ -9,15 +9,27 @@ const SECTIONS = ["home", "services", "doctors", "schedule", "contacts"]
 
 const RouterComponent = () => {
   usePageTheme()
+  const location = useLocation()
+  
+  const sectionPaths = useRef<Record<string, string>>({
+    home: '/home',
+    services: '/services',
+    doctors: '/doctors',
+    contacts: '/contacts'
+  })
 
-
-  // Handle hash changes with react-scroll
   useEffect(() => {
+    const pathParts = location.pathname.split('/').filter(Boolean)
+    const section = pathParts[0] || 'home'
+    
+    if (SECTIONS.includes(section)) {
+      sectionPaths.current[section] = location.pathname
+    }
+  }, [location.pathname])
 
+  useEffect(() => {
     const handleHashChange = () => {
-
       const hash = window.location.hash
-
       const targetSection = hash.split("/")[0].slice(1)
       if (targetSection) {
         scroller.scrollTo(targetSection, {
@@ -29,15 +41,11 @@ const RouterComponent = () => {
       }
     }
 
-    // Handle initial hash on mount
     handleHashChange()
-
-    // Listen for hash changes
     window.addEventListener("hashchange", handleHashChange)
     return () => window.removeEventListener("hashchange", handleHashChange)
   }, [])
 
-  // Intersection Observer to detect which section is in view and update URL
   useEffect(() => {
     const observerOptions = {
       threshold: 0.3,
@@ -47,9 +55,11 @@ const RouterComponent = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id
-
-
-          window.history.replaceState(null, "", `/${sectionId}`)
+          
+          const savedPath = sectionPaths.current[sectionId]
+          if (savedPath) {
+            window.history.replaceState(null, "", savedPath)
+          }
         }
       })
     }
@@ -86,6 +96,5 @@ const RouterComponent = () => {
     </>
   )
 }
-
 
 export default RouterComponent

@@ -11,6 +11,7 @@ import { useParams } from 'react-router'
 
 const MainLayout = () => {
 	const { serviceId, categoryId, doctorId } = useParams();
+	console.log( serviceId, categoryId, doctorId )
 
   return (
     <main>
@@ -23,7 +24,7 @@ const MainLayout = () => {
       </section>
 
       <section id="doctors">
-        {doctorId ? (
+        {doctorId  ? (
           <DoctorPage />
         ) : categoryId ? (
           <DoctorChosenSection />

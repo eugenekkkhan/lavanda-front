@@ -3,12 +3,13 @@ import InformationCard from "../../../molecules/Cards/InformationCard";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { Service } from "../data/services.data";
 import { servicesData } from "../data/services.data";
+import { useNavigate } from 'react-router'
 
 const ServiceSection = () => {
+  const navigate = useNavigate()
   const handleLearnMore = (serviceId: string) => {
-    console.log(`Learn more about service: ${serviceId}`);
     if (serviceId) {
-      window.location.hash = `services/${serviceId}`;
+      navigate(`/services/${serviceId}`)
     }
   };
   const createCards = (items: Service[]) =>
