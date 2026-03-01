@@ -83,7 +83,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
       />
 
       {/* Nav links */}
-      {sections.map((section, index) => (
+      {sections.map((section) => (
         <Link
           key={section.title}
           to={section.link}

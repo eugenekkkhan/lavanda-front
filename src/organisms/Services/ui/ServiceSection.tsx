@@ -1,14 +1,10 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
 import InformationCard from "../../../molecules/Cards/InformationCard";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { Service } from "../data/services.data";
 import { servicesData } from "../data/services.data";
 
 const ServiceSection = () => {
-  //const [data, setData] = useState<Service[] | []>([])
-
-  const navigate = useNavigate();
   const handleLearnMore = (serviceId: string) => {
     console.log(`Learn more about service: ${serviceId}`);
     if (serviceId) {

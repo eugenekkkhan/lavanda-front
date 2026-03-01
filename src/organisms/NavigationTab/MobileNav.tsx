@@ -165,7 +165,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           >
             <div className="flex flex-col items-end gap-[10px]">
               {/* Mobile menu items */}
-              {sections.map((section, index) => (
+              {sections.map((section) => (
                 <Link
                   key={section.title}
                   to={section.link}

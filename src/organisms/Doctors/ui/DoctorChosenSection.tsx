@@ -6,7 +6,6 @@ import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { Service } from "../../Services/data/services.data";
 import { therapistsData } from "../data/therapists.data";
-import { Link } from "react-router";
 const DoctorChosenSection = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const navigate = useNavigate();
