@@ -1,10 +1,11 @@
 import { motion } from "framer-motion"
-import { useNavigate, useParams } from "react-router"
+import { useParams } from "react-router"
 import { HiArrowLongLeft } from "react-icons/hi2"
 import IconButton from "../../../molecules/Buttons/IconButton"
 import { currentTherapistData } from "../data/currentTherapist.data"
+import { useBackNavigation } from "../../../hooks/useBackNavigation"
 const DoctorPage = () => {
-  const navigate = useNavigate()
+  const { goBack } = useBackNavigation()
   const { doctorId } = useParams<{ doctorId: string }>()
 
   console.log("Текущий ID доктора из URL:", doctorId)
@@ -20,7 +21,7 @@ const DoctorPage = () => {
           <IconButton
             icon={HiArrowLongLeft}
             className="flex-shrink-0"
-            onClick={() => navigate(-1)}
+            onClick={goBack}
           >
             Назад
           </IconButton>
@@ -42,7 +43,7 @@ const DoctorPage = () => {
             <IconButton
               icon={HiArrowLongLeft}
               className="flex-shrink-0"
-              onClick={() => navigate(-1)}
+              onClick={goBack}
             >
               Назад
             </IconButton>

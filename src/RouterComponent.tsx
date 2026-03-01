@@ -1,95 +1,133 @@
-import { useEffect, useState } from "react"
-import { Route, Routes, useLocation } from 'react-router'
-import { scroller } from "react-scroll"
-import usePageTheme from "./hooks/usePageTheme"
-import NavigationTab from "./organisms/NavigationTab/NavigationTab"
-import MainLayout from './pages/MainLayout'
+import { useEffect, useState, useRef } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
+import { scroller } from "react-scroll";
+import usePageTheme from "./hooks/usePageTheme";
+import NavigationTab from "./organisms/NavigationTab/NavigationTab";
+import MainLayout from "./pages/MainLayout";
+import { ComponentContext } from "./context/ComponentContext";
+import { section, SECTIONS } from "./common/constants";
 
-const SECTIONS = ["home", "services", "doctors", "schedule", "contacts"]
+export type LocationTuple = [section, ...string[]];
+
+export const trimPathname = (pathname: string): string => {
+  const pathParts = pathname.split("/").filter(Boolean);
+  
+  if (pathParts.length === 0) {
+    return "/";
+  }
+  
+  if (pathParts.length === 1) {
+    return "/";
+  }
+  
+  // Remove the last segment
+  pathParts.pop();
+  return "/" + pathParts.join("/");
+};
+
+const getContextValue = (pathname: string): Record<string, string> => {
+  const contextValue = SECTIONS.reduce(
+    (acc, sec) => ({
+      ...acc,
+      [sec]: sec,
+    }),
+    {} as Record<string, string>,
+  );
+
+  const pathParts = pathname.split("/").filter(Boolean);
+  const sectionName = pathParts[0] as section;
+
+  if (SECTIONS.includes(sectionName)) {
+    contextValue[sectionName] = sectionName;
+  }
+
+  return contextValue;
+};
 
 const RouterComponent = () => {
-  usePageTheme()
-  const location = useLocation()
-  
-  const [serviceId, setServiceId] = useState<string | null>(null)
-  const [categoryId, setCategoryId] = useState<string | null>(null)
-  const [doctorId, setDoctorId] = useState<string | null>(null)
+  usePageTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const contextValue = getContextValue(location.pathname);
+  const initialRenderRef = useRef(true);
+
+  const [serviceId, setServiceId] = useState<string | null>(null);
+  const [categoryId, setCategoryId] = useState<string | null>(null);
+  const [doctorId, setDoctorId] = useState<string | null>(null);
+
+  const [locationTuple, setLocationTuple] = useState<LocationTuple | null>();
 
   useEffect(() => {
-    const pathParts = location.pathname.split('/').filter(Boolean)
-    
-    if (pathParts[0] === 'services' && pathParts[1]) {
-      setServiceId(pathParts[1])
-    }
-    
-    if (pathParts[0] === 'doctors') {
-      if (pathParts[1]) {
-        setCategoryId(pathParts[1])
-      }
-      if (pathParts[2]) {
-        setDoctorId(pathParts[2])
-      }
-    }
-  }, [location.pathname])
+    const pathParts = location.pathname.split("/").filter(Boolean);
 
+    const section = pathParts[0] as section;
+    if (SECTIONS.includes(section)) {
+      setLocationTuple([section, ...pathParts.slice(1)]);
+    } else {
+      setLocationTuple(null);
+    }
+  }, [location.pathname]);
+
+  // Handle first render - scroll to specific section after delay
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash
-      const targetSection = hash.replace('#', '').split("/")[0]
-      if (targetSection) {
-        scroller.scrollTo(targetSection, {
-          duration: 800,
+    if (initialRenderRef.current && locationTuple) {
+        scroller.scrollTo(locationTuple[0], {
+          duration: 500,
+          delay: 0,
           smooth: true,
-        })
-      }
+          offset: 0,
+        });
     }
-
-    handleHashChange()
-    window.addEventListener("hashchange", handleHashChange)
-    return () => window.removeEventListener("hashchange", handleHashChange)
-  }, [])
+  }, [locationTuple]);
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.3, 
-    }
+      threshold: 0.3,
+    };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const sectionId = entry.target.id
-          let newPath = `/${sectionId}`
-
-         
-          if (sectionId === 'services' && serviceId) {
-            newPath = `/services/${serviceId}`
-          } else if (sectionId === 'doctors') {
-            if (doctorId && categoryId) {
-              newPath = `/doctors/${categoryId}/${doctorId}`
-            } else if (categoryId) {
-              newPath = `/doctors/${categoryId}`
-            }
+          const sectionName = entry.target.id;
+          let newPath: string = "";
+          if (sectionName) {
+            newPath = `/${sectionName}`;
           }
+
+          // if (sectionId === 'services' && serviceId) {
+          //   newPath = `/services/${serviceId}`
+          // } else if (sectionId === 'doctors') {
+          //   if (doctorId && categoryId) {
+          //     newPath = `/doctors/${categoryId}/${doctorId}`
+          //   } else if (categoryId) {
+          //     newPath = `/doctors/${categoryId}`
+          //   }
+          // }
 
           if (window.location.pathname !== newPath) {
-            window.history.replaceState(null, '', newPath)
+            window.history.replaceState(null, "", newPath);
           }
         }
-      })
-    }
+      });
+    };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
 
     SECTIONS.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => observer.disconnect()
-  }, [serviceId, categoryId, doctorId])
+    return () => observer.disconnect();
+  }, [serviceId, categoryId, doctorId]);
 
   return (
-    <>
+    <ComponentContext.Provider
+      value={contextValue}
+    >
       <NavigationTab />
       <Routes>
         <Route path="/" element={<MainLayout />} />
@@ -101,8 +139,8 @@ const RouterComponent = () => {
         <Route path="/doctors/:categoryId" element={<MainLayout />} />
         <Route path="/doctors/:categoryId/:doctorId" element={<MainLayout />} />
       </Routes>
-    </>
-  )
-}
+    </ComponentContext.Provider>
+  );
+};
 
-export default RouterComponent
+export default RouterComponent;

@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { useNavigate } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import { Service } from "../data/services.data";
 import { uziData } from "../data/uzi.data";
+import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const ServiceChosenSection = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const navigate = useNavigate();
+  const { goBack } = useBackNavigation();
   const imageURL =
     "https://media.istockphoto.com/id/1295782888/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BF%D1%83%D1%81%D1%82%D0%BE%D0%B9-%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82-%D0%B2%D1%80%D0%B0%D1%87%D0%B0.jpg?s=612x612&w=0&k=20&c=vDcpy2AZ2WbeOSpebSevKYssoUeBwOa_Ett6l1nb8Nk=";
 
@@ -42,7 +42,7 @@ const ServiceChosenSection = () => {
             <IconButton
               icon={HiArrowLongLeft}
               className="flex-shrink-0"
-              onClick={() => navigate(-1)}
+              onClick={goBack}
             >
               Назад
             </IconButton>

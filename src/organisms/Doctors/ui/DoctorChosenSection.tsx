@@ -1,14 +1,15 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { HiArrowLongLeft } from "react-icons/hi2"
-import { useNavigate, Link, useParams } from "react-router"
+import { Link, useParams } from "react-router"
 import IconButton from "../../../molecules/Buttons/IconButton"
 import InformationList from "../../../molecules/Lists/InformationList"
 import type { Service } from "../../Services/data/services.data"
 import { therapistsData } from "../data/therapists.data"
+import { useBackNavigation } from "../../../hooks/useBackNavigation"
 const DoctorChosenSection = () => {
   const [searchQuery, setSearchQuery] = useState<string>("")
-  const navigate = useNavigate()
+  const { goBack } = useBackNavigation()
   const { categoryId } = useParams();
   const createCards = (items: Service[]) =>
     items.map((item) => (
@@ -39,7 +40,7 @@ const DoctorChosenSection = () => {
               <IconButton
                 icon={HiArrowLongLeft}
                 className="flex-shrink-0"
-                onClick={() => navigate(-1)}
+                onClick={goBack}
               >
                 Назад
               </IconButton>
