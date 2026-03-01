@@ -27,7 +27,7 @@ const ContactPill: React.FC<ContactPillProps> = ({
         transition={{ delay: 0.3 }}
       >
         <div className="flex flex-wrap items-center gap-2 w-full">
-          <div className="flex gap-3 justify-start shrink-0">
+          <div className="flex gap-2 justify-start shrink-0">
             {contactsData.map((contact) => (
               <a
                 key={contact.id}
