@@ -1,59 +1,102 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Route, Routes, useLocation } from "react-router";
 import { scroller } from "react-scroll";
-import HeroSection from "./organisms/HeroSection/HeroSection";
-import ServiceSection from "./organisms/Services/ui/ServiceSection";
 import usePageTheme from "./hooks/usePageTheme";
-import ServiceChosenSection from "./organisms/Services/ui/ServiceChosenSection";
-import DoctorSection from "./organisms/Doctors/ui/DoctorSection";
-import DoctorChosenSection from "./organisms/Doctors/ui/DoctorChosenSection";
-import DoctorPage from "./organisms/Doctors/ui/DoctorPage";
-import { motion, AnimatePresence } from "framer-motion";
 import NavigationTab from "./organisms/NavigationTab/NavigationTab";
-import ContactSection from "./organisms/ContactSection/ContactSection";
+import MainLayout from "./pages/MainLayout";
+import { ComponentContext } from "./context/ComponentContext";
+import { section, SECTIONS } from "./common/constants";
 
-const SECTIONS = ["home", "services", "doctors", "schedule", "contacts"];
+export type LocationTuple = [section, ...string[]];
+
+export const trimPathname = (pathname: string): string => {
+  const pathParts = pathname.split("/").filter(Boolean);
+
+  if (pathParts.length === 0) {
+    return "/";
+  }
+
+  if (pathParts.length === 1) {
+    return "/";
+  }
+
+  // Remove the last segment
+  pathParts.pop();
+  return "/" + pathParts.join("/");
+};
+
+const getContextValue = (pathname: string): Record<string, string> => {
+  const contextValue = SECTIONS.reduce(
+    (acc, sec) => ({
+      ...acc,
+      [sec]: sec,
+    }),
+    {} as Record<string, string>,
+  );
+
+  const pathParts = pathname.split("/").filter(Boolean);
+  const sectionName = pathParts[0] as section;
+
+  if (SECTIONS.includes(sectionName)) {
+    contextValue[sectionName] = sectionName;
+  }
+
+  return contextValue;
+};
 
 const RouterComponent = () => {
-  const [serviceId, setServiceId] = useState<string | null>(null);
-  const [doctorId, setDoctorId] = useState<string | null>(null);
-  const [pathSegments, setPathSegments] = useState<string[]>([]);
   usePageTheme();
-  // Handle hash changes with react-scroll
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      console.log(hash);
-      const parts = hash.replace("#", "").split("/").filter(Boolean);
-      const [section, ...rest] = parts;
-      setPathSegments(parts);
-      console.log(parts.length);
-      if (section === "services") {
-        setServiceId(rest.length > 0 ? rest.join("/") : null);
-      } else if (section === "doctors") {
-        setDoctorId(rest.length > 0 ? rest.join("/") : null);
-      }
+  const location = useLocation();
+  const contextValue = getContextValue(location.pathname);
+  const initialRenderRef = useRef(true);
 
-      const targetSection = hash.split("/")[0].slice(1);
-      if (targetSection) {
-        scroller.scrollTo(targetSection, {
-          duration: 800,
+  const [locationTuple, setLocationTuple] = useState<LocationTuple | null>();
+
+  useEffect(() => {
+    const pathParts = location.pathname.split("/").filter(Boolean);
+
+    const section = pathParts[0] as section;
+    if (SECTIONS.includes(section)) {
+      setLocationTuple([section, ...pathParts.slice(1)]);
+    } else {
+      setLocationTuple(null);
+    }
+  }, [location.pathname]);
+
+  // Handle first render - scroll to specific section after delay
+  useEffect(() => {
+    if (initialRenderRef.current && locationTuple) {
+      scroller.scrollTo(locationTuple[0], {
+        duration: 500,
+        delay: 0,
+        smooth: true,
+        offset: 0,
+      });
+
+      initialRenderRef.current = false;
+    }
+  }, [locationTuple]);
+
+  // Scroll to section when navigating to nested routes
+  useEffect(() => {
+    if (!initialRenderRef.current && locationTuple) {
+      const pathParts = location.pathname.split("/").filter(Boolean);
+      const isNestedRoute = pathParts.length > 1;
+
+      if (isNestedRoute) {
+        scroller.scrollTo(locationTuple[0], {
+          duration: 500,
           delay: 0,
           smooth: true,
           offset: 0,
         });
       }
-    };
+    }
+  }, [locationTuple, location.pathname]);
 
-    // Handle initial hash on mount
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
-  // Intersection Observer to detect which section is in view and update URL
   useEffect(() => {
+    const pathParts = location.pathname.split("/").filter(Boolean);
+
     const observerOptions = {
       threshold: 0.3,
     };
@@ -61,16 +104,32 @@ const RouterComponent = () => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-          let newHash = `#${sectionId}`;
-
-          if (sectionId === "services" && serviceId) {
-            newHash = `#services/${serviceId}`;
-          } else if (sectionId === "doctors" && doctorId) {
-            newHash = `#doctors/${doctorId}`;
+          const sectionName = entry.target.id;
+          let newPath: string = "";
+          if (sectionName) {
+            newPath = `/${sectionName}`;
           }
 
-          window.history.replaceState(null, "", newHash);
+          if (sectionName === 'services' && pathParts[1]) {
+            newPath = `/services/${pathParts[1]}`
+          } else if (sectionName === 'doctors') {
+            if (pathParts[1] && pathParts[2]) {
+              newPath = `/doctors/${pathParts[1]}/${pathParts[2]}`
+            } else if (pathParts[1]) {
+              newPath = `/doctors/${pathParts[1]}`
+            }
+          }
+
+          if (!newPath) {
+            return;
+          }
+
+          const newUrl = `${newPath}${window.location.search}${window.location.hash}`;
+          const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+          if (currentUrl !== newUrl) {
+            window.history.replaceState(null, "", newUrl);
+          }
         }
       });
     };
@@ -80,70 +139,29 @@ const RouterComponent = () => {
       observerOptions,
     );
 
-    SECTIONS.forEach((sectionId) => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        observer.observe(element);
-      }
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [doctorId, serviceId]);
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   return (
-    <>
+    <ComponentContext.Provider value={contextValue}>
       <NavigationTab />
-      <section id="home">
-        <HeroSection />
-      </section>
-      <section id="services">
-        <AnimatePresence mode="wait">
-          {serviceId ? (
-            <motion.div key="s-details" {...animProps}>
-              <ServiceChosenSection />
-            </motion.div>
-          ) : (
-            <motion.div key="s-list" {...animProps}>
-              <ServiceSection />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
+      <Routes>
+        <Route path="/" element={<MainLayout />} />
+        {SECTIONS.map((section) => (
+          <Route key={section} path={`/${section}`} element={<MainLayout />} />
+        ))}
 
-      <section id="doctors">
-        <AnimatePresence mode="wait">
-          {!doctorId && (
-            <motion.div key="d-list" {...animProps}>
-              <DoctorSection />
-            </motion.div>
-          )}
-
-          {doctorId && pathSegments.length === 2 && (
-            <motion.div key="d-category" {...animProps}>
-              <DoctorChosenSection />
-            </motion.div>
-          )}
-
-          {doctorId && pathSegments.length === 3 && (
-            <motion.div key="d-profile" {...animProps}>
-              <DoctorPage />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
-      <section id="contacts">
-        <ContactSection />
-      </section>
-    </>
+        <Route path="/services/:serviceId" element={<MainLayout />} />
+        <Route path="/doctors/:categoryId" element={<MainLayout />} />
+        <Route path="/doctors/:categoryId/:doctorId" element={<MainLayout />} />
+      </Routes>
+    </ComponentContext.Provider>
   );
 };
 
-const animProps = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.4 },
-};
 export default RouterComponent;

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 
 type Section = {
@@ -14,6 +14,54 @@ interface MobileNavProps {
   onSetActive: (sectionLink: string) => void;
   onNavigate?: () => void;
 }
+
+const HamburgerIcon = ({
+  isOpen,
+  onClick,
+}: {
+  isOpen: boolean;
+  onClick: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className="min-h-[38px] min-w-[38px] rounded-full relative z-30"
+    aria-label="Toggle menu"
+  >
+    <motion.span
+      className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
+      animate={{
+        rotate: isOpen ? 45 : 0,
+        top: isOpen ? "18px" : "12px",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    ></motion.span>
+    <motion.span
+      className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
+      animate={{ opacity: isOpen ? 0 : 1, top: "18px" }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    ></motion.span>
+    <motion.span
+      className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
+      animate={{
+        rotate: isOpen ? -45 : 0,
+        top: isOpen ? "18px" : "24px",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    ></motion.span>
+  </button>
+);
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
@@ -74,48 +122,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
     onNavigate?.();
   };
 
-  const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
-    <button
-      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      className="min-h-[38px] min-w-[38px] rounded-full relative z-30"
-      aria-label="Toggle menu"
-    >
-      <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
-        animate={{
-          rotate: isOpen ? 45 : 0,
-          top: isOpen ? "18px" : "12px",
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        }}
-      ></motion.span>
-      <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
-        animate={{ opacity: isOpen ? 0 : 1, top: "18px" }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        }}
-      ></motion.span>
-      <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
-        animate={{
-          rotate: isOpen ? -45 : 0,
-          top: isOpen ? "18px" : "24px",
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        }}
-      ></motion.span>
-    </button>
-  );
-
   return (
     <motion.div
       ref={mobileContainerRef}
@@ -154,36 +160,30 @@ const MobileNav: React.FC<MobileNavProps> = ({
         />
       )}
 
-      <HamburgerIcon isOpen={isMobileMenuOpen} />
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 0.2 }}
+      <HamburgerIcon
+        isOpen={isMobileMenuOpen}
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      />
+      <div
+        className={`flex flex-col items-end gap-[10px] ${isMobileMenuOpen ? "block" : "hidden"}`}
+      >
+        {/* Mobile menu items */}
+        {sections.map((section) => (
+          <Link
+            key={section.title}
+            to={section.link}
+            spy={true}
+            smooth={true}
+            duration={800}
+            offset={0}
+            onSetActive={onSetActive}
+            onClick={handleLinkClick}
+            className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors text-[var(--color-secondary)]`}
           >
-            <div className="flex flex-col items-end gap-[10px]">
-              {/* Mobile menu items */}
-              {sections.map((section) => (
-                <Link
-                  key={section.title}
-                  to={section.link}
-                  spy={true}
-                  smooth={true}
-                  duration={800}
-                  offset={0}
-                  onSetActive={onSetActive}
-                  onClick={handleLinkClick}
-                  className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors text-[var(--color-secondary)]`}
-                >
-                  <span ref={section.mobileRef}>{section.title}</span>
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <span ref={section.mobileRef}>{section.title}</span>
+          </Link>
+        ))}
+      </div>
     </motion.div>
   );
 };
