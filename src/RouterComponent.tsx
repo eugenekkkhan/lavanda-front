@@ -77,6 +77,23 @@ const RouterComponent = () => {
     }
   }, [locationTuple]);
 
+  // Scroll to section when navigating to nested routes
+  useEffect(() => {
+    if (!initialRenderRef.current && locationTuple) {
+      const pathParts = location.pathname.split("/").filter(Boolean);
+      const isNestedRoute = pathParts.length > 1;
+
+      if (isNestedRoute) {
+        scroller.scrollTo(locationTuple[0], {
+          duration: 500,
+          delay: 0,
+          smooth: true,
+          offset: 0,
+        });
+      }
+    }
+  }, [locationTuple, location.pathname]);
+
   useEffect(() => {
     const pathParts = location.pathname.split("/").filter(Boolean);
     const isNestedRoute = pathParts.length > 1;
