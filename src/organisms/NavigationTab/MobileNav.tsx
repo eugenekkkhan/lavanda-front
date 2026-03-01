@@ -12,12 +12,14 @@ interface MobileNavProps {
   sections: Section[];
   activeSectionIndex: number;
   onSetActive: (sectionLink: string) => void;
+  onNavigate?: () => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
   activeSectionIndex,
   onSetActive,
+  onNavigate,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobilePillDimensions, setMobilePillDimensions] = useState({
@@ -69,6 +71,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
+    onNavigate?.();
   };
 
   const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (

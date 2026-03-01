@@ -2,15 +2,15 @@ import ContactPill from "../../molecules/Contacts/ContactPill";
 
 const HeroSection = () => {
   return (
-    <section className="w-full min-h-screen bg-[var(--color-primary)] text-[var(--color-secondary)] flex flex-col">
+    <section className="w-full min-h-screen bg-[var(--color-primary)] text-[var(--color-secondary)] flex flex-col snap-start snap-always">
       {/* Contact Pill */}
       <div className="w-full px-4 mt-[72px] md:max-w-[496px] mx-auto">
-          <div className="hidden sm:block">
-            <ContactPill displayAddress={false} displayText={false}/>
-          </div>
-          <div className="block sm:hidden">
-            <ContactPill displayAddress={false} displayText={false}/>
-          </div>
+        <div className="hidden sm:block">
+          <ContactPill displayAddress={false} displayText={false} />
+        </div>
+        <div className="block sm:hidden">
+          <ContactPill displayAddress={false} displayText={false} />
+        </div>
       </div>
 
       {/* Main Content */}

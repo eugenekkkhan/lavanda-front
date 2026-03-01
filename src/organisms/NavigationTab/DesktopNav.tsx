@@ -12,12 +12,14 @@ interface DesktopNavProps {
   sections: Section[];
   activeSectionIndex: number;
   onSetActive: (sectionLink: string) => void;
+  onNavigate?: () => void;
 }
 
 const DesktopNav: React.FC<DesktopNavProps> = ({
   sections,
   activeSectionIndex,
   onSetActive,
+  onNavigate,
 }) => {
   const [pillDimensions, setPillDimensions] = useState({
     width: 0,
@@ -90,6 +92,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           duration={800}
           offset={0}
           onSetActive={onSetActive}
+          onClick={onNavigate}
           className={`relative z-20 transition-colors duration-200 cursor-pointer text-[var(--color-secondary)]`}
         >
           <span ref={section.ref}>{section.title}</span>
