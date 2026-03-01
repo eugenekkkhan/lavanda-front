@@ -31,6 +31,7 @@ const THEMES: Record<string, ThemeConfig> = {
 	'#contacts': {
 		primaryColor: '#bdb2ff',
 		secondaryColor: '#ffffff',
+    accentColor: '#404040',
 	},
 }
 const SECTIONS = ['home', 'services', 'doctors', 'contacts']
