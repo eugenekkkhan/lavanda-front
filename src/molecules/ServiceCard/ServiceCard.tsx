@@ -17,7 +17,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     <div className="flex gap-4 p-3">
       {/* Image placeholder */}
       {image && (
-        <div className="w-[196px] h-[226px] flex-shrink-0 rounded-lg bg-[#b2a5fe]/40 flex items-center m-auto justify-center overflow-hidden">
+        <div className="w-[196px] h-[226px] flex-shrink-0 md:rounded-3xl rounded-lg bg-[#b205fe]/40 flex items-center m-auto justify-center overflow-hidden">
           <img
             src={image}
             alt={title}
