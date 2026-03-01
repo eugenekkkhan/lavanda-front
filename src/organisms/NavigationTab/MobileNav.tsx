@@ -21,6 +21,18 @@ const MobileNav: React.FC<MobileNavProps> = ({
   onSetActive,
   onNavigate,
 }) => {
+  const ITEM_HEIGHT = 30
+  const GAP = 10
+  const BUTTON_HEIGHT = 38
+  const EXTRA_PADDING = 12
+
+  const menuHeight = BUTTON_HEIGHT +
+    sections.length * ITEM_HEIGHT +
+    (sections.length - 1) * GAP +
+    EXTRA_PADDING
+
+
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobilePillDimensions, setMobilePillDimensions] = useState({
     width: 0,
@@ -125,7 +137,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       initial={false}
       animate={{
         width: isMobileMenuOpen ? 129 : 42,
-        height: isMobileMenuOpen ? 200 : 42,
+        height: isMobileMenuOpen ? menuHeight : 42,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
