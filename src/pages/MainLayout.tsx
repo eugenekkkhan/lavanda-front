@@ -1,43 +1,64 @@
 import HeroSection from '../organisms/HeroSection/HeroSection'
-import DoctorsPage from './DoctorsPage'
 import ContactSection from '../organisms/ContactSection/ContactSection'
-import ServicesPage from './ServicesPage'
 import ServiceChosenSection from '../organisms/Services/ui/ServiceChosenSection'
 import DoctorPage from '../organisms/Doctors/ui/DoctorPage'
 import ServiceSection from '../organisms/Services/ui/ServiceSection'
 import DoctorChosenSection from '../organisms/Doctors/ui/DoctorChosenSection'
 import DoctorSection from '../organisms/Doctors/ui/DoctorSection'
 import { useParams } from 'react-router'
+import { AnimatePresence, motion } from 'motion/react'
+import { animationEssentials } from '../common/animationEssentials'
 
 const MainLayout = () => {
-	const { serviceId, categoryId, doctorId } = useParams();
-	console.log( serviceId, categoryId, doctorId )
+	const { serviceId, categoryId, doctorId } = useParams()
 
-  return (
-    <main>
-      <section id="home">
-        <HeroSection />
-      </section>
+	return (
+		<main>
+			<section id="home">
+				<HeroSection />
+			</section>
 
-      <section id="services">
-        {serviceId ? <ServiceChosenSection /> : <ServiceSection />}
-      </section>
+			<section id="services">
+				<AnimatePresence mode="wait">
+					{serviceId ? (
+						<motion.div key="detail" {...animationEssentials}>
+							<ServiceChosenSection />
+						</motion.div>
+					) : (
+						<motion.div key="list" {...animationEssentials}>
+							<ServiceSection />
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</section>
 
-      <section id="doctors">
-        {doctorId  ? (
-          <DoctorPage />
-        ) : categoryId ? (
-          <DoctorChosenSection />
-        ) : (
-          <DoctorSection />
-        )}
-      </section>
+			<section id="doctors">
+				<AnimatePresence mode="wait">
+					{doctorId ? (
+						<motion.div key="doctor-profile" {...animationEssentials}>
+							<DoctorPage />
+						</motion.div>
+					) :
 
-      <section id="contacts">
-        <ContactSection />
-      </section>
-    </main>
-  );
+						categoryId ? (
+							<motion.div key="category-list" {...animationEssentials}>
+								<DoctorChosenSection />
+							</motion.div>
+						) :
+
+							(
+								<motion.div key="doctors-main" {...animationEssentials}>
+									<DoctorSection />
+								</motion.div>
+							)}
+				</AnimatePresence>
+			</section>
+
+			<section id="contacts">
+				<ContactSection />
+			</section>
+		</main>
+	)
 }
 
 export default MainLayout

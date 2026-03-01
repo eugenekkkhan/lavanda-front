@@ -15,7 +15,7 @@ const DoctorPage = () => {
 
   if (!therapist) {
     return (
-      <motion.div className="max-w-[1104px] mx-auto min-h-[800px] flex flex-col py-4 px-4">
+      <motion.div className="max-w-[1104px] py-16 md:py-24 mx-auto min-h-[1000px] flex flex-col py-4 px-4 snap-start snap-always ">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -27,7 +27,7 @@ const DoctorPage = () => {
         </div>
 
         <div className="flex-1 flex items-center justify-center">
-          <h2 className="text-5xl font-bold text-secondary text-center">
+          <h2 className="text-5xl font-bold text-secondary/70 text-center">
             Данных нет
           </h2>
         </div>

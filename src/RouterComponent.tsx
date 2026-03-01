@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { Route, Routes, useLocation } from 'react-router'
+import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { scroller } from "react-scroll"
 import usePageTheme from "./hooks/usePageTheme"
 import NavigationTab from "./organisms/NavigationTab/NavigationTab"
@@ -10,7 +10,9 @@ const SECTIONS = ["home", "services", "doctors", "schedule", "contacts"]
 const RouterComponent = () => {
   usePageTheme()
   const location = useLocation()
-  
+  const navigate = useNavigate()
+
+
   const sectionPaths = useRef<Record<string, string>>({
     home: '/home',
     services: '/services',
@@ -21,7 +23,7 @@ const RouterComponent = () => {
   useEffect(() => {
     const pathParts = location.pathname.split('/').filter(Boolean)
     const section = pathParts[0] || 'home'
-    
+
     if (SECTIONS.includes(section)) {
       sectionPaths.current[section] = location.pathname
     }
@@ -55,10 +57,10 @@ const RouterComponent = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id
-          
+
           const savedPath = sectionPaths.current[sectionId]
-          if (savedPath) {
-            window.history.replaceState(null, "", savedPath)
+          if (savedPath && savedPath !== location.pathname) {
+            navigate(savedPath, { replace: true })
           }
         }
       })
