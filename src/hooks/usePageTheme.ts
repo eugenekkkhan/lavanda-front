@@ -11,12 +11,12 @@ const THEMES: Record<string, ThemeConfig> = {
   "/": {
     primaryColor: "#ffffff",
     secondaryColor: "#404040",
-    accentColor: "#404040",
+    accentColor: "#bdb2ff",
   },
   "#home": {
     primaryColor: "#ffffff",
     secondaryColor: "#404040",
-    accentColor: "#404040",
+    accentColor: "#bdb2ff",
   },
   "#services": {
     primaryColor: "#bdb2ff",
