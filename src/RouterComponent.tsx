@@ -9,6 +9,7 @@ import DoctorChosenSection from './organisms/Doctors/ui/DoctorChosenSection'
 import DoctorPage from './organisms/Doctors/ui/DoctorPage'
 import { motion, AnimatePresence } from 'framer-motion'
 import NavigationTab from './organisms/NavigationTab/NavigationTab'
+import ContactSection from './organisms/ContactSection/ContactSection';
 
 const SECTIONS = ['home', 'services', 'doctors', 'schedule', 'contacts']
 
@@ -51,11 +52,11 @@ const RouterComponent = () => {
 		return () => window.removeEventListener('hashchange', handleHashChange)
 	}, [])
 
-	// Intersection Observer to detect which section is in view and update URL
-	useEffect(() => {
-		const observerOptions = {
-			threshold: 0.3,
-		}
+  // Intersection Observer to detect which section is in view and update URL
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3,
+    };
 
 		const observerCallback = (entries: IntersectionObserverEntry[]) => {
 			entries.forEach(entry => {
@@ -88,7 +89,7 @@ const RouterComponent = () => {
 		}
 	}, [doctorId, serviceId])
 
-	return (
+ return (
 		<>
     <NavigationTab />
 			<section id='home'>
@@ -129,6 +130,9 @@ const RouterComponent = () => {
 					)}
 				</AnimatePresence>
 			</section>
+      <section id="contacts">
+        <ContactSection />
+      </section>
 		</>
 	)
 }
