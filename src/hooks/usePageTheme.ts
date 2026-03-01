@@ -4,24 +4,29 @@ import { useEffect, useState } from 'react'
 interface ThemeConfig {
 	primaryColor: string
 	secondaryColor: string
+  accentColor?: string
 }
 
 const THEMES: Record<string, ThemeConfig> = {
 	'/': {
 		primaryColor: '#ffffff',
 		secondaryColor: '#404040',
+    accentColor: '#404040',
 	},
 	'#home': {
 		primaryColor: '#ffffff',
 		secondaryColor: '#404040',
+    accentColor: '#404040',
 	},
 	'#services': {
 		primaryColor: '#bdb2ff',
 		secondaryColor: '#ffffff',
+    accentColor: '#404040',
 	},
 	'#doctors': {
 		primaryColor: '#ECFFE8',
 		secondaryColor: '#000000B3',
+    accentColor: '#404040',
 	},
 }
 const SECTIONS = ['home', 'services', 'doctors']
@@ -59,6 +64,7 @@ export const usePageTheme = () => {
 
 		root.style.setProperty('--color-primary', currentTheme.primaryColor)
 		root.style.setProperty('--color-secondary', currentTheme.secondaryColor)
+    root.style.setProperty('--color-accent', currentTheme.accentColor || currentTheme.secondaryColor)
 	}, [activeHash, pathname])
 }
 export default usePageTheme

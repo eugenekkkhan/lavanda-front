@@ -54,7 +54,7 @@ const NavigationTab = () => {
     >
       <AnimatePresence>
         <Stack
-          className="absolute bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
+          className="absolute bg-[var(--color-accent)]/30 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
           initial={{ opacity: 0, scale: 0.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{

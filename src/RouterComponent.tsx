@@ -90,7 +90,7 @@ const RouterComponent = () => {
 
 	return (
 		<>
-    <NavigationTab />
+      <NavigationTab />
 			<section id='home'>
 				<HeroSection />
 			</section>
