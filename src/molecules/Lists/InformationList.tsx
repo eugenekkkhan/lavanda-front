@@ -1,11 +1,11 @@
-import { motion } from "framer-motion";
-import SearchInput from "../../atoms/SearchInput/SearchInput";
+import { motion } from "framer-motion"
+import SearchInput from "../../atoms/SearchInput/SearchInput"
 
 interface InformationListProps {
-  data: React.ReactNode[];
-  showSearch?: boolean;
-  searchQuery?: string;
-  onSearchChange?: (value: string) => void;
+  data: React.ReactNode[]
+  showSearch?: boolean
+  searchQuery?: string
+  onSearchChange?: (value: string) => void
 }
 
 const InformationList = ({
@@ -15,7 +15,7 @@ const InformationList = ({
   onSearchChange,
 }: InformationListProps) => {
 
-  
+
   return (
     <motion.div className="border border-secondary rounded-4xl md:rounded-3xl overflow-hidden ">
       {showSearch && (
@@ -30,7 +30,11 @@ const InformationList = ({
       <motion.div className="">
         {searchQuery && data.length === 0 ? (
           <div className="flex items-center justify-center min-h-[300px]">
-            <p className='m-0 text-secondary/70 text-2xl'>По запросу «{searchQuery}» ничего не найдено</p>
+            <p className='m-0 text-secondary/70 text-2xl text-center px-4'>По запросу «
+              {searchQuery.length > 20
+                ? `${searchQuery.slice(0, 20)}...`
+                : searchQuery}
+              » ничего не найдено</p>
           </div>
         ) : (
           <motion.div>
@@ -46,7 +50,7 @@ const InformationList = ({
         )}
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default InformationList;
+export default InformationList
