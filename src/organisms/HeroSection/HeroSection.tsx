@@ -15,18 +15,27 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 md:py-24">
+      <div className="flex-1 flex flex-col items-center">
         {/* Main Heading */}
-        <div className="text-center max-w-2xl">
-          <div className="relative mb-55">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-secondary mb-4">
-              Медицинский центр
-            </h1>
-            <img src={logo} className="absolute scale-125 top-1/2 left-1/4 translate-y-5 z-10"/>
+        <div className="flex-1 flex flex-col justify-end text-center max-w-2xl">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">
+            <div className="relative">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-secondary mb-4 text-nowrap">
+                Медицинский центр
+              </h1>
+              <img 
+                src={logo} 
+                className="absolute top-1/2 left-1/4
+                  scale-70 md:scale-100 lg:scale-125
+                  -translate-x-16.5 md:-translate-x-9.5 lg:-translate-x-3
+                  -translate-y-1.5 md:translate-y-2.5 lg:translate-y-6 z-10"
+                alt="Logo"
+              />
+            </div>
           </div>
 
           {/* Description */}
-          <p className="text-base md:text-lg text-secondary/80 leading-relaxed max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-black/80 leading-relaxed max-w-xl mx-auto mb-8 ml-4 mr-4">
             Медицинский центр <span className="text-accent">«Лаванда»</span> – это место, где современное
             оборудование, опытные специалисты и внимательное отношение к каждому
             пациенту создают комфортные условия для качественной диагностики и
