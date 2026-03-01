@@ -24,7 +24,7 @@ const DoctorChosenSection = () => {
     ));
 
   const filteredData = therapistsData.filter((s: Service) =>
-    s.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    s.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
 
   const handleSearchChange = (value: string) => {
