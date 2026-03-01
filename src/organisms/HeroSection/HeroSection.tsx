@@ -3,7 +3,7 @@ import logo from "../../assets/Logo.svg";
 
 const HeroSection = () => {
   return (
-    <section className="w-full min-h-screen bg-white text-secondary flex flex-col snap-start snap-always">
+    <section className="w-full min-h-screen bg-primary text-accent flex flex-col snap-start snap-always">
       {/* Contact Pill */}
       <div className="w-full px-4 mt-[72px] md:max-w-[496px] mx-auto">
         <div className="hidden sm:block">
@@ -20,7 +20,7 @@ const HeroSection = () => {
         <div className="flex-1 flex flex-col justify-end text-center max-w-2xl">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">
             <div className="relative">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-secondary mb-4 text-nowrap">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-accent mb-4 text-nowrap">
                 Медицинский центр
               </h1>
               <img 
@@ -35,8 +35,8 @@ const HeroSection = () => {
           </div>
 
           {/* Description */}
-          <p className="text-base md:text-lg text-black/80 leading-relaxed max-w-xl mx-auto mb-8 ml-4 mr-4">
-            Медицинский центр <span className="text-accent">«Лаванда»</span> – это место, где современное
+          <p className="text-base md:text-lg text-accent/80 leading-relaxed max-w-xl mx-auto mb-8 ml-4 mr-4">
+            Медицинский центр <span className="text-tertiary">«Лаванда»</span> – это место, где современное
             оборудование, опытные специалисты и внимательное отношение к каждому
             пациенту создают комфортные условия для качественной диагностики и
             лечения
