@@ -21,7 +21,7 @@ const ServiceChosenSection = () => {
     ));
 
   const filteredData = uziData.filter((s: Service) =>
-    s.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    s.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
 
   const filteredServicesCards = createCards(filteredData);
