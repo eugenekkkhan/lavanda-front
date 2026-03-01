@@ -15,7 +15,6 @@ const NAV_SECTIONS = [
   { title: "Главная", link: "home" },
   { title: "Услуги", link: "services" },
   { title: "Врачи", link: "doctors" },
-  { title: "Расписание", link: "schedule" },
   { title: "Контакты", link: "contacts" },
 ];
 
