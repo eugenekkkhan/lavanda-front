@@ -96,11 +96,6 @@ const RouterComponent = () => {
 
   useEffect(() => {
     const pathParts = location.pathname.split("/").filter(Boolean);
-    const isNestedRoute = pathParts.length > 1;
-
-    if (isNestedRoute) {
-      return;
-    }
 
     const observerOptions = {
       threshold: 0.3,
@@ -115,15 +110,15 @@ const RouterComponent = () => {
             newPath = `/${sectionName}`;
           }
 
-          // if (sectionId === 'services' && serviceId) {
-          //   newPath = `/services/${serviceId}`
-          // } else if (sectionId === 'doctors') {
-          //   if (doctorId && categoryId) {
-          //     newPath = `/doctors/${categoryId}/${doctorId}`
-          //   } else if (categoryId) {
-          //     newPath = `/doctors/${categoryId}`
-          //   }
-          // }
+          if (sectionName === 'services' && pathParts[1]) {
+            newPath = `/services/${pathParts[1]}`
+          } else if (sectionName === 'doctors') {
+            if (pathParts[1] && pathParts[2]) {
+              newPath = `/doctors/${pathParts[1]}/${pathParts[2]}`
+            } else if (pathParts[1]) {
+              newPath = `/doctors/${pathParts[1]}`
+            }
+          }
 
           if (!newPath) {
             return;
