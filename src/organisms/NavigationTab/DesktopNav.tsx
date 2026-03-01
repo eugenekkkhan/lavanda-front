@@ -12,12 +12,14 @@ interface DesktopNavProps {
   sections: Section[];
   activeSectionIndex: number;
   onSetActive: (sectionLink: string) => void;
+  onNavigate?: () => void;
 }
 
 const DesktopNav: React.FC<DesktopNavProps> = ({
   sections,
   activeSectionIndex,
   onSetActive,
+  onNavigate,
 }) => {
   const [pillDimensions, setPillDimensions] = useState({
     width: 0,
@@ -67,7 +69,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
     >
       {/* Animated pill background */}
       <motion.div
-        className="absolute h-[38px] rounded-2xl bg-[var(--color-secondary)] top-[2px]"
+        className="absolute h-[38px] rounded-2xl bg-[var(--color-primary)] top-[2px]"
         animate={{
           width: pillDimensions.width,
           left: pillDimensions.left,
@@ -81,7 +83,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
       />
 
       {/* Nav links */}
-      {sections.map((section, index) => (
+      {sections.map((section) => (
         <Link
           key={section.title}
           to={section.link}
@@ -90,11 +92,8 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           duration={800}
           offset={0}
           onSetActive={onSetActive}
-          className={`relative z-20 transition-colors duration-200 cursor-pointer ${
-            activeSectionIndex === index
-              ? "text-[var(--color-primary)]"
-              : "text-[var(--color-secondary)]"
-          }`}
+          onClick={onNavigate}
+          className={`relative z-20 transition-colors duration-200 cursor-pointer text-[var(--color-secondary)]`}
         >
           <span ref={section.ref}>{section.title}</span>
         </Link>

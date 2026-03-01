@@ -13,6 +13,7 @@
 @layer base {
   html {
     @apply text-base;
+    scroll-snap-type: y mandatory;
   }
   html,
   body {

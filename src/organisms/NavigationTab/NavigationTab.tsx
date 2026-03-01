@@ -24,6 +24,15 @@ const NavigationTab = () => {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Disable snap during scroll animation
+  const disableSnapDuringScroll = () => {
+    const html = document.documentElement;
+    html.style.scrollSnapType = "none";
+    setTimeout(() => {
+      html.style.scrollSnapType = "y mandatory";
+    }, 850); // Slightly longer than react-scroll duration (800ms)
+  };
+
   useEffect(() => {
     const newSections = NAV_SECTIONS.map((sec) => ({
       ...sec,
@@ -54,7 +63,7 @@ const NavigationTab = () => {
     >
       <AnimatePresence>
         <Stack
-          className="absolute bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
+          className="absolute bg-[var(--color-accent)]/30 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
           initial={{ opacity: 0, scale: 0.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -69,6 +78,7 @@ const NavigationTab = () => {
               sections={sections}
               activeSectionIndex={activeSectionIndex}
               onSetActive={handleSetActive}
+              onNavigate={disableSnapDuringScroll}
             />
           )}
           {isMobile && (
@@ -76,6 +86,7 @@ const NavigationTab = () => {
               sections={sections}
               activeSectionIndex={activeSectionIndex}
               onSetActive={handleSetActive}
+              onNavigate={disableSnapDuringScroll}
             />
           )}
         </Stack>

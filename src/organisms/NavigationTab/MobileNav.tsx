@@ -12,12 +12,14 @@ interface MobileNavProps {
   sections: Section[];
   activeSectionIndex: number;
   onSetActive: (sectionLink: string) => void;
+  onNavigate?: () => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
   sections,
   activeSectionIndex,
   onSetActive,
+  onNavigate,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobilePillDimensions, setMobilePillDimensions] = useState({
@@ -69,6 +71,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
+    onNavigate?.();
   };
 
   const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
@@ -78,7 +81,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       aria-label="Toggle menu"
     >
       <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? 45 : 0,
           top: isOpen ? "18px" : "12px",
@@ -90,7 +93,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
         animate={{ opacity: isOpen ? 0 : 1, top: "18px" }}
         transition={{
           type: "spring",
@@ -99,7 +102,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         }}
       ></motion.span>
       <motion.span
-        className="w-[22px] h-0.5 bg-[var(--color-primary)] absolute left-[8px]"
+        className="w-[22px] h-0.5 bg-[var(--color-secondary)] absolute left-[8px]"
         animate={{
           rotate: isOpen ? -45 : 0,
           top: isOpen ? "18px" : "24px",
@@ -127,7 +130,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {/* Mobile pill background */}
       {isMobileMenuOpen && (
         <motion.div
-          className="absolute h-[38px] rounded-2xl bg-[var(--color-secondary)] right-[2px]"
+          className="absolute h-[38px] rounded-2xl bg-[var(--color-primary)] right-[2px]"
           animate={{
             width: mobilePillDimensions.width,
             top: mobilePillDimensions.top,
@@ -144,7 +147,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
       {/* Purple circle background when closed */}
       {!isMobileMenuOpen && (
         <motion.div
-          className="absolute inset-[2px] rounded-full bg-[var(--color-secondary)]"
+          className="absolute inset-[2px] rounded-full bg-[var(--color-primary)]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{ zIndex: 10 }}
@@ -162,7 +165,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           >
             <div className="flex flex-col items-end gap-[10px]">
               {/* Mobile menu items */}
-              {sections.map((section, index) => (
+              {sections.map((section) => (
                 <Link
                   key={section.title}
                   to={section.link}
@@ -172,11 +175,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                   offset={0}
                   onSetActive={onSetActive}
                   onClick={handleLinkClick}
-                  className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors ${
-                    activeSectionIndex === index
-                      ? "text-[var(--color-primary)]"
-                      : "text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
-                  }`}
+                  className={`px-[12px] pt-[8px] min-h-[38px] w-fit rounded-2xl cursor-pointer relative z-20 transition-colors text-[var(--color-secondary)]`}
                 >
                   <span ref={section.mobileRef}>{section.title}</span>
                 </Link>
