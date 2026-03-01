@@ -30,7 +30,7 @@ const InformationList = ({
       <motion.div className="">
         {searchQuery && data.length === 0 ? (
           <div className="flex items-center justify-center min-h-[300px]">
-            <p className='m-0 text-secondary/70 text-2xl'>По запросу «{searchQuery}» ничего не нашли</p>
+            <p className='m-0 text-secondary/70 text-2xl'>По запросу «{searchQuery}» ничего не найдено</p>
           </div>
         ) : (
           <motion.div>
