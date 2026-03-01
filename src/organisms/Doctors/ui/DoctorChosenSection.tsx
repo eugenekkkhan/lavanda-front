@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { Service } from "../../Services/data/services.data";
 import { therapistsData } from "../data/therapists.data";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorChosenSection = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState<string>(
+    () => searchParams.get("search") ?? "",
+  );
   const { goBack } = useBackNavigation();
   const { categoryId } = useParams();
   const createCards = (items: Service[]) =>
@@ -23,6 +26,19 @@ const DoctorChosenSection = () => {
   const filteredData = therapistsData.filter((s: Service) =>
     s.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+
+    const nextParams = new URLSearchParams(searchParams);
+    if (value) {
+      nextParams.set("search", value);
+    } else {
+      nextParams.delete("search");
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  };
 
   const filteredServicesCards = createCards(filteredData);
 
@@ -55,7 +71,7 @@ const DoctorChosenSection = () => {
             showSearch
             data={filteredServicesCards}
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onSearchChange={handleSearchChange}
           />
         </motion.div>
       </motion.div>

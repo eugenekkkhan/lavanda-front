@@ -1,13 +1,17 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import { Service } from "../data/services.data";
 import { uziData } from "../data/uzi.data";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const ServiceChosenSection = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState<string>(
+    () => searchParams.get("search") ?? "",
+  );
   const { goBack } = useBackNavigation();
   const imageURL =
     "https://media.istockphoto.com/id/1295782888/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BF%D1%83%D1%81%D1%82%D0%BE%D0%B9-%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82-%D0%B2%D1%80%D0%B0%D1%87%D0%B0.jpg?s=612x612&w=0&k=20&c=vDcpy2AZ2WbeOSpebSevKYssoUeBwOa_Ett6l1nb8Nk=";
@@ -23,6 +27,19 @@ const ServiceChosenSection = () => {
   const filteredData = uziData.filter((s: Service) =>
     s.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+
+    const nextParams = new URLSearchParams(searchParams);
+    if (value) {
+      nextParams.set("search", value);
+    } else {
+      nextParams.delete("search");
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  };
 
   const filteredServicesCards = createCards(filteredData);
 
@@ -68,7 +85,7 @@ const ServiceChosenSection = () => {
           showSearch
           data={filteredServicesCards}
           searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
+          onSearchChange={handleSearchChange}
         />
       </motion.div>
     </motion.section>

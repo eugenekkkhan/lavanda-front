@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import { scroller } from "react-scroll";
 import usePageTheme from "./hooks/usePageTheme";
 import NavigationTab from "./organisms/NavigationTab/NavigationTab";
@@ -47,13 +47,8 @@ const getContextValue = (pathname: string): Record<string, string> => {
 const RouterComponent = () => {
   usePageTheme();
   const location = useLocation();
-  const navigate = useNavigate();
   const contextValue = getContextValue(location.pathname);
   const initialRenderRef = useRef(true);
-
-  const [serviceId, setServiceId] = useState<string | null>(null);
-  const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [doctorId, setDoctorId] = useState<string | null>(null);
 
   const [locationTuple, setLocationTuple] = useState<LocationTuple | null>();
 
@@ -77,10 +72,19 @@ const RouterComponent = () => {
         smooth: true,
         offset: 0,
       });
+
+      initialRenderRef.current = false;
     }
   }, [locationTuple]);
 
   useEffect(() => {
+    const pathParts = location.pathname.split("/").filter(Boolean);
+    const isNestedRoute = pathParts.length > 1;
+
+    if (isNestedRoute) {
+      return;
+    }
+
     const observerOptions = {
       threshold: 0.3,
     };
@@ -104,8 +108,15 @@ const RouterComponent = () => {
           //   }
           // }
 
-          if (window.location.pathname !== newPath) {
-            window.history.replaceState(null, "", newPath);
+          if (!newPath) {
+            return;
+          }
+
+          const newUrl = `${newPath}${window.location.search}${window.location.hash}`;
+          const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+          if (currentUrl !== newUrl) {
+            window.history.replaceState(null, "", newUrl);
           }
         }
       });
@@ -122,7 +133,7 @@ const RouterComponent = () => {
     });
 
     return () => observer.disconnect();
-  }, [serviceId, categoryId, doctorId]);
+  }, [location.pathname]);
 
   return (
     <ComponentContext.Provider value={contextValue}>
