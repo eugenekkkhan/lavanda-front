@@ -3,6 +3,7 @@
 @theme {
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
   --radius-4xl: 31px;
   --radius-3xl: 21px;
   --radius-2xl: 19px;
