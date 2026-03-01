@@ -1,35 +1,30 @@
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { HiArrowLongLeft } from "react-icons/hi2"
-import { Link, useParams } from "react-router"
-import IconButton from "../../../molecules/Buttons/IconButton"
-import InformationList from "../../../molecules/Lists/InformationList"
-import type { Service } from "../../Services/data/services.data"
-import { therapistsData } from "../data/therapists.data"
-import { useBackNavigation } from "../../../hooks/useBackNavigation"
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { Link, useParams } from "react-router";
+import IconButton from "../../../molecules/Buttons/IconButton";
+import InformationList from "../../../molecules/Lists/InformationList";
+import type { Service } from "../../Services/data/services.data";
+import { therapistsData } from "../data/therapists.data";
+import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorChosenSection = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  const { goBack } = useBackNavigation()
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { goBack } = useBackNavigation();
   const { categoryId } = useParams();
   const createCards = (items: Service[]) =>
     items.map((item) => (
-      <Link 
-      to={`/doctors/${categoryId}/${item.id}`} 
-      key={item.id}
-    >
-        <div
-          className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]"
-        >
+      <Link to={`/doctors/${categoryId}/${item.id}`} key={item.id}>
+        <div className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]">
           <p className="">{item.title}</p>
         </div>
       </Link>
-    ))
+    ));
 
   const filteredData = therapistsData.filter((s: Service) =>
     s.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+  );
 
-  const filteredServicesCards = createCards(filteredData)
+  const filteredServicesCards = createCards(filteredData);
 
   return (
     <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
@@ -65,7 +60,7 @@ const DoctorChosenSection = () => {
         </motion.div>
       </motion.div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default DoctorChosenSection
+export default DoctorChosenSection;

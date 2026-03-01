@@ -11,15 +11,15 @@ export type LocationTuple = [section, ...string[]];
 
 export const trimPathname = (pathname: string): string => {
   const pathParts = pathname.split("/").filter(Boolean);
-  
+
   if (pathParts.length === 0) {
     return "/";
   }
-  
+
   if (pathParts.length === 1) {
     return "/";
   }
-  
+
   // Remove the last segment
   pathParts.pop();
   return "/" + pathParts.join("/");
@@ -71,12 +71,12 @@ const RouterComponent = () => {
   // Handle first render - scroll to specific section after delay
   useEffect(() => {
     if (initialRenderRef.current && locationTuple) {
-        scroller.scrollTo(locationTuple[0], {
-          duration: 500,
-          delay: 0,
-          smooth: true,
-          offset: 0,
-        });
+      scroller.scrollTo(locationTuple[0], {
+        duration: 500,
+        delay: 0,
+        smooth: true,
+        offset: 0,
+      });
     }
   }, [locationTuple]);
 
@@ -125,9 +125,7 @@ const RouterComponent = () => {
   }, [serviceId, categoryId, doctorId]);
 
   return (
-    <ComponentContext.Provider
-      value={contextValue}
-    >
+    <ComponentContext.Provider value={contextValue}>
       <NavigationTab />
       <Routes>
         <Route path="/" element={<MainLayout />} />
