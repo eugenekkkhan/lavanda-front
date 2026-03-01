@@ -14,6 +14,8 @@ const InformationList = ({
   searchQuery = "",
   onSearchChange,
 }: InformationListProps) => {
+
+  
   return (
     <motion.div className="border border-secondary rounded-4xl md:rounded-3xl overflow-hidden ">
       {showSearch && (
@@ -25,16 +27,23 @@ const InformationList = ({
           />
         </motion.div>
       )}
-
-      <motion.div>
-        {data.map((item, index) => (
-          <motion.div key={index}>
-            {item}
-            {index < data.length - 1 && (
-              <div className="h-px mx-[11px] bg-secondary"></div>
-            )}
+      <motion.div className="">
+        {searchQuery && data.length === 0 ? (
+          <div className="flex items-center justify-center min-h-[300px]">
+            <p className='m-0 text-secondary/70 text-2xl'>По запросу «{searchQuery}» ничего не нашли</p>
+          </div>
+        ) : (
+          <motion.div>
+            {data.map((item, index) => (
+              <motion.div key={index}>
+                {item}
+                {index < data.length - 1 && (
+                  <div className="h-px mx-[11px] bg-secondary"></div>
+                )}
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
+        )}
       </motion.div>
     </motion.div>
   );
