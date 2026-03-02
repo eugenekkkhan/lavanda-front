@@ -67,6 +67,12 @@ const THEMES: Record<string, ThemeConfig> = {
     primaryColor: "#bdb2ff",
     secondaryColor: "#ffffff",
     accentColor: "#404040",
+    components: {
+      contactPill: {
+        primaryColor: "#ffffff",
+        secondaryColor: "#bdb2ff",
+      },
+    },
   },
 };
 const SECTIONS = ["home", "services", "doctors", "contacts", "footer"];
