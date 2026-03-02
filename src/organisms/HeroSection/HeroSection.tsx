@@ -35,11 +35,16 @@ const HeroSection = () => {
             </div>
           </div>
           <div
-            className={
-              scrolled
-                ? "fixed top-[22px] z-50 lg:top-4 left-4 h-[32px] lg:h-[42px] transition-all duration-500 ease-in-out !fill-[var(--color-tertiary)]"
-                : "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-[calc(50%-40px)] md:-translate-y-[calc(50%-20px)] !fill-[var(--color-tertiary)] h-[90px] transition-all duration-500 ease-in-out"
-            }
+            className="fixed top-0 left-0 z-50 !fill-[var(--color-tertiary)]"
+            style={{
+              height: "90px",
+              transformOrigin: "top left",
+              transform: scrolled
+                ? "translate3d(16px, 22px, 0) scale(0.356)"
+                : "translate3d(calc(50vw - 144px), calc(50vh - 5px), 0) scale(1)",
+              transition: "transform 500ms ease-in-out",
+              willChange: "transform",
+            }}
           >
             <Logo />
           </div>
