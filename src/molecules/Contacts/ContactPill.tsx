@@ -16,7 +16,7 @@ const ContactPill: React.FC<ContactPillProps> = ({
 }) => {
   return (
     <motion.div
-      className="bg-primary rounded-[28px] text-secondary p-2 overflow-hidden"
+      className="bg-contactPill-primary rounded-[28px] text-contactPill-secondary p-2 overflow-hidden"
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: "auto", opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -38,8 +38,8 @@ const ContactPill: React.FC<ContactPillProps> = ({
                 <IconButton
                   side="only"
                   icon={contact.icon}
-                  className="cursor-pointer rounded-full !p-[8px]"
-                  theme="primary"
+                  className="cursor-pointer rounded-full !p-[8px] 
+                    !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
                 />
               </a>
             ))}
@@ -50,8 +50,8 @@ const ContactPill: React.FC<ContactPillProps> = ({
               <IconButton
                 icon={MdOutlineAlternateEmail}
                 size="base"
-                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center items-center"
-                theme="primary"
+                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center items-center 
+                  !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
               >
                 <span className="truncate">info@lavandamed.ru</span>
               </IconButton>
@@ -72,16 +72,16 @@ const ContactPill: React.FC<ContactPillProps> = ({
               <TextButton
                 text="+ 7 (980) 244-44-01"
                 size="base"
-                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center"
-                theme="primary"
+                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center 
+                  !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
               />
             </a>
             <a href="tel:+79802444400" className="flex-1 w-full sm:w-auto">
               <TextButton
                 text="+ 7 (980) 244-44-00"
                 size="base"
-                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center"
-                theme="primary"
+                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center 
+                  !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
               />
             </a>
           </div>
@@ -98,8 +98,8 @@ const ContactPill: React.FC<ContactPillProps> = ({
             {displayText && <span className="mb-2">Адрес:</span>}
             <TextButton
               text="г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI"
-              theme="primary"
-              className="w-full justify-center"
+              className="w-full justify-center cursor-default 
+                !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
               size="lg"
             />
           </div>
