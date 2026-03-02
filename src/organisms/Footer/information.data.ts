@@ -28,3 +28,21 @@ export const schedule = [
     hours: "07:30–15:00",
   },
 ]
+
+export const menuItems = [
+  { 
+    name: "Услуги", 
+    href: "services", 
+    duration: 1000,
+  },
+  { 
+    name: "Врачи", 
+    href: "doctors", 
+    duration: 700,
+  },
+  { 
+    name: "Контакты", 
+    href: "contacts", 
+    duration: 500,
+  },
+];

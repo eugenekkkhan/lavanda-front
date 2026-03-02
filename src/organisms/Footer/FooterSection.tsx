@@ -4,12 +4,20 @@ import IconButton from "../../molecules/Buttons/IconButton";
 import { IoMdArrowRoundUp } from "react-icons/io";
 import { scroller } from "react-scroll"
 import ContactPill from "../../molecules/Contacts/ContactPill";
-// import logo from "../../assets/Logo.svg"
-import { schedule } from "./information.data.ts"
+import Logo from "../../atoms/Logo.tsx";
+import { menuItems, schedule } from "./information.data.ts"
 import useMobile from "../../hooks/useMobile.ts";
 
 const FooterSection = () => {
   const isMobile = useMobile();
+
+  let removeSnap = (timeout: number) => {
+    const html = document.documentElement;
+    html.style.scrollSnapType = "none";
+    setTimeout(() => {
+      html.style.scrollSnapType = "y mandatory";
+    }, timeout);
+  }
 
   const animation = {
     mobile: {
@@ -36,35 +44,45 @@ const FooterSection = () => {
 
   return (
     <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
-      <motion.div className="max-w-[1104px] min-h-[600px] mx-auto text-base text-accent relative">
+      <motion.div className="max-w-[1104px] min-h-[600px] mx-auto text-base text-secondary relative">
           <div className="flex flex-col md:flex-row md:flex-wrap gap-8 max-w-7xl min-h-[300px]">
             
             <div className="lg:block hidden">
               <div className="relative">
-                <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-accent mb-4 text-nowrap">
+                <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-secondary mb-4 text-nowrap">
                   Медицинский центр
                 </h1>
-                <img 
-                  // src={logo} 
-                  className="absolute top-1/2 left-1/4
-                    scale-70 md:scale-100 lg:scale-125
-                    -translate-x-16.5 md:-translate-x-9.5 lg:-translate-x-3
-                    -translate-y-1.5 md:translate-y-2.5 lg:translate-y-6 z-10"
-                  alt="Logo"
-                />
+                <div className="fill-secondary absolute left-0 top-1/2 w-full
+                  lg:-translate-y-2 lg:scale-70 z-10"
+                >
+                  <Logo/>
+                </div>
               </div>
             </div>
 
             <div className="flex flex-col min-w-[170px] flex-1">
               <div className="font-semibold text-xl text-secondary mb-2">Информация</div>
               <div className="flex flex-col text-sm gap-2">
-                {["Врачи", "Услуги", "Контакты"].map((item, index) => (
+                {menuItems.map((item, index) => (
                   <motion.div
-                    key={item+String(isMobile)}
+                    key={item.name+String(isMobile)}
                     {...(isMobile ? animation.mobile : animation.left)}
                     transition={{ delay: index * 0.1 }}
                   >
-                    {item}
+                    <button
+                      className="cursor-pointer hover:underline"
+                      onClick={() => {
+                        removeSnap(1050);
+                        scroller.scrollTo(item.href, {
+                          duration: item.duration,
+                          delay: 0,
+                          smooth: true,
+                          offset: 0,
+                        });
+                      }}
+                    >
+                      {item.name}
+                    </button>
                   </motion.div>
                 ))}
               </div>
@@ -110,14 +128,14 @@ const FooterSection = () => {
           </div>
 
           <motion.div 
-            className="flex flex-col gap-4 max-w-7xl mx-auto mt-8 pt-4 text-xs text-accent"
+            className="flex flex-col gap-4 max-w-7xl mx-auto mt-8 pt-4 text-xs text-secondary"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
             <motion.div 
-              className="border-t border-accent w-full"
+              className="border-t border-secondary w-full"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -162,14 +180,10 @@ const FooterSection = () => {
                 >
                   <IconButton
                     icon={IoMdArrowRoundUp}
-                    className="text-accent !rounded-full !p-[8px]"
+                    className="text-secondary !rounded-full !p-[8px]"
                     side="only"
                     onClick={() => {
-                      const html = document.documentElement;
-                      html.style.scrollSnapType = "none";
-                      setTimeout(() => {
-                        html.style.scrollSnapType = "y mandatory";
-                      }, 1350); // Slightly longer than react-scroll duration (1300ms)
+                      removeSnap(1350);
                       scroller.scrollTo("home", {
                         duration: 1300,
                         delay: 0,
