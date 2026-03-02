@@ -25,30 +25,31 @@ export const trimPathname = (pathname: string): string => {
   return "/" + pathParts.join("/");
 };
 
-const getContextValue = (pathname: string): Record<string, string> => {
-  const contextValue = SECTIONS.reduce(
-    (acc, sec) => ({
-      ...acc,
-      [sec]: sec,
-    }),
-    {} as Record<string, string>,
-  );
-
-  const pathParts = pathname.split("/").filter(Boolean);
-  const sectionName = pathParts[0] as section;
-
-  if (SECTIONS.includes(sectionName)) {
-    contextValue[sectionName] = sectionName;
-  }
-
-  return contextValue;
-};
-
 const RouterComponent = () => {
   usePageTheme();
   const location = useLocation();
-  const contextValue = getContextValue(location.pathname);
   const initialRenderRef = useRef(true);
+
+  // Track the last visited full pathname per section
+  const [sectionPaths, setSectionPaths] = useState<Record<section, string>>(
+    () =>
+      SECTIONS.reduce(
+        (acc, sec) => {
+          acc[sec] = `/${sec}`;
+          return acc;
+        },
+        {} as Record<section, string>,
+      ),
+  );
+
+  // Whenever the route changes via navigation, persist the new path for that section
+  useEffect(() => {
+    const parts = location.pathname.split("/").filter(Boolean);
+    const sec = parts[0] as section;
+    if (SECTIONS.includes(sec)) {
+      setSectionPaths((prev) => ({ ...prev, [sec]: location.pathname }));
+    }
+  }, [location.pathname]);
 
   const [locationTuple, setLocationTuple] = useState<LocationTuple | null>();
 
@@ -95,8 +96,6 @@ const RouterComponent = () => {
   }, [locationTuple, location.pathname]);
 
   useEffect(() => {
-    const pathParts = location.pathname.split("/").filter(Boolean);
-
     const observerOptions = {
       threshold: 0.3,
     };
@@ -104,25 +103,11 @@ const RouterComponent = () => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const sectionName = entry.target.id;
-          let newPath: string = "";
-          if (sectionName) {
-            newPath = `/${sectionName}`;
-          }
+          const sectionName = entry.target.id as section;
+          if (!sectionName) return;
 
-          if (sectionName === 'services' && pathParts[1]) {
-            newPath = `/services/${pathParts[1]}`
-          } else if (sectionName === 'doctors') {
-            if (pathParts[1] && pathParts[2]) {
-              newPath = `/doctors/${pathParts[1]}/${pathParts[2]}`
-            } else if (pathParts[1]) {
-              newPath = `/doctors/${pathParts[1]}`
-            }
-          }
-
-          if (!newPath) {
-            return;
-          }
+          // Use the last saved pathname for this section
+          const newPath = sectionPaths[sectionName] ?? `/${sectionName}`;
 
           const newUrl = `${newPath}${window.location.search}${window.location.hash}`;
           const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
@@ -145,10 +130,10 @@ const RouterComponent = () => {
     });
 
     return () => observer.disconnect();
-  }, [location.pathname]);
+  }, [sectionPaths]);
 
   return (
-    <ComponentContext.Provider value={contextValue}>
+    <ComponentContext.Provider value={sectionPaths}>
       <NavigationTab />
       <Routes>
         <Route path="/" element={<MainLayout />} />
