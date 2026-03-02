@@ -100,7 +100,7 @@ const FooterSection = () => {
               transition={{ duration: 0.8 }}
             />
 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between min-h-[110px]">
               <div className="lg:block hidden max-w-1/2">
                 <div className="flex flex-col gap-4">
                   <p>Наша компания открыта для новых клиентов, мы ведем все современные социальные сети и мессенджеры.</p>
@@ -129,6 +129,7 @@ const FooterSection = () => {
                     scale: [1, 1.1, 1.05, 1.1, 1]
                   }}
                   transition={{
+                    delay: 2,
                     duration: 3.5,
                     repeat: Infinity,
                     repeatType: "loop",
