@@ -1,11 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ContactPill from "../../molecules/Contacts/ContactPill";
-import logo from "../../assets/Logo.svg";
 import Logo from "../../atoms/Logo";
-
-const SCROLLED_TOP = 16;
-const SCROLLED_LEFT = 16;
-const SCROLLED_WIDTH = 80;
 
 const HeroSection = () => {
   const [scrolled, setScrolled] = useState(false);

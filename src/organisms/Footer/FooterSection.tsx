@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import TextButton from "../../molecules/Buttons/TextButton";
 import IconButton from "../../molecules/Buttons/IconButton";
 import { IoMdArrowRoundUp } from "react-icons/io";
-import { scroller } from "react-scroll"
+import { scroller } from "react-scroll";
 import ContactPill from "../../molecules/Contacts/ContactPill";
 import Logo from "../../atoms/Logo.tsx";
 import { menuItems, schedule } from "./information.data.ts"
@@ -88,44 +87,55 @@ const FooterSection = () => {
               </div>
             </div>
 
-            <div className="flex flex-col min-w-[200px] flex-2">
-              <div className="font-semibold text-xl text-secondary mb-2">Часы работы</div>
-              
-              <div className="flex flex-col h-full text-sm gap-2">
-                {schedule.map((day, index) => (
-                  <motion.div 
-                    key={day.name+String(isMobile)}
-                    className="flex justify-between"
-                    {...(isMobile ? animation.mobile : animation.center)}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <span>{day.name}</span>
-                    <span>{day.hours}</span>
-                  </motion.div>
-                ))}
-              </div>
+          <div className="flex flex-col min-w-[200px] flex-2">
+            <div className="font-semibold text-xl text-secondary mb-2">
+              Часы работы
             </div>
 
-            <div className="flex flex-col min-w-[220px] flex-2">
-              <div className="font-semibold text-xl text-secondary mb-2">Контакты</div>
-              <div className="flex flex-col gap-2 text-sm">
-                {["г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI", "Остановка «ТРЦ Проспект»", "+ 7 (980) 244-44-00", "info@lavandamed.ru"].map((item, index) => (
-                  <motion.div
-                    key={item+String(isMobile)}
-                    className={
-                      index === 2 ? "md:block hidden mt-2" : 
-                      index === 3 ? "md:block hidden" : 
-                      ""
-                    }
-                    {...(isMobile ? animation.mobile : animation.right)}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    {item}
-                  </motion.div>
-                ))}
-              </div>
+            <div className="flex flex-col h-full text-sm gap-2">
+              {schedule.map((day, index) => (
+                <motion.div
+                  key={day.name + String(isMobile)}
+                  className="flex justify-between"
+                  {...(isMobile ? animation.mobile : animation.center)}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <span>{day.name}</span>
+                  <span>{day.hours}</span>
+                </motion.div>
+              ))}
             </div>
           </div>
+
+          <div className="flex flex-col min-w-[220px] flex-2">
+            <div className="font-semibold text-xl text-secondary mb-2">
+              Контакты
+            </div>
+            <div className="flex flex-col gap-2 text-sm">
+              {[
+                "г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI",
+                "Остановка «ТРЦ Проспект»",
+                "+ 7 (980) 244-44-00",
+                "info@lavandamed.ru",
+              ].map((item, index) => (
+                <motion.div
+                  key={item + String(isMobile)}
+                  className={
+                    index === 2
+                      ? "md:block hidden mt-2"
+                      : index === 3
+                        ? "md:block hidden"
+                        : ""
+                  }
+                  {...(isMobile ? animation.mobile : animation.right)}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {item}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
 
           <motion.div 
             className="flex flex-col gap-4 max-w-7xl mx-auto mt-8 pt-4 text-xs text-secondary"
@@ -142,22 +152,30 @@ const FooterSection = () => {
               transition={{ duration: 0.8 }}
             />
 
-            <div className="flex flex-row justify-between min-h-[110px]">
-              <div className="lg:block hidden max-w-1/2">
-                <div className="flex flex-col gap-4">
-                  <p>Наша компания открыта для новых клиентов, мы ведем все современные социальные сети и мессенджеры.</p>
-                  <p>Вы можете написать нам любым удобным для вас способом - телефон, почта, мессенджеры или социальные сети.</p>
-                </div>
-              </div>
-              <div className="mx-auto lg:mx-0 w-full">
-                <ContactPill displayText={false} displayAddress={false} />
+          <div className="flex flex-row justify-between min-h-[110px]">
+            <div className="lg:block hidden max-w-1/2">
+              <div className="flex flex-col gap-4">
+                <p>
+                  Наша компания открыта для новых клиентов, мы ведем все
+                  современные социальные сети и мессенджеры.
+                </p>
+                <p>
+                  Вы можете написать нам любым удобным для вас способом -
+                  телефон, почта, мессенджеры или социальные сети.
+                </p>
               </div>
             </div>
+            <div className="mx-auto lg:mx-0 w-full">
+              <ContactPill displayText={false} displayAddress={false} />
+            </div>
+          </div>
 
-            <div className="flex flex-row justify-between text-nowrap item-center mt-5">
-              <span className="text-xl md:text-2xl text-secondary">© lavandamed.ru, 2026</span>
+          <div className="flex flex-row justify-between text-nowrap item-center mt-5">
+            <span className="text-xl md:text-2xl text-secondary">
+              © lavandamed.ru, 2026
+            </span>
 
-              {/* <a href="https://lavandamed.ru/privacy.php" className="sm:w-auto">
+            {/* <a href="https://lavandamed.ru/privacy.php" className="sm:w-auto">
                 <TextButton
                   text="Политика конфиденциальности"
                   size="base"
@@ -200,7 +218,7 @@ const FooterSection = () => {
 
       </motion.div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default FooterSection
+export default FooterSection;

@@ -8,22 +8,18 @@ import DoctorSection from "../organisms/Doctors/ui/DoctorSection";
 import { useParams } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { animationEssentials } from "../common/animationEssentials";
-import { useContext } from "react";
-import { ComponentContext } from "../context/ComponentContext";
-import FooterSection from "../organisms/Footer/FooterSection"
+import FooterSection from "../organisms/Footer/FooterSection";
 
 const MainLayout = () => {
   const { serviceId, categoryId, doctorId } = useParams();
 
-  const componentContextValue = useContext(ComponentContext);
-
   return (
     <main>
-      <section id="home">
+      <section id="home" className="min-h-screen">
         <HeroSection />
       </section>
 
-      <section id="services">
+      <section id="services" className="min-h-screen">
         <AnimatePresence mode="wait">
           {serviceId ? (
             <motion.div key="detail" {...animationEssentials}>
@@ -37,7 +33,7 @@ const MainLayout = () => {
         </AnimatePresence>
       </section>
 
-      <section id="doctors">
+      <section id="doctors" className="min-h-screen">
         <AnimatePresence mode="wait">
           {doctorId ? (
             <motion.div key="doctor-profile" {...animationEssentials}>
@@ -55,7 +51,7 @@ const MainLayout = () => {
         </AnimatePresence>
       </section>
 
-      <section id="contacts">
+      <section id="contacts" className="min-h-screen">
         <ContactSection />
       </section>
 
