@@ -14,7 +14,7 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 md:py-24">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
         {/* Main Heading */}
         <div className="text-center max-w-2xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-[var(--color-secondary)] mb-4">
