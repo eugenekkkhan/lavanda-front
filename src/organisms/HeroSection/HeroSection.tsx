@@ -29,7 +29,7 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
         {/* Main Heading */}
         <div className="flex-1 flex flex-col justify-end text-center max-w-2xl">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">

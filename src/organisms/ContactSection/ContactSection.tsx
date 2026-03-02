@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const ContactSection = () => {
   return (
-    <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
+    <motion.section className="w-full bg-secondary py-[16px] md:py-[78px] px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto">
         <div className="flex flex-col lg:flex-row justify-evenly gap-5">
           <div className="flex flex-col gap-[18px]">

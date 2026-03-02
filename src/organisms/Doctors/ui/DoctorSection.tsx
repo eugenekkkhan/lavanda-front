@@ -22,7 +22,7 @@ const DoctorSection = () => {
     ));
 
   return (
-    <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
+    <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto">
         <motion.div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">

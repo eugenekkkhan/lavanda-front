@@ -43,9 +43,9 @@ const DoctorChosenSection = () => {
   const filteredServicesCards = createCards(filteredData);
 
   return (
-    <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
+    <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
-        <div className="w-full flex items-center mt-[58px]  mb-4 overflow-hidden ">
+        <div className="w-full flex items-center mt-[58px] mb-4">
           <motion.div className="">
             <motion.div className="flex items-center gap-4 mb-6">
               <IconButton
