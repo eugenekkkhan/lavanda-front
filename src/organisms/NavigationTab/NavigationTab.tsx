@@ -3,6 +3,7 @@ import Stack from "../../atoms/Stack/Stack";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { AnimatePresence, motion } from "framer-motion";
+import useMobile from "../../hooks/useMobile";
 
 type Section = {
   title: string;
@@ -21,7 +22,7 @@ const NAV_SECTIONS = [
 const NavigationTab = () => {
   const [sections, setSections] = useState<Section[]>([]);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMobile();
 
   // Disable snap during scroll animation
   const disableSnapDuringScroll = () => {
@@ -39,12 +40,6 @@ const NavigationTab = () => {
       mobileRef: React.createRef<HTMLAnchorElement>(),
     }));
     setSections(newSections);
-
-    // Check if mobile on mount and on resize
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Called by react-scroll's onSetActive callback
