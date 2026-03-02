@@ -57,7 +57,12 @@ const NavigationTab = () => {
   };
 
   return (
-    <motion.div
+    <>
+      <motion.div
+        className="fixed top-0 left-0 w-full h-18 bg-gradient-to-b from-primary to-transparent pointer-events-none z-40"
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      />
+      <motion.div
       className={`w-full fixed top-[18px] flex px-[18px] z-50 transition-all`}
       animate={{ justifyContent: isMobile ? "flex-end" : "center" }}
     >
@@ -92,6 +97,7 @@ const NavigationTab = () => {
         </Stack>
       </AnimatePresence>
     </motion.div>
+    </>
   );
 };
 
