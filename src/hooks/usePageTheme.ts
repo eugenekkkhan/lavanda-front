@@ -43,11 +43,13 @@ const THEMES: Record<string, ThemeConfig> = {
     primaryColor: "#bdb2ff",
     secondaryColor: "#ffffff",
     accentColor: "#404040",
+    tertiaryColor: "#ffffff",
   },
   "#doctors": {
     primaryColor: "#ECFFE8",
     secondaryColor: "#000000B3",
     accentColor: "#404040",
+    tertiaryColor: "#000000B3",
   },
   "#contacts": {
     primaryColor: "#ffffff",
