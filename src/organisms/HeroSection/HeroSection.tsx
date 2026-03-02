@@ -8,50 +8,13 @@ const SCROLLED_LEFT = 16;
 const SCROLLED_WIDTH = 80;
 
 const HeroSection = () => {
-  const anchorRef = useRef<HTMLImageElement>(null);
-  const [rect, setRect] = useState<DOMRect | null>(null);
   const [scrolled, setScrolled] = useState(false);
-
-  const measureRect = () => {
-    if (anchorRef.current) {
-      setRect(anchorRef.current.getBoundingClientRect());
-    }
-  };
-
-  useLayoutEffect(() => {
-    measureRect();
-    window.addEventListener("resize", measureRect);
-    return () => window.removeEventListener("resize", measureRect);
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // const logoStyle: React.CSSProperties = rect
-  //   ? scrolled
-  //     ? {
-
-  //         position: "fixed",
-  //         top: SCROLLED_TOP,
-  //         left: SCROLLED_LEFT,
-  //         width: SCROLLED_WIDTH,
-  //         height: "auto",
-  //         zIndex: 50,
-  //         transition: "top 0.45s ease, left 0.45s ease, width 0.45s ease",
-  //       }
-  //     : {
-  //         position: "absolute",
-  //         top: rect.top,
-  //         left: rect.left,
-  //         width: rect.width,
-  //         height: rect.height,
-  //         zIndex: 50,
-  //         transition: "top 0.45s ease, left 0.45s ease, width 0.45s ease",
-  //       }
-  //   : { display: "none" };
 
   return (
     <section className="w-full min-h-screen bg-primary text-accent flex flex-col snap-start snap-always">
@@ -79,8 +42,8 @@ const HeroSection = () => {
           <div
             className={
               scrolled
-                ? "fixed top-[22px] lg:top-4 left-4 h-[32px] lg:h-[42px] transition-all duration-500 !fill-[var(--color-tertiary)]"
-                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%-40px)] md:-translate-y-[calc(50%-20px)] !fill-[var(--color-tertiary)] h-[90px] transition-all duration-500"
+                ? "fixed top-[22px] z-50 lg:top-4 left-4 h-[32px] lg:h-[42px] transition-all duration-500 ease-in-out !fill-[var(--color-tertiary)]"
+                : "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-[calc(50%-40px)] md:-translate-y-[calc(50%-20px)] !fill-[var(--color-tertiary)] h-[90px] transition-all duration-500 ease-in-out"
             }
           >
             <Logo />
