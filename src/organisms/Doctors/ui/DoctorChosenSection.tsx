@@ -4,8 +4,8 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
-import type { Service } from "../../Services/data/services.data";
-import { therapistsData } from "../data/therapists.data";
+import type { DoctorListItem } from "../data/doctorsByCategory.data";
+import { doctorsByCategoryData } from "../data/doctorsByCategory.data";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +14,10 @@ const DoctorChosenSection = () => {
   );
   const { goBack } = useBackNavigation();
   const { categoryId } = useParams();
-  const createCards = (items: Service[]) =>
+  const categoryData =
+    doctorsByCategoryData[categoryId ?? ""] ?? doctorsByCategoryData.therapists;
+
+  const createCards = (items: DoctorListItem[]) =>
     items.map((item) => (
       <Link to={`/doctors/${categoryId}/${item.id}`} key={item.id}>
         <div className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]">
@@ -23,8 +26,8 @@ const DoctorChosenSection = () => {
       </Link>
     ));
 
-  const filteredData = therapistsData.filter((s: Service) =>
-    s.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
+  const filteredData = categoryData.doctors.filter((doctor) =>
+    doctor.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
 
   const handleSearchChange = (value: string) => {
@@ -40,7 +43,7 @@ const DoctorChosenSection = () => {
     setSearchParams(nextParams, { replace: true });
   };
 
-  const filteredServicesCards = createCards(filteredData);
+  const filteredDoctorCards = createCards(filteredData);
 
   return (
     <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
@@ -57,11 +60,11 @@ const DoctorChosenSection = () => {
               </IconButton>
 
               <h2 className="text-4xl md:text-5xl font-bold text-secondary leading-none">
-                Терапевты
+                {categoryData.title}
               </h2>
             </motion.div>
             <p className="w-full text-base md:text-lg text-secondary/90 leading-relaxed">
-              Какой-то текст про терапевтов.
+              {categoryData.description}
             </p>
           </motion.div>
         </div>
@@ -69,7 +72,7 @@ const DoctorChosenSection = () => {
         <motion.div className="">
           <InformationList
             showSearch
-            data={filteredServicesCards}
+            data={filteredDoctorCards}
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
           />

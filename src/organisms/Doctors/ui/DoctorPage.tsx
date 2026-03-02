@@ -2,17 +2,21 @@ import { motion } from "framer-motion";
 import { useParams } from "react-router";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import IconButton from "../../../molecules/Buttons/IconButton";
-import { currentTherapistData } from "../data/currentTherapist.data";
+import { doctorProfilesByCategoryData } from "../data/doctorProfiles.data";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorPage = () => {
   const { goBack } = useBackNavigation();
-  const { doctorId } = useParams<{ doctorId: string }>();
+  const { categoryId, doctorId } = useParams<{
+    categoryId: string;
+    doctorId: string;
+  }>();
 
-  const therapist = currentTherapistData.find((t) => t.id === doctorId);
+  const doctorsInCategory = doctorProfilesByCategoryData[categoryId ?? ""] ?? [];
+  const doctor = doctorsInCategory.find((item) => item.id === doctorId);
 
-  if (!therapist) {
+  if (!doctor) {
     return (
-      <motion.div className="max-w-[1104px] py-[16px] md:py-[78px] mx-auto min-h-[1000px] flex flex-col py-4 px-4 snap-start snap-always ">
+      <motion.div className="max-w-[1104px] py-[16px] md:py-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always ">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -47,19 +51,19 @@ const DoctorPage = () => {
               </IconButton>
 
               <h2 className="text-4xl md:text-5xl font-bold text-secondary">
-                {therapist?.name}
+                {doctor.name}
               </h2>
             </motion.div>
 
             <p className="w-full text-base md:text-lg text-secondary/70">
-              {therapist?.description}
+              {doctor.description}
             </p>
           </motion.div>
 
           <motion.div className="w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden">
             <img
-              src={therapist?.icon}
-              alt={therapist?.id}
+              src={doctor.icon}
+              alt={doctor.id}
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -69,7 +73,7 @@ const DoctorPage = () => {
             Предоставляемые услуги:
           </h3>
           <ul className="list-disc ml-6 text-secondary/70">
-            {therapist?.services.map((item: string, index: number) => {
+            {doctor.services.map((item: string, index: number) => {
               return (
                 <li key={index} className="leading-normal">
                   {item}
