@@ -5,6 +5,7 @@ import { IoMdArrowRoundUp } from "react-icons/io";
 import { scroller } from "react-scroll"
 import ContactPill from "../../molecules/Contacts/ContactPill";
 // import logo from "../../assets/Logo.svg"
+import { schedule } from "./information.data.ts"
 
 const FooterSection = () => {
   return (
@@ -40,37 +41,20 @@ const FooterSection = () => {
             <div className="flex flex-col min-w-[200px] flex-2">
               <div className="font-semibold text-xl text-secondary mb-2">Часы работы</div>
               
-              <div className="flex flex-col h-full">
-                <div className="flex flex-col h-full text-sm gap-2">
-                  <div className="flex justify-between">
-                    <span>Понедельник</span>
-                    <span>07:30–18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Вторник</span>
-                    <span>07:30–18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Среда</span>
-                    <span>07:30–18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Четверг</span>
-                    <span>07:30–18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Пятница</span>
-                    <span>07:30–18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Суббота</span>
-                    <span>07:30–15:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Воскресенье</span>
-                    <span>07:30–15:00</span>
-                  </div>
-                </div>
+              <div className="flex flex-col h-full text-sm gap-2">
+                {schedule.map((day, index) => (
+                  <motion.div 
+                    key={day.name}
+                    className="flex justify-between"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <span>{day.name}</span>
+                    <span>{day.hours}</span>
+                  </motion.div>
+                ))}
               </div>
             </div>
 
