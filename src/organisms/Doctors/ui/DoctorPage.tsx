@@ -11,7 +11,8 @@ const DoctorPage = () => {
     doctorId: string;
   }>();
 
-  const doctorsInCategory = doctorProfilesByCategoryData[categoryId ?? ""] ?? [];
+  const doctorsInCategory =
+    doctorProfilesByCategoryData[categoryId ?? ""] ?? [];
   const doctor = doctorsInCategory.find((item) => item.id === doctorId);
 
   if (!doctor) {
