@@ -41,7 +41,7 @@ const HeroSection = () => {
               transformOrigin: "top left",
               transform: scrolled
                 ? "translate3d(16px, 22px, 0) scale(0.356)"
-                : "translate3d(calc(50vw - 144px), calc(50vh - 5px), 0) scale(1)",
+                : "translate3d(calc(50vw - 144px), calc(50vh), 0) scale(1)",
               transition: "transform 500ms ease-in-out",
               willChange: "transform",
             }}
