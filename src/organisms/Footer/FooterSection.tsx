@@ -29,7 +29,7 @@ const FooterSection = () => {
             </div>
 
             <div className="flex flex-col min-w-[170px] flex-1">
-              <div className="font-semibold text-xl text-secondary mb-2">ИНФОРМАЦИЯ</div>
+              <div className="font-semibold text-xl text-secondary mb-2">Информация</div>
               <div className="flex flex-col text-sm gap-2">
                 <div>Врачи</div>
                 <div>Услуги</div>
@@ -38,7 +38,7 @@ const FooterSection = () => {
             </div>
 
             <div className="flex flex-col min-w-[200px] flex-2">
-              <div className="font-semibold text-xl text-secondary mb-2">ЧАСЫ РАБОТЫ</div>
+              <div className="font-semibold text-xl text-secondary mb-2">Часы работы</div>
               
               <div className="flex flex-col h-full">
                 <div className="flex flex-col h-full text-sm gap-2">
@@ -75,7 +75,7 @@ const FooterSection = () => {
             </div>
 
             <div className="flex flex-col min-w-[220px] flex-2">
-              <div className="font-semibold text-xl text-secondary mb-2">КОНТАКТЫ</div>
+              <div className="font-semibold text-xl text-secondary mb-2">Контакты</div>
               <div className="flex flex-col gap-2 text-sm">
                 <div>г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI</div>
                 <div>Остановка «ТРЦ Проспект»</div>
@@ -110,19 +110,19 @@ const FooterSection = () => {
                 />
               </a> */}
               <div className="mr-[9px]">
-              <IconButton
-                icon={IoMdArrowRoundUp}
-                className="text-accent !rounded-full !p-[8px]"
-                side="only"
-                onClick={() => {
-                  scroller.scrollTo("home", {
-                      duration: 2000,
-                      delay: 0,
-                      smooth: true,
-                      offset: 0,
-                    });
-                }}
-              />
+                <IconButton
+                  icon={IoMdArrowRoundUp}
+                  className="text-accent !rounded-full !p-[8px]"
+                  side="only"
+                  onClick={() => {
+                    scroller.scrollTo("home", {
+                        duration: 2000,
+                        delay: 0,
+                        smooth: true,
+                        offset: 0,
+                      });
+                  }}
+                />
               </div>
             </div>
           </div>
