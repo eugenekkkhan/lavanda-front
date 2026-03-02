@@ -1,19 +1,46 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import IconButton from "../../../molecules/Buttons/IconButton";
-import { doctorProfilesByCategoryData } from "../data/doctorProfiles.data";
+import { fetchEmployeeByDocumentId } from "../../../api";
+import type { Employee } from "../../../api/types";
+import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+
 const DoctorPage = () => {
   const { goBack } = useBackNavigation();
-  const { categoryId, doctorId } = useParams<{
-    categoryId: string;
-    doctorId: string;
-  }>();
+  const { doctorId } = useParams<{ categoryId: string; doctorId: string }>();
 
-  const doctorsInCategory =
-    doctorProfilesByCategoryData[categoryId ?? ""] ?? [];
-  const doctor = doctorsInCategory.find((item) => item.id === doctorId);
+  const [doctor, setDoctor] = useState<Employee | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!doctorId) return;
+    fetchEmployeeByDocumentId(doctorId)
+      .then((res) => setDoctor(res.data))
+      .catch(() => setDoctor(null))
+      .finally(() => setLoading(false));
+  }, [doctorId]);
+
+  if (loading) {
+    return (
+      <motion.div className="max-w-[1104px] py-[16px] md:py-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always">
+        <div className="flex justify-start">
+          <IconButton
+            icon={HiArrowLongLeft}
+            className="flex-shrink-0"
+            onClick={goBack}
+          >
+            Назад
+          </IconButton>
+        </div>
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-secondary/50">Загрузка...</p>
+        </div>
+      </motion.div>
+    );
+  }
 
   if (!doctor) {
     return (
@@ -36,6 +63,11 @@ const DoctorPage = () => {
       </motion.div>
     );
   }
+
+  const photoUrl = doctor.photo
+    ? getStrapiImageUrl(doctor.photo.url)
+    : undefined;
+
   return (
     <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
       {" "}
@@ -52,36 +84,32 @@ const DoctorPage = () => {
               </IconButton>
 
               <h2 className="text-4xl md:text-5xl font-bold text-secondary">
-                {doctor.name}
+                {doctor.fullName}
               </h2>
             </motion.div>
 
+            {doctor.expirience ? (
+              <p className="text-secondary/70 mb-2">
+                Опыт: {doctor.expirience} лет
+              </p>
+            ) : null}
+            {doctor.position ? (
+              <p className="text-secondary/70 mb-2">{doctor.position}</p>
+            ) : null}
             <p className="w-full text-base md:text-lg text-secondary/70">
               {doctor.description}
             </p>
           </motion.div>
 
           <motion.div className="w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden">
-            <img
-              src={doctor.icon}
-              alt={doctor.id}
-              className="w-full h-full object-cover"
-            />
+            {photoUrl ? (
+              <img
+                src={photoUrl}
+                alt={doctor.fullName}
+                className="w-full h-[200px] object-cover"
+              />
+            ) : null}
           </motion.div>
-        </motion.div>
-        <motion.div className="">
-          <h3 className="font-bold text-secondary/70">
-            Предоставляемые услуги:
-          </h3>
-          <ul className="list-disc ml-6 text-secondary/70">
-            {doctor.services.map((item: string, index: number) => {
-              return (
-                <li key={index} className="leading-normal">
-                  {item}
-                </li>
-              );
-            })}
-          </ul>
         </motion.div>
       </motion.div>
     </motion.section>

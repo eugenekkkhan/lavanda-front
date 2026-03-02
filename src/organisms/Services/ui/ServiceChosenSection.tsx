@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
-import { Service } from "../data/services.data";
-import { serviceDetailsData } from "../data/serviceDetails.data";
+import {
+  fetchSectionServiceEntityByDocumentId,
+  fetchSubsectionsBySection,
+} from "../../../api";
+import type {
+  SectionServiceEntity,
+  SubsectionServiceEntity,
+} from "../../../api/types";
+import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+
 const ServiceChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState<string>(
@@ -14,35 +22,52 @@ const ServiceChosenSection = () => {
   );
   const { serviceId } = useParams<{ serviceId: string }>();
   const { goBack } = useBackNavigation();
-  const selectedService =
-    serviceDetailsData[serviceId ?? ""] ?? serviceDetailsData.uzd;
 
-  const createCards = (items: Service[]) =>
+  const [section, setSection] = useState<SectionServiceEntity | null>(null);
+  const [subsections, setSubsections] = useState<SubsectionServiceEntity[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!serviceId) return;
+    Promise.all([
+      fetchSectionServiceEntityByDocumentId(serviceId).then((res) =>
+        setSection(res.data),
+      ),
+      fetchSubsectionsBySection(serviceId).then((res) =>
+        setSubsections(res.data),
+      ),
+    ]).finally(() => setLoading(false));
+  }, [serviceId]);
+
+  const createCards = (items: SubsectionServiceEntity[]) =>
     items.map((item) => (
-      <div className="py-2 flex items-center justify-between text-lg md:text-2xl font-semibold text-secondary px-[18px]">
-        <p className="">{item.title}</p>
-        <p>{item.description}</p>
+      <div
+        key={item.documentId}
+        className="py-2 flex items-center justify-between text-lg md:text-2xl font-semibold text-secondary px-[18px]"
+      >
+        <p>{item.title}</p>
+        {item.price ? <p>{item.price} ₽</p> : null}
       </div>
     ));
 
-  const filteredData = selectedService.items.filter((s: Service) =>
+  const filteredData = subsections.filter((s) =>
     s.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-
     const nextParams = new URLSearchParams(searchParams);
     if (value) {
       nextParams.set("search", value);
     } else {
       nextParams.delete("search");
     }
-
     setSearchParams(nextParams, { replace: true });
   };
 
-  const filteredServicesCards = createCards(filteredData);
+  const backgroundImage = section?.thumbnail
+    ? getStrapiImageUrl(section.thumbnail.url)
+    : undefined;
 
   return (
     <motion.section className="w-full bg-primary pt-[78px] snap-start snap-always">
@@ -50,7 +75,9 @@ const ServiceChosenSection = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity"
           style={{
-            backgroundImage: `url(${selectedService.imageURL})`,
+            backgroundImage: backgroundImage
+              ? `url(${backgroundImage})`
+              : undefined,
             opacity: 0.3,
           }}
         />
@@ -66,22 +93,26 @@ const ServiceChosenSection = () => {
             </IconButton>
 
             <h2 className="text-4xl md:text-5xl font-bold text-secondary leading-none">
-              {selectedService.title}
+              {section?.title ?? ""}
             </h2>
           </motion.div>
           <p className="w-full text-base md:text-lg text-secondary/90 leading-relaxed">
-            {selectedService.description}
+            {section?.description ?? ""}
           </p>
         </motion.div>
       </div>
 
       <motion.div className="max-w-[1104px] mx-auto w-full px-4">
-        <InformationList
-          showSearch
-          data={filteredServicesCards}
-          searchQuery={searchQuery}
-          onSearchChange={handleSearchChange}
-        />
+        {loading ? (
+          <p className="text-secondary/50 px-[18px]">Загрузка...</p>
+        ) : (
+          <InformationList
+            showSearch
+            data={createCards(filteredData)}
+            searchQuery={searchQuery}
+            onSearchChange={handleSearchChange}
+          />
+        )}
       </motion.div>
     </motion.section>
   );
