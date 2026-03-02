@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { animationEssentials } from "../common/animationEssentials";
 import { useContext } from "react";
 import { ComponentContext } from "../context/ComponentContext";
+import FooterSection from "../organisms/Footer/FooterSection"
 
 const MainLayout = () => {
   const { serviceId, categoryId, doctorId } = useParams();
@@ -56,6 +57,10 @@ const MainLayout = () => {
 
       <section id="contacts">
         <ContactSection />
+      </section>
+
+      <section id="footer">
+        <FooterSection />
       </section>
     </main>
   );
