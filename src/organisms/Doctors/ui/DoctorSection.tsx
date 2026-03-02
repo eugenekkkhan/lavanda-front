@@ -1,25 +1,43 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import InformationCard from "../../../molecules/Cards/InformationCard";
 import InformationList from "../../../molecules/Lists/InformationList";
-import type { Service } from "../../Services/data/services.data";
-import { doctorsData } from "../data/doctors.data";
-import { useNavigate } from "react-router";
+import { fetchEmployeeCategories } from "../../../api";
+import type { EmployeeCategory } from "../../../api/types";
+import { getStrapiImageUrl } from "../../../api/utils";
 
 const DoctorSection = () => {
   const navigate = useNavigate();
-  const handleLearnMore = (serviceId: string) => {
-    if (serviceId) {
-      navigate(`/doctors/${serviceId}`);
+  const [categories, setCategories] = useState<EmployeeCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEmployeeCategories()
+      .then((res) => {
+        if (res) setCategories(res.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleLearnMore = (documentId: string) => {
+    if (documentId) {
+      navigate(`/doctors/${documentId}`);
     }
   };
-  const createCards = (items: Service[]) =>
-    items.map((item) => (
-      <InformationCard
-        key={item.id}
-        item={item}
-        handleLearnMore={handleLearnMore}
-      />
-    ));
+
+  const cards = categories.map((category) => (
+    <InformationCard
+      key={category.documentId}
+      item={{
+        id: category.documentId,
+        title: category.title,
+        description: category.description ?? undefined,
+        icon: category.icon ? getStrapiImageUrl(category.icon.url) : undefined,
+      }}
+      handleLearnMore={handleLearnMore}
+    />
+  ));
 
   return (
     <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
@@ -39,7 +57,11 @@ const DoctorSection = () => {
         </motion.div>
 
         <motion.div>
-          <InformationList data={createCards(doctorsData)} />
+          {loading ? (
+            <p className="text-secondary/50">Загрузка...</p>
+          ) : (
+            <InformationList data={cards} />
+          )}
         </motion.div>
       </motion.div>
     </motion.section>
