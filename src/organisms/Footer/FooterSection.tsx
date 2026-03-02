@@ -145,8 +145,13 @@ const FooterSection = () => {
                     className="text-accent !rounded-full !p-[8px]"
                     side="only"
                     onClick={() => {
+                      const html = document.documentElement;
+                      html.style.scrollSnapType = "none";
+                      setTimeout(() => {
+                        html.style.scrollSnapType = "y mandatory";
+                      }, 1350); // Slightly longer than react-scroll duration (1300ms)
                       scroller.scrollTo("home", {
-                        duration: 2000,
+                        duration: 1300,
                         delay: 0,
                         smooth: true,
                         offset: 0,
