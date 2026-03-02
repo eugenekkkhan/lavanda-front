@@ -19,11 +19,11 @@ const MainLayout = () => {
 
   return (
     <main>
-      <section id="home">
+      <section id="home" className="min-h-screen">
         <HeroSection />
       </section>
 
-      <section id="services">
+      <section id="services" className="min-h-screen">
         <AnimatePresence mode="wait">
           {serviceId ? (
             <motion.div key="detail" {...animationEssentials}>
@@ -37,7 +37,7 @@ const MainLayout = () => {
         </AnimatePresence>
       </section>
 
-      <section id="doctors">
+      <section id="doctors" className="min-h-screen">
         <AnimatePresence mode="wait">
           {doctorId ? (
             <motion.div key="doctor-profile" {...animationEssentials}>
@@ -55,7 +55,7 @@ const MainLayout = () => {
         </AnimatePresence>
       </section>
 
-      <section id="contacts">
+      <section id="contacts" className="min-h-screen">
         <ContactSection />
       </section>
 
