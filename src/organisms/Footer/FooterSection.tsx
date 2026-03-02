@@ -99,7 +99,7 @@ const FooterSection = () => {
               </div>
             </div>
 
-            <div className="flex flex-row justify-between text-nowrap item-center">
+            <div className="flex flex-row justify-between text-nowrap item-center mt-5">
               <span className="text-xl md:text-2xl text-secondary">© lavandamed.ru, 2026</span>
 
               {/* <a href="https://lavandamed.ru/privacy.php" className="sm:w-auto">
@@ -110,19 +110,32 @@ const FooterSection = () => {
                 />
               </a> */}
               <div className="mr-[9px]">
-                <IconButton
-                  icon={IoMdArrowRoundUp}
-                  className="text-accent !rounded-full !p-[8px]"
-                  side="only"
-                  onClick={() => {
-                    scroller.scrollTo("home", {
+                <motion.div
+                  animate={{ 
+                    y: [0, -15, -5, -15, 0],
+                    scale: [1, 1.1, 1.05, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut"
+                  }}
+                >
+                  <IconButton
+                    icon={IoMdArrowRoundUp}
+                    className="text-accent !rounded-full !p-[8px]"
+                    side="only"
+                    onClick={() => {
+                      scroller.scrollTo("home", {
                         duration: 2000,
                         delay: 0,
                         smooth: true,
                         offset: 0,
                       });
-                  }}
-                />
+                    }}
+                  />
+                </motion.div>
               </div>
             </div>
           </div>
