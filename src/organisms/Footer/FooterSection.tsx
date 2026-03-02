@@ -6,8 +6,34 @@ import { scroller } from "react-scroll"
 import ContactPill from "../../molecules/Contacts/ContactPill";
 // import logo from "../../assets/Logo.svg"
 import { schedule } from "./information.data.ts"
+import useMobile from "../../hooks/useMobile.ts";
 
 const FooterSection = () => {
+  const isMobile = useMobile();
+
+  const animation = {
+    mobile: {
+      initial: { opacity: 0, x: -20 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true },
+    },
+    left: {
+      initial: { opacity: 0, x: -50 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true },
+    },
+    right: {
+      initial: { opacity: 0, x: 50 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true },
+    },
+    center: {
+      initial: { opacity: 0, y: 50 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true },
+    },
+  };
+
   return (
     <motion.section className="w-full bg-primary py-16 md:py-24 px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] min-h-[600px] mx-auto text-base text-accent relative">
@@ -34,10 +60,8 @@ const FooterSection = () => {
               <div className="flex flex-col text-sm gap-2">
                 {["Врачи", "Услуги", "Контакты"].map((item, index) => (
                   <motion.div
-                    key={item}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    key={item+String(isMobile)}
+                    {...(isMobile ? animation.mobile : animation.left)}
                     transition={{ delay: index * 0.1 }}
                   >
                     {item}
@@ -52,12 +76,10 @@ const FooterSection = () => {
               <div className="flex flex-col h-full text-sm gap-2">
                 {schedule.map((day, index) => (
                   <motion.div 
-                    key={day.name}
+                    key={day.name+String(isMobile)}
                     className="flex justify-between"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    {...(isMobile ? animation.mobile : animation.center)}
+                    transition={{ delay: index * 0.05 }}
                   >
                     <span>{day.name}</span>
                     <span>{day.hours}</span>
@@ -71,15 +93,13 @@ const FooterSection = () => {
               <div className="flex flex-col gap-2 text-sm">
                 {["г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI", "Остановка «ТРЦ Проспект»", "+ 7 (980) 244-44-00", "info@lavandamed.ru"].map((item, index) => (
                   <motion.div
-                    key={item}
+                    key={item+String(isMobile)}
                     className={
                       index === 2 ? "md:block hidden mt-2" : 
                       index === 3 ? "md:block hidden" : 
                       ""
                     }
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    {...(isMobile ? animation.mobile : animation.right)}
                     transition={{ delay: index * 0.1 }}
                   >
                     {item}
