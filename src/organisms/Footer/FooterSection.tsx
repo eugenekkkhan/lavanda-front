@@ -85,7 +85,20 @@ const FooterSection = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 max-w-7xl mx-auto mt-8 pt-4 border-t border-accent text-xs text-accent">
+          <motion.div 
+            className="flex flex-col gap-4 max-w-7xl mx-auto mt-8 pt-4 text-xs text-accent"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <motion.div 
+              className="border-t border-accent w-full"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            />
 
             <div className="flex flex-row justify-between">
               <div className="lg:block hidden max-w-1/2">
@@ -138,7 +151,7 @@ const FooterSection = () => {
                 </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
 
       </motion.div>
