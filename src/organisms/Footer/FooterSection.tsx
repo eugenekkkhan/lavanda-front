@@ -32,9 +32,17 @@ const FooterSection = () => {
             <div className="flex flex-col min-w-[170px] flex-1">
               <div className="font-semibold text-xl text-secondary mb-2">Информация</div>
               <div className="flex flex-col text-sm gap-2">
-                <div>Врачи</div>
-                <div>Услуги</div>
-                <div>Контакты</div>
+                {["Врачи", "Услуги", "Контакты"].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {item}
+                  </motion.div>
+                ))}
               </div>
             </div>
 
