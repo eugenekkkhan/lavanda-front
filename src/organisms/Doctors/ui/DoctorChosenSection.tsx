@@ -6,6 +6,7 @@ import IconButton from "../../../molecules/Buttons/IconButton";
 import InformationList from "../../../molecules/Lists/InformationList";
 import type { DoctorListItem } from "../data/doctorsByCategory.data";
 import { doctorsByCategoryData } from "../data/doctorsByCategory.data";
+import { doctorProfilesByCategoryData } from "../data/doctorProfiles.data";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 const DoctorChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,15 +17,32 @@ const DoctorChosenSection = () => {
   const { categoryId } = useParams();
   const categoryData =
     doctorsByCategoryData[categoryId ?? ""] ?? doctorsByCategoryData.therapists;
+  const categoryProfiles = doctorProfilesByCategoryData[categoryId ?? ""] ?? [];
+  const profileById = new Map(
+    categoryProfiles.map((doctorProfile) => [doctorProfile.id, doctorProfile]),
+  );
 
   const createCards = (items: DoctorListItem[]) =>
-    items.map((item) => (
-      <Link to={`/doctors/${categoryId}/${item.id}`} key={item.id}>
-        <div className="py-2 flex items-center justify-start text-lg md:text-2xl font-semibold text-secondary px-[18px]">
-          <p className="">{item.title}</p>
-        </div>
-      </Link>
-    ));
+    items.map((item) => {
+      const doctorProfile = profileById.get(item.id);
+
+      return (
+        <Link to={`/doctors/${categoryId}/${item.id}`} key={item.id}>
+          <div className="py-2 flex items-center justify-start gap-3 text-lg md:text-2xl font-semibold text-secondary px-[18px]">
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-[var(--color-accent)]/30 flex-shrink-0">
+              {doctorProfile?.icon ? (
+                <img
+                  src={doctorProfile.icon}
+                  alt={doctorProfile.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : null}
+            </div>
+            <p className="">{item.title}</p>
+          </div>
+        </Link>
+      );
+    });
 
   const filteredData = categoryData.doctors.filter((doctor) =>
     doctor.title.toLowerCase().includes(searchQuery.trim().toLowerCase()),
