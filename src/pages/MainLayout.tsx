@@ -19,7 +19,7 @@ const MainLayout = () => {
 
   return (
     <main>
-      {/* <section id="home">
+      <section id="home">
         <HeroSection />
       </section>
 
@@ -57,7 +57,7 @@ const MainLayout = () => {
 
       <section id="contacts">
         <ContactSection />
-      </section> */}
+      </section>
 
       <section id="footer">
         <FooterSection />
