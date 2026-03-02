@@ -69,10 +69,22 @@ const FooterSection = () => {
             <div className="flex flex-col min-w-[220px] flex-2">
               <div className="font-semibold text-xl text-secondary mb-2">Контакты</div>
               <div className="flex flex-col gap-2 text-sm">
-                <div>г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI</div>
-                <div>Остановка «ТРЦ Проспект»</div>
-                <div className="md:block hidden mt-2">+ 7 (980) 244-44-00</div>
-                <div className="md:block hidden">info@lavandamed.ru</div>
+                {["г. Лиски, Воронежская область, ул. Титова, д. 20, помещение XI", "Остановка «ТРЦ Проспект»", "+ 7 (980) 244-44-00", "info@lavandamed.ru"].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    className={
+                      index === 2 ? "md:block hidden mt-2" : 
+                      index === 3 ? "md:block hidden" : 
+                      ""
+                    }
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {item}
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
