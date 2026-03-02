@@ -33,8 +33,13 @@ const THEMES: Record<string, ThemeConfig> = {
     secondaryColor: "#ffffff",
     accentColor: "#404040",
   },
+  "#footer": {
+    primaryColor: "#bdb2ff",
+    secondaryColor: "#ffffff",
+    accentColor: "#404040",
+  },
 };
-const SECTIONS = ["home", "services", "doctors", "contacts"];
+const SECTIONS = ["home", "services", "doctors", "contacts", "footer"];
 export const usePageTheme = () => {
   const { pathname } = useLocation();
   const [activeHash, setActiveHash] = useState(window.location.hash || "#home");

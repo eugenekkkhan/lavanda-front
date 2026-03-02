@@ -1,4 +1,4 @@
-export type section = "home" | "services" | "doctors" | "schedule" | "contacts";
+export type section = "home" | "services" | "doctors" | "schedule" | "contacts" | "footer";
 export type extensibleSection = "services" | "doctors";
 
 export const SECTIONS: section[] = [
@@ -7,4 +7,5 @@ export const SECTIONS: section[] = [
   "doctors",
   "schedule",
   "contacts",
+  "footer",
 ];
