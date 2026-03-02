@@ -25,7 +25,7 @@ const DoctorPage = () => {
 
   if (loading) {
     return (
-      <motion.div className="max-w-[1104px] py-[16px] md:py-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always">
+      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -44,7 +44,7 @@ const DoctorPage = () => {
 
   if (!doctor) {
     return (
-      <motion.div className="max-w-[1104px] py-[16px] md:py-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always ">
+      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always ">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -69,7 +69,7 @@ const DoctorPage = () => {
     : undefined;
 
   return (
-    <motion.section className="w-full bg-primary py-[16px] md:py-[78px] px-4 snap-start snap-always">
+    <motion.section className="w-full bg-primary pt-[78px] pb-[16px] px-4 snap-start snap-always">
       {" "}
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
         <motion.div className="flex flex-col md:flex-row gap-6 items-start mb-4">
