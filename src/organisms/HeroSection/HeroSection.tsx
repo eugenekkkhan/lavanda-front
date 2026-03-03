@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ContactPill from "../../molecules/Contacts/ContactPill";
 import Logo from "../../atoms/Logo";
 
 const HeroSection = () => {
@@ -13,26 +12,15 @@ const HeroSection = () => {
 
   return (
     <section className="w-full min-h-screen bg-primary text-accent flex flex-col snap-start snap-always">
-      {/* Contact Pill */}
-      <div className="w-full px-4 mt-[72px] md:max-w-[496px] mx-auto">
-        <div className="hidden sm:block">
-          <ContactPill displayAddress={false} displayText={false} />
-        </div>
-        <div className="block sm:hidden">
-          <ContactPill displayAddress={false} displayText={false} />
-        </div>
-      </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
         {/* Main Heading */}
         <div className="flex-1 flex flex-col justify-end text-center max-w-2xl">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">
-            <div className="relative">
+          <div className="absolute top-[calc(50vh-40px)] left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-accent mb-4 text-nowrap">
                 Медицинский центр
               </h1>
-            </div>
           </div>
           <div
             className="fixed top-0 left-0 z-50 !fill-[var(--color-tertiary)]"
@@ -41,7 +29,7 @@ const HeroSection = () => {
               transformOrigin: "top left",
               transform: scrolled
                 ? "translate3d(16px, 22px, 0) scale(0.356)"
-                : "translate3d(calc(50vw - 144px), calc(50vh), 0) scale(1)",
+                : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
               transition: "transform 500ms ease-in-out",
               willChange: "transform",
             }}

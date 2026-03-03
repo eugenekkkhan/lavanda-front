@@ -95,7 +95,7 @@ const DoctorChosenSection = () => {
                 Назад
               </IconButton>
 
-              <h2 className="text-4xl md:text-5xl font-bold text-secondary leading-none">
+              <h2 className="min-w-0 text-2xl sm:text-4xl md:text-5xl font-bold text-secondary leading-none">
                 {category?.title ?? ""}
               </h2>
             </motion.div>

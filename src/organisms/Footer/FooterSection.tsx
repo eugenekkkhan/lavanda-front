@@ -172,7 +172,7 @@ const FooterSection = () => {
 
           <div className="flex flex-row justify-between text-nowrap item-center mt-5">
             <span className="text-xl md:text-2xl text-secondary">
-              © lavandamed.ru, 2026
+              © lavanda-med.com, 2026
             </span>
 
             {/* <a href="https://lavandamed.ru/privacy.php" className="sm:w-auto">

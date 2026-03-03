@@ -83,7 +83,7 @@ const DoctorPage = () => {
                 Назад
               </IconButton>
 
-              <h2 className="text-4xl md:text-5xl font-bold text-secondary">
+              <h2 className="min-w-0 text-2xl sm:text-4xl md:text-5xl font-bold text-secondary">
                 {doctor.fullName}
               </h2>
             </motion.div>
@@ -101,12 +101,12 @@ const DoctorPage = () => {
             </p>
           </motion.div>
 
-          <motion.div className="w-full md:w-[196px] h-[200px] md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden">
+          <motion.div className="w-full md:w-[196px] h-auto md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden">
             {photoUrl ? (
               <img
                 src={photoUrl}
                 alt={doctor.fullName}
-                className="w-full h-[200px] object-cover"
+                className="w-full h-full object-cover"
               />
             ) : null}
           </motion.div>
