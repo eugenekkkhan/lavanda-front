@@ -67,12 +67,13 @@ const RouterComponent = () => {
   // Handle first render - scroll to specific section after delay
   useEffect(() => {
     if (initialRenderRef.current && locationTuple) {
-      scroller.scrollTo(locationTuple[0], {
+      // Тут лежит просто охеренный костыль
+      setTimeout(()=>scroller.scrollTo(locationTuple[0], {
         duration: 500,
         delay: 0,
         smooth: true,
-        offset: 0,
-      });
+        offset: 1,
+      }), 500)
 
       initialRenderRef.current = false;
     }
@@ -89,7 +90,7 @@ const RouterComponent = () => {
           duration: 500,
           delay: 0,
           smooth: true,
-          offset: 0,
+          offset: 1,
         });
       }
     }
