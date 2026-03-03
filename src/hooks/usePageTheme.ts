@@ -53,7 +53,7 @@ const THEMES: Record<string, ThemeConfig> = {
   },
   "#contacts": {
     primaryColor: "#ffffff",
-    secondaryColor: "#ffffff",
+    secondaryColor: "#404040",
     accentColor: "#404040",
     tertiaryColor: "#bdb2ff",
     components: {
