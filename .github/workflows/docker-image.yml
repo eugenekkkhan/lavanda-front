@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build up -d --build lavanda-front
+      run: docker compose build up -d --build lavanda-front
