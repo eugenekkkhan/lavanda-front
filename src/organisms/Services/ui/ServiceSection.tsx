@@ -7,6 +7,7 @@ import { fetchSectionServiceEntities } from "../../../api";
 import type { SectionServiceEntity } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { ReadinessContext } from "../../../context/ReadinessContext";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
 
 const ServiceSection = () => {
   const navigate = useNavigate();
@@ -64,12 +65,10 @@ const ServiceSection = () => {
         </motion.div>
 
         {/* Services List */}
-        <motion.div>
-          {loading ? (
-            <p className="text-secondary/50">Загрузка...</p>
-          ) : (
-            <InformationList data={cards} />
-          )}
+        <motion.div
+          className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
+        >
+          {loading ? <LoadingCircle /> : <InformationList data={cards} />}
         </motion.div>
       </motion.div>
     </motion.section>

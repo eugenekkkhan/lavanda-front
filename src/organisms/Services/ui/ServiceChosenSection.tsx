@@ -14,6 +14,7 @@ import type {
 } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
 
 const ServiceChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -102,9 +103,11 @@ const ServiceChosenSection = () => {
         </motion.div>
       </div>
 
-      <motion.div className="max-w-[1104px] mx-auto w-full px-4">
+      <motion.div
+        className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"} max-w-[1104px] mx-auto w-full px-4`}
+      >
         {loading ? (
-          <p className="text-secondary/50 px-[18px]">Загрузка...</p>
+          <LoadingCircle />
         ) : (
           <InformationList
             showSearch
