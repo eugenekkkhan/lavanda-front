@@ -7,6 +7,7 @@ import { fetchEmployeeByDocumentId } from "../../../api";
 import type { Employee } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
 
 const DoctorPage = () => {
   const { goBack } = useBackNavigation();
@@ -25,7 +26,7 @@ const DoctorPage = () => {
 
   if (loading) {
     return (
-      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always">
+      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-screen flex flex-col px-4 snap-start snap-always">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -35,16 +36,18 @@ const DoctorPage = () => {
             Назад
           </IconButton>
         </div>
-        <div className="flex-1 flex items-center justify-center">
-          <p className="text-secondary/50">Загрузка...</p>
-        </div>
+        <motion.div
+          className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
+        >
+          <LoadingCircle />
+        </motion.div>
       </motion.div>
     );
   }
 
   if (!doctor) {
     return (
-      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-[1000px] flex flex-col px-4 snap-start snap-always ">
+      <motion.div className="max-w-[1104px] pt-[78px] mx-auto min-h-screen flex flex-col px-4 snap-start snap-always ">
         <div className="flex justify-start">
           <IconButton
             icon={HiArrowLongLeft}
@@ -69,7 +72,7 @@ const DoctorPage = () => {
     : undefined;
 
   return (
-    <motion.section className="w-full bg-primary pt-[78px] pb-[16px] px-4 snap-start snap-always">
+    <motion.section className="w-full min-h-screen bg-primary pt-[78px] pb-[16px] px-4 snap-start snap-always">
       {" "}
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
         <motion.div className="flex flex-col md:flex-row gap-6 items-start mb-4">

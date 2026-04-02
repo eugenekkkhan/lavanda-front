@@ -11,6 +11,7 @@ import {
 import type { Employee, EmployeeCategory } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
 
 const DoctorChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,7 +83,7 @@ const DoctorChosenSection = () => {
   };
 
   return (
-    <motion.section className="w-full bg-primary py-[16px] px-4 snap-start snap-always">
+    <motion.section className="w-full min-h-screen bg-primary py-[64px] px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
         <div className="w-full flex items-center mt-[58px] mb-4">
           <motion.div className="">
@@ -105,9 +106,11 @@ const DoctorChosenSection = () => {
           </motion.div>
         </div>
 
-        <motion.div className="">
+        <motion.div
+          className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
+        >
           {loading ? (
-            <p className="text-secondary/50 px-[18px]">Загрузка...</p>
+            <LoadingCircle />
           ) : (
             <InformationList
               showSearch

@@ -1,23 +1,32 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import InformationCard from "../../../molecules/Cards/InformationCard";
 import InformationList from "../../../molecules/Lists/InformationList";
 import { fetchEmployeeCategories } from "../../../api";
 import type { EmployeeCategory } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const DoctorSection = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<EmployeeCategory[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const { setReady } = useContext(ReadinessContext);
   useEffect(() => {
+    setReady("doctors", false);
+
     fetchEmployeeCategories()
       .then((res) => {
-        if (res) setCategories(res.data);
+        if (res) {
+          setCategories(res.data);
+        }
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setReady("doctors", true);
+      });
   }, []);
 
   const handleLearnMore = (documentId: string) => {
@@ -40,8 +49,8 @@ const DoctorSection = () => {
   ));
 
   return (
-    <motion.section className="w-full bg-primary pt-[78px] pb-[16px] px-4 snap-start snap-always">
-      <motion.div className="max-w-[1104px] mx-auto">
+    <motion.section className="w-full min-h-screen bg-primary pt-[78px] pb-[64px] px-4 snap-start snap-always">
+      <motion.div className="max-w-[1104px] mx-auto min-h-full">
         <motion.div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
             Врачи
@@ -56,12 +65,10 @@ const DoctorSection = () => {
           </p>
         </motion.div>
 
-        <motion.div>
-          {loading ? (
-            <p className="text-secondary/50">Загрузка...</p>
-          ) : (
-            <InformationList data={cards} />
-          )}
+        <motion.div
+          className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
+        >
+          {loading ? <LoadingCircle /> : <InformationList data={cards} />}
         </motion.div>
       </motion.div>
     </motion.section>
