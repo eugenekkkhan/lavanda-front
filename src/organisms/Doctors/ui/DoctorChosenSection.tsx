@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
@@ -12,6 +12,7 @@ import type { Employee, EmployeeCategory } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const DoctorChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,12 +25,14 @@ const DoctorChosenSection = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [category, setCategory] = useState<EmployeeCategory | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const { setReady } = useContext(ReadinessContext);
   useEffect(() => {
     if (!categoryId) return;
+    setReady("doctors", false);
     Promise.all([
       fetchEmployeeCategories().then((res) => {
         if (res) {
+          setReady("doctors", true);
           const found =
             res.data.find((c) => c.documentId === categoryId) ?? null;
           setCategory(found);

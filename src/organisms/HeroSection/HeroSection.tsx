@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../atoms/Logo";
 import { ReadinessContext } from "../../context/ReadinessContext";
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 const HeroSection = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -11,7 +11,20 @@ const HeroSection = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const { isReady, readyMap } = useContext(ReadinessContext);
+  const { isReady } = useContext(ReadinessContext);
+  const [opacity, setOpacity] = useState(1);
+
+  useEffect(() => {
+    if (isReady && opacity > 0) {
+      const timeout = setTimeout(() => {
+        console.log("Clearing Timeout");
+        setOpacity((prev) => {
+          return prev - 1 / 20 > 0 ? prev - 1 / 20 : 0;
+        });
+      }, 10);
+      return () => clearTimeout(timeout);
+    }
+  }, [isReady, opacity]);
 
   return (
     <section className="w-full min-h-screen bg-primary text-accent flex flex-col snap-start snap-always">
@@ -25,13 +38,14 @@ const HeroSection = () => {
             </h1>
           </div>
           <div
-            className="fixed top-0 left-0 z-50 !fill-[var(--color-tertiary)]"
+            className="fixed top-0 left-0 z-55 !fill-[var(--color-tertiary)]"
             style={{
               height: "90px",
               transformOrigin: "top left",
-              transform: scrolled
-                ? "translate3d(16px, 22px, 0) scale(0.356)"
-                : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
+              transform:
+                scrolled && isReady
+                  ? "translate3d(16px, 22px, 0) scale(0.356)"
+                  : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
               transition: "transform 500ms ease-in-out",
               willChange: "transform",
             }}
@@ -39,10 +53,12 @@ const HeroSection = () => {
             <Logo />
           </div>
           <motion.div
-            className={`fixed ${!isReady ? "" : "hidden"} bg-primary top-0 left-0 z-45 w-screen h-screen`}
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            transition={{ duration: 0.5, delay: 1 }}
+            className={`fixed bg-primary top-0 left-0 z-50 w-screen h-screen`}
+            style={{
+              opacity: opacity,
+              display: opacity === 0 ? "none" : "block",
+              transition: "opacity 500ms ease-in-out",
+            }}
           ></motion.div>
 
           {/* Description */}

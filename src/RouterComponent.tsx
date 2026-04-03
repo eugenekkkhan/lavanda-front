@@ -96,8 +96,8 @@ const RouterComponent = () => {
           JSON.stringify(readyMap),
         );
         scroller.scrollTo(locationTuple[0], {
-          duration: 200,
-          delay: 500,
+          duration: 20,
+          delay: 0,
           smooth: true,
           offset: 1,
         });
@@ -111,14 +111,14 @@ const RouterComponent = () => {
       const pathParts = location.pathname.split("/").filter(Boolean);
       const isNestedRoute = pathParts.length > 1;
 
-      if (isNestedRoute) {
-        scroller.scrollTo(locationTuple[0], {
-          duration: 500,
-          delay: 0,
-          smooth: true,
-          offset: 1,
-        });
-      }
+      // if (isNestedRoute) {
+      //   scroller.scrollTo(locationTuple[0], {
+      //     duration: 500,
+      //     delay: 0,
+      //     smooth: true,
+      //     offset: 1,
+      //   });
+      // }
     }
   }, [locationTuple, location.pathname]);
 

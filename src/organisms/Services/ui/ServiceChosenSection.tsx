@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
@@ -15,6 +15,7 @@ import type {
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const ServiceChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,9 +28,11 @@ const ServiceChosenSection = () => {
   const [section, setSection] = useState<SectionServiceEntity | null>(null);
   const [subsections, setSubsections] = useState<SubsectionServiceEntity[]>([]);
   const [loading, setLoading] = useState(true);
+  const { setReady } = useContext(ReadinessContext);
 
   useEffect(() => {
     if (!serviceId) return;
+    setReady("services", false);
     Promise.all([
       fetchSectionServiceEntityByDocumentId(serviceId).then((res) =>
         setSection(res.data),
@@ -37,7 +40,10 @@ const ServiceChosenSection = () => {
       fetchSubsectionsBySection(serviceId).then((res) =>
         setSubsections(res.data),
       ),
-    ]).finally(() => setLoading(false));
+    ]).finally(() => {
+      setLoading(false);
+      setReady("services", true);
+    });
   }, [serviceId]);
 
   const createCards = (items: SubsectionServiceEntity[]) =>

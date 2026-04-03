@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import IconButton from "../../../molecules/Buttons/IconButton";
@@ -8,6 +8,7 @@ import type { Employee } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const DoctorPage = () => {
   const { goBack } = useBackNavigation();
@@ -15,13 +16,18 @@ const DoctorPage = () => {
 
   const [doctor, setDoctor] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
+  const { setReady } = useContext(ReadinessContext);
 
   useEffect(() => {
     if (!doctorId) return;
+    setReady("doctors", false);
     fetchEmployeeByDocumentId(doctorId)
       .then((res) => setDoctor(res.data))
       .catch(() => setDoctor(null))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setReady("doctors", true);
+      });
   }, [doctorId]);
 
   if (loading) {
