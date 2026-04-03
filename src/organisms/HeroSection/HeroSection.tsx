@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../atoms/Logo";
 import { ReadinessContext } from "../../context/ReadinessContext";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 const HeroSection = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -27,7 +27,7 @@ const HeroSection = () => {
   }, [isReady, opacity]);
 
   return (
-    <section className="w-full min-h-screen bg-primary text-accent flex flex-col snap-start snap-always">
+    <section className="w-full min-h-screen mb-16 bg-primary text-accent flex flex-col snap-start snap-always">
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
         {/* Main Heading */}
@@ -46,18 +46,18 @@ const HeroSection = () => {
                 scrolled && isReady
                   ? "translate3d(16px, 22px, 0) scale(0.356)"
                   : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
-              transition: "transform 500ms ease-in-out",
+              transition: "transform 500ms ease-in-out, color 500ms ease-in-out",
               willChange: "transform",
             }}
           >
             <Logo />
           </div>
           <motion.div
-            className={`fixed bg-primary top-0 left-0 z-50 w-screen h-screen`}
+            className={`fixed bg-primary top-0 left-0 z-50 w-screen h-[calc(100vh+400px)] overflow-hidden pointer-events-none`}
             style={{
               opacity: opacity,
               display: opacity === 0 ? "none" : "block",
-              transition: "opacity 500ms ease-in-out",
+              transition: opacity < 0.5 ? "background-color 500ms ease-in-out" : "none",
             }}
           ></motion.div>
 

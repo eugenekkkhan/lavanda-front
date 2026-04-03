@@ -48,7 +48,7 @@ const ServiceSection = () => {
   ));
 
   return (
-    <motion.section className="w-full min-h-screen bg-primary pt-[78px] pb-[16px] px-4 snap-start snap-always">
+    <motion.section className="w-full min-h-screen bg-primary pt-[78px] pb-16 px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto">
         {/* Section Header */}
         <motion.div className="mb-12">

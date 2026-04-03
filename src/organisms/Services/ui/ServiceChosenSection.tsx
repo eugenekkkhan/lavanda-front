@@ -77,7 +77,7 @@ const ServiceChosenSection = () => {
     : undefined;
 
   return (
-    <motion.section className="w-full bg-primary pt-[78px] pb-[16px] snap-start snap-always">
+    <motion.section className="w-full bg-primary pt-[78px] pb-16 snap-start snap-always">
       <div className="relative w-full  flex items-center mb-6 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity"
