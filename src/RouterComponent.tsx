@@ -49,8 +49,10 @@ const RouterComponent = () => {
   };
 
   const isReady = useMemo(() => {
-    if (Object.keys(readyMap).length === 2)
+    if (Object.keys(readyMap).length === 2) {
+      console.log("Calculating isReady:", JSON.stringify(readyMap));
       return Object.values(readyMap).every((v) => v === true);
+    }
     return false;
   }, [readyMap]);
 
@@ -96,31 +98,13 @@ const RouterComponent = () => {
           JSON.stringify(readyMap),
         );
         scroller.scrollTo(locationTuple[0], {
-          duration: 20,
+          duration: 0,
           delay: 0,
-          smooth: true,
           offset: 1,
         });
       }
     }
   }, [locationTuple, readyMap]);
-
-  // Scroll to section when navigating to nested routes
-  useEffect(() => {
-    if (!initialRenderRef.current && locationTuple) {
-      const pathParts = location.pathname.split("/").filter(Boolean);
-      const isNestedRoute = pathParts.length > 1;
-
-      // if (isNestedRoute) {
-      //   scroller.scrollTo(locationTuple[0], {
-      //     duration: 500,
-      //     delay: 0,
-      //     smooth: true,
-      //     offset: 1,
-      //   });
-      // }
-    }
-  }, [locationTuple, location.pathname]);
 
   useEffect(() => {
     const observerOptions = {
