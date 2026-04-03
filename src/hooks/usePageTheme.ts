@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ThemeConfig {
   primaryColor: string;
@@ -76,9 +76,12 @@ const THEMES: Record<string, ThemeConfig> = {
   },
 };
 const SECTIONS = ["home", "services", "doctors", "contacts", "footer"];
+const THEME_SWITCH_DEBOUNCE_MS = 120;
+
 export const usePageTheme = () => {
   const { pathname } = useLocation();
   const [activeHash, setActiveHash] = useState(window.location.hash || "#home");
+  const debounceTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const observerOptions = {
@@ -88,11 +91,20 @@ export const usePageTheme = () => {
     };
 
     const callback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveHash(`#${entry.target.id}`);
-        }
-      });
+      const intersectingEntry = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!intersectingEntry) return;
+
+      if (debounceTimeoutRef.current) {
+        window.clearTimeout(debounceTimeoutRef.current);
+      }
+
+      debounceTimeoutRef.current = window.setTimeout(() => {
+        setActiveHash(`#${intersectingEntry.target.id}`);
+        debounceTimeoutRef.current = null;
+      }, THEME_SWITCH_DEBOUNCE_MS);
     };
 
     const observer = new IntersectionObserver(callback, observerOptions);
@@ -102,7 +114,12 @@ export const usePageTheme = () => {
       if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (debounceTimeoutRef.current) {
+        window.clearTimeout(debounceTimeoutRef.current);
+      }
+    };
   }, []);
   useEffect(() => {
     const currentTheme = THEMES[activeHash] || THEMES["/"];
