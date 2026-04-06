@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Logo from "../../atoms/Logo";
 import { ReadinessContext } from "../../context/ReadinessContext";
 import { motion } from "framer-motion";
+import { scroller } from "react-scroll";
 const HeroSection = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -51,6 +52,7 @@ const HeroSection = () => {
             className="fixed top-0 left-0 z-55 !fill-[var(--color-tertiary)]"
             style={{
               height: "90px",
+              cursor: scrolled && opacity === 0 ? "pointer" : "default",
               transformOrigin: "top left",
               transform:
                 scrolled && opacity === 0
@@ -60,6 +62,7 @@ const HeroSection = () => {
                 "transform 500ms ease-in-out, color 500ms ease-in-out",
               willChange: "transform",
             }}
+            onClick={() => scroller.scrollTo("home", { duration: 500, smooth: true })}
           >
             <Logo />
           </div>
