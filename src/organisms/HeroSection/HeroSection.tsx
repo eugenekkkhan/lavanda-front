@@ -43,10 +43,11 @@ const HeroSection = () => {
               height: "90px",
               transformOrigin: "top left",
               transform:
-                scrolled && isReady
+                scrolled && opacity === 0
                   ? "translate3d(16px, 22px, 0) scale(0.356)"
                   : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
-              transition: "transform 500ms ease-in-out, color 500ms ease-in-out",
+              transition:
+                "transform 500ms ease-in-out, color 500ms ease-in-out",
               willChange: "transform",
             }}
           >
@@ -57,7 +58,8 @@ const HeroSection = () => {
             style={{
               opacity: opacity,
               display: opacity === 0 ? "none" : "block",
-              transition: opacity < 0.5 ? "background-color 500ms ease-in-out" : "none",
+              transition:
+                opacity < 0.5 ? "background-color 500ms ease-in-out" : "none",
             }}
           ></motion.div>
 
