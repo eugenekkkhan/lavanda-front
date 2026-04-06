@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import { scroller } from "react-scroll";
 import usePageTheme from "./hooks/usePageTheme";
@@ -29,7 +29,6 @@ export const trimPathname = (pathname: string): string => {
 const RouterComponent = () => {
   usePageTheme();
   const location = useLocation();
-  const initialRenderRef = useRef(true);
 
   // Track the last visited full pathname per section
   const [sectionPaths, setSectionPaths] = useState<Record<section, string>>(
