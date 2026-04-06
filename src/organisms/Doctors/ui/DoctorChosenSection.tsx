@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
@@ -11,6 +11,8 @@ import {
 import type { Employee, EmployeeCategory } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const DoctorChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,12 +25,14 @@ const DoctorChosenSection = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [category, setCategory] = useState<EmployeeCategory | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const { setReady } = useContext(ReadinessContext);
   useEffect(() => {
     if (!categoryId) return;
+    setReady("doctors", false);
     Promise.all([
       fetchEmployeeCategories().then((res) => {
         if (res) {
+          setReady("doctors", true);
           const found =
             res.data.find((c) => c.documentId === categoryId) ?? null;
           setCategory(found);
@@ -82,9 +86,9 @@ const DoctorChosenSection = () => {
   };
 
   return (
-    <motion.section className="w-full bg-primary py-[16px] px-4 snap-start snap-always">
+    <motion.section className="w-full min-h-screen bg-primary pt-16 pb-16 px-4 snap-start snap-always">
       <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
-        <div className="w-full flex items-center mt-[58px] mb-4">
+        <div className="w-full flex items-center mt-[12px] mb-4">
           <motion.div className="">
             <motion.div className="flex items-center gap-4 mb-6">
               <IconButton
@@ -105,9 +109,11 @@ const DoctorChosenSection = () => {
           </motion.div>
         </div>
 
-        <motion.div className="">
+        <motion.div
+          className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
+        >
           {loading ? (
-            <p className="text-secondary/50 px-[18px]">Загрузка...</p>
+            <LoadingCircle />
           ) : (
             <InformationList
               showSearch

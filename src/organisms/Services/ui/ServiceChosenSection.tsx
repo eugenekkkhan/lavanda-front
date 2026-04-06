@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useParams, useSearchParams } from "react-router";
 import IconButton from "../../../molecules/Buttons/IconButton";
@@ -14,6 +14,8 @@ import type {
 } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
+import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { ReadinessContext } from "../../../context/ReadinessContext";
 
 const ServiceChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,9 +28,11 @@ const ServiceChosenSection = () => {
   const [section, setSection] = useState<SectionServiceEntity | null>(null);
   const [subsections, setSubsections] = useState<SubsectionServiceEntity[]>([]);
   const [loading, setLoading] = useState(true);
+  const { setReady } = useContext(ReadinessContext);
 
   useEffect(() => {
     if (!serviceId) return;
+    setReady("services", false);
     Promise.all([
       fetchSectionServiceEntityByDocumentId(serviceId).then((res) =>
         setSection(res.data),
@@ -36,7 +40,10 @@ const ServiceChosenSection = () => {
       fetchSubsectionsBySection(serviceId).then((res) =>
         setSubsections(res.data),
       ),
-    ]).finally(() => setLoading(false));
+    ]).finally(() => {
+      setLoading(false);
+      setReady("services", true);
+    });
   }, [serviceId]);
 
   const createCards = (items: SubsectionServiceEntity[]) =>
@@ -70,7 +77,7 @@ const ServiceChosenSection = () => {
     : undefined;
 
   return (
-    <motion.section className="w-full bg-primary pt-[78px] pb-[16px] snap-start snap-always">
+    <motion.section className="w-full bg-primary pt-[78px] pb-16 snap-start snap-always">
       <div className="relative w-full  flex items-center mb-6 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity"
@@ -102,9 +109,11 @@ const ServiceChosenSection = () => {
         </motion.div>
       </div>
 
-      <motion.div className="max-w-[1104px] mx-auto w-full px-4">
+      <motion.div
+        className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"} max-w-[1104px] mx-auto w-full px-4`}
+      >
         {loading ? (
-          <p className="text-secondary/50 px-[18px]">Загрузка...</p>
+          <LoadingCircle />
         ) : (
           <InformationList
             showSearch

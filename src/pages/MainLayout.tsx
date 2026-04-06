@@ -14,7 +14,7 @@ const MainLayout = () => {
   const { serviceId, categoryId, doctorId } = useParams();
 
   return (
-    <main>
+    <main className="overflow-x-clip">
       <section id="home" className="min-h-screen">
         <HeroSection />
       </section>

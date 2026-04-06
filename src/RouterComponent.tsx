@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import { scroller } from "react-scroll";
 import usePageTheme from "./hooks/usePageTheme";
@@ -6,6 +6,7 @@ import NavigationTab from "./organisms/NavigationTab/NavigationTab";
 import MainLayout from "./pages/MainLayout";
 import { ComponentContext } from "./context/ComponentContext";
 import { section, SECTIONS } from "./common/constants";
+import { ReadinessContext } from "./context/ReadinessContext";
 
 export type LocationTuple = [section, ...string[]];
 
@@ -41,6 +42,29 @@ const RouterComponent = () => {
         {} as Record<section, string>,
       ),
   );
+  const [readyMap, setReadyMap] = useState<Record<string, boolean>>({});
+
+  const setReady = (key: string, value: boolean) => {
+    setReadyMap((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const isReady = useMemo(() => {
+    if (Object.keys(readyMap).length === 2) {
+      console.log("Calculating isReady:", JSON.stringify(readyMap));
+      return Object.values(readyMap).every((v) => v === true);
+    }
+    return false;
+  }, [readyMap]);
+
+  useEffect(() => {
+    console.log(JSON.stringify(readyMap));
+  }, [readyMap]);
+
+  const readinessContextValue = {
+    readyMap,
+    setReady,
+    isReady,
+  };
 
   // Whenever the route changes via navigation, persist the new path for that section
   useEffect(() => {
@@ -66,39 +90,25 @@ const RouterComponent = () => {
 
   // Handle first render - scroll to specific section after delay
   useEffect(() => {
-    if (initialRenderRef.current && locationTuple) {
+    if (locationTuple) {
       // Тут лежит просто охеренный костыль
-      setTimeout(()=>scroller.scrollTo(locationTuple[0], {
-        duration: 500,
-        delay: 0,
-        smooth: true,
-        offset: 1,
-      }), 500)
-
-      initialRenderRef.current = false;
-    }
-  }, [locationTuple]);
-
-  // Scroll to section when navigating to nested routes
-  useEffect(() => {
-    if (!initialRenderRef.current && locationTuple) {
-      const pathParts = location.pathname.split("/").filter(Boolean);
-      const isNestedRoute = pathParts.length > 1;
-
-      if (isNestedRoute) {
+      if (isReady) {
+        console.log(
+          "Checking readiness on initial render:",
+          JSON.stringify(readyMap),
+        );
         scroller.scrollTo(locationTuple[0], {
-          duration: 500,
+          duration: 0,
           delay: 0,
-          smooth: true,
           offset: 1,
         });
       }
     }
-  }, [locationTuple, location.pathname]);
+  }, [locationTuple, readyMap]);
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.3,
+      threshold: 0.365,
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -135,17 +145,26 @@ const RouterComponent = () => {
 
   return (
     <ComponentContext.Provider value={sectionPaths}>
-      <NavigationTab />
-      <Routes>
-        <Route path="/" element={<MainLayout />} />
-        {SECTIONS.map((section) => (
-          <Route key={section} path={`/${section}`} element={<MainLayout />} />
-        ))}
+      <ReadinessContext.Provider value={readinessContextValue}>
+        <NavigationTab />
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          {SECTIONS.map((section) => (
+            <Route
+              key={section}
+              path={`/${section}`}
+              element={<MainLayout />}
+            />
+          ))}
 
-        <Route path="/services/:serviceId" element={<MainLayout />} />
-        <Route path="/doctors/:categoryId" element={<MainLayout />} />
-        <Route path="/doctors/:categoryId/:doctorId" element={<MainLayout />} />
-      </Routes>
+          <Route path="/services/:serviceId" element={<MainLayout />} />
+          <Route path="/doctors/:categoryId" element={<MainLayout />} />
+          <Route
+            path="/doctors/:categoryId/:doctorId"
+            element={<MainLayout />}
+          />
+        </Routes>
+      </ReadinessContext.Provider>
     </ComponentContext.Provider>
   );
 };
