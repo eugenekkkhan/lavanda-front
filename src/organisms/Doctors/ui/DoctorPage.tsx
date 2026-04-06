@@ -76,21 +76,47 @@ const DoctorPage = () => {
   const photoUrl = doctor.photo
     ? getStrapiImageUrl(doctor.photo.url)
     : undefined;
+  const hasDescription = Boolean(doctor.description?.trim());
+  const noDescriptionMinHeightClass =
+    "min-h-[calc(100vh-78px-64px-72px)]";
 
   return (
-    <motion.section className="w-full min-h-screen bg-primary pt-[78px] pb-16 px-4 snap-start snap-always">
+    <motion.section className="w-full relative min-h-screen bg-primary pt-[78px] pb-16 px-4 snap-start snap-always">
       {" "}
-      <motion.div className="max-w-[1104px] mx-auto min-h-[800px]">
-        <motion.div className="flex flex-col md:flex-row gap-6 items-start mb-4">
+      {!hasDescription ? (
+        <motion.div className="absolute top-[88px] left-0 right-0 z-40 px-4 pointer-events-none">
+          <div
+            className="max-w-[1104px] mx-auto pointer-events-auto"
+          >
+            <IconButton
+              icon={HiArrowLongLeft}
+              className="flex-shrink-0"
+              onClick={goBack}
+            >
+              Назад
+            </IconButton>
+          </div>
+        </motion.div>
+      ) : null}
+      <motion.div
+        className={`max-w-[1104px] mx-auto ${hasDescription ? "min-h-[800px]" : `${noDescriptionMinHeightClass} flex items-center justify-center`}`}
+      >
+        <motion.div
+          className={`flex flex-col md:flex-row gap-6 ${hasDescription ? "items-start mb-4" : "items-center justify-center pt-18 md:pt-0"}`}
+        >
           <motion.div className="flex-1">
-            <motion.div className="flex items-center gap-4 mb-4">
-              <IconButton
-                icon={HiArrowLongLeft}
-                className="flex-shrink-0"
-                onClick={goBack}
-              >
-                Назад
-              </IconButton>
+            <motion.div
+              className={`flex gap-4 mb-4 ${hasDescription ? "items-center" : "items-center justify-center"}`}
+            >
+              {hasDescription ? (
+                <IconButton
+                  icon={HiArrowLongLeft}
+                  className="flex-shrink-0"
+                  onClick={goBack}
+                >
+                  Назад
+                </IconButton>
+              ) : null}
 
               <h2 className="min-w-0 text-2xl sm:text-4xl md:text-5xl font-bold text-secondary">
                 {doctor.fullName}
@@ -110,12 +136,15 @@ const DoctorPage = () => {
             {doctor.position ? (
               <p className="text-secondary/70 mb-2">{doctor.position}</p>
             ) : null}
-            <p className="w-full text-base md:text-lg text-secondary/70">
-              {doctor.description}
-            </p>
+            {hasDescription ? (
+              <p className="w-full text-base md:text-lg text-secondary/70">
+                {doctor.description}
+              </p>
+            ) : null}
           </motion.div>
-
-          <motion.div className="w-full md:w-[196px] h-auto md:h-[226px] flex items-center justify-center flex-shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden">
+          <motion.div
+            className={`w-full ${hasDescription ? "md:w-[196px] md:h-[226px]" : "md:w-[260px] min-h-[226px]"} h-auto flex items-center justify-center shrink-0 rounded-[10px] bg-[#b2a5fe]/40 overflow-hidden`}
+          >
             {photoUrl ? (
               <img
                 src={photoUrl}
