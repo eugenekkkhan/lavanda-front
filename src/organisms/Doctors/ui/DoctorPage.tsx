@@ -99,7 +99,12 @@ const DoctorPage = () => {
 
             {doctor.expirience ? (
               <p className="text-secondary/70 mb-2">
-                Опыт: {doctor.expirience} лет
+                Опыт: {doctor.expirience}{" "}
+                {doctor.expirience === 1
+                  ? "год"
+                  : doctor.expirience && doctor.expirience < 5
+                    ? "года"
+                    : "лет"}
               </p>
             ) : null}
             {doctor.position ? (
