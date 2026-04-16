@@ -16,8 +16,8 @@ const BaseCard: React.FC<BaseCardProps> = ({
   return (
     <div className="flex flex-col md:flex-row gap-4 p-[11px]">
       {image && (
-        <div className="w-full h-[200px] md:h-auto md:w-[196px] flex items-center flex-shrink-0 md:rounded-[10px] rounded-3xl bg-[var(--color-secondary)]/40 justify-center overflow-hidden transition-all">
-          <img src={image} alt={title} className="w-full h-[200px] object-cover" />
+        <div className="w-full h-[200px] md:w-[196px] md:min-h-[226px] md:self-stretch flex-shrink-0 md:rounded-[10px] rounded-3xl bg-[var(--color-secondary)]/40 overflow-hidden transition-all">
+          <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
       )}
 

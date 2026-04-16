@@ -8,6 +8,7 @@ import type { SectionServiceEntity } from "../../../api/types";
 import { getStrapiImageUrl } from "../../../api/utils";
 import { ReadinessContext } from "../../../context/ReadinessContext";
 import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
+import { toCardPreviewText } from "../../../utils/markdownToPlainText";
 
 const ServiceSection = () => {
   const navigate = useNavigate();
@@ -38,7 +39,9 @@ const ServiceSection = () => {
       item={{
         id: section.documentId,
         title: section.title,
-        description: section.description ?? undefined,
+        description: section.description
+          ? toCardPreviewText(section.description)
+          : undefined,
         icon: section.thumbnail
           ? getStrapiImageUrl(section.thumbnail.url)
           : undefined,
