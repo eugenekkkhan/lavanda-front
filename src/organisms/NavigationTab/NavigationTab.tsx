@@ -53,44 +53,43 @@ const NavigationTab = () => {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 w-full h-18 bg-gradient-to-b from-primary to-transparent pointer-events-none z-40"
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="fixed top-0 left-0 w-full h-18 bg-gradient-to-b from-primary to-transparent pointer-events-none z-40 transition-colors duration-500"
       />
       <motion.div
-      className={`w-full fixed top-[18px] flex px-[18px] z-50 transition-all`}
-      animate={{ justifyContent: isMobile ? "flex-end" : "center" }}
-    >
-      <AnimatePresence>
-        <Stack
-          className="absolute bg-[var(--color-accent)]/30 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
-          initial={{ opacity: 0, scale: 0.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-            delay: 0.1,
-          }}
-        >
-          {!isMobile && (
-            <DesktopNav
-              sections={sections}
-              activeSectionIndex={activeSectionIndex}
-              onSetActive={handleSetActive}
-              onNavigate={disableSnapDuringScroll}
-            />
-          )}
-          {isMobile && (
-            <MobileNav
-              sections={sections}
-              activeSectionIndex={activeSectionIndex}
-              onSetActive={handleSetActive}
-              onNavigate={disableSnapDuringScroll}
-            />
-          )}
-        </Stack>
-      </AnimatePresence>
-    </motion.div>
+        className={`w-full fixed top-[18px] flex px-[18px] z-50 transition-all`}
+        animate={{ justifyContent: isMobile ? "flex-end" : "center" }}
+      >
+        <AnimatePresence>
+          <Stack
+            className="absolute bg-[var(--color-accent)]/30 text-[var(--color-secondary)] rounded-3xl z-100 backdrop-blur-md shadow-md"
+            initial={{ opacity: 0, scale: 0.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+              delay: 0.1,
+            }}
+          >
+            {!isMobile && (
+              <DesktopNav
+                sections={sections}
+                activeSectionIndex={activeSectionIndex}
+                onSetActive={handleSetActive}
+                onNavigate={disableSnapDuringScroll}
+              />
+            )}
+            {isMobile && (
+              <MobileNav
+                sections={sections}
+                activeSectionIndex={activeSectionIndex}
+                onSetActive={handleSetActive}
+                onNavigate={disableSnapDuringScroll}
+              />
+            )}
+          </Stack>
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 };
