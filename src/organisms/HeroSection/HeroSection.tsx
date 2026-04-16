@@ -14,6 +14,7 @@ const HeroSection = () => {
 
   const { isReady } = useContext(ReadinessContext);
   const [opacity, setOpacity] = useState(1);
+  const showInitialLogo = opacity > 0 || !scrolled;
 
   useEffect(() => {
     if (isReady && opacity > 0) {
@@ -30,39 +31,39 @@ const HeroSection = () => {
   return (
     <section className="w-full min-h-screen mb-16 bg-primary text-accent flex flex-col snap-start snap-always">
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
+      <div className="relative flex-1 flex flex-col items-center justify-center px-4 py-[16px] md:py-[78px]">
         {/* Main Heading */}
-        <div className="flex-1 flex flex-col justify-end text-center max-w-2xl">
+        <div className="flex-1 flex flex-col items-center justify-center text-center max-w-3xl">
           {opacity < 1 ? (
-            <>
-            <div className="absolute top-[calc(50vh-40px)] left-1/2 -translate-x-1/2 -translate-y-1/2 md:-translate-y-6/7 mb-12 md:mb-17 lg:mb-22">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-thin text-accent mb-4 text-nowrap">
-                Медицинский центр
-              </h1>
-            </div>
-            <p className="text-base md:text-lg text-accent/80 leading-relaxed max-w-xl mx-auto mb-8 ml-4 mr-4">
+            <p className="absolute bottom-8 md:bottom-12 left-1/2 w-full max-w-xl -translate-x-1/2 px-4 text-base md:text-lg text-center text-accent/80 leading-relaxed">
               Медицинский центр <span className="text-tertiary">«Лаванда»</span>{" "}
               – это место, где современное оборудование, опытные специалисты и
               внимательное отношение к каждому пациенту создают комфортные
               условия для качественной диагностики и лечения
             </p>
-            </>
           ) : null}
           <div
-            className="fixed top-0 left-0 z-55 !fill-[var(--color-tertiary)]"
+            className="fixed z-55"
             style={{
-              height: "90px",
-              cursor: scrolled && opacity === 0 ? "pointer" : "default",
-              transformOrigin: "top left",
-              transform:
-                scrolled && opacity === 0
-                  ? "translate3d(16px, 22px, 0) scale(0.356)"
-                  : "translate3d(calc(50vw - 144px), calc(50vh - 40px), 0) scale(1)",
+              width: "260px",
+              height: "160px",
+              top: "50%",
+              left: "50%",
+              color: "var(--color-tertiary)",
+              cursor: showInitialLogo ? "pointer" : "default",
+              transformOrigin: "center center",
+              transform: showInitialLogo
+                ? "translate3d(-50%, -50%, 0) scale(1)"
+                : "translate3d(-50%, -50%, 0) scale(0.96)",
+              opacity: showInitialLogo ? 1 : 0,
+              pointerEvents: showInitialLogo ? "auto" : "none",
               transition:
-                "transform 500ms ease-in-out, color 500ms ease-in-out",
-              willChange: "transform",
+                "opacity 420ms ease, transform 320ms ease, top 500ms ease-in-out, left 500ms ease-in-out, width 500ms ease-in-out, height 500ms ease-in-out, color 100ms ease-in-out",
+              willChange: "opacity, transform, width, height, top, left",
             }}
-            onClick={() => scroller.scrollTo("home", { duration: 500, smooth: true })}
+            onClick={() =>
+              scroller.scrollTo("home", { duration: 500, smooth: true })
+            }
           >
             <Logo />
           </div>

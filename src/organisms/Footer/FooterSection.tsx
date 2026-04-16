@@ -53,15 +53,10 @@ const FooterSection = () => {
         <div className="flex flex-col md:flex-row md:flex-wrap gap-8 max-w-7xl min-h-[300px]">
           <div className="lg:block hidden">
             <div className="relative">
-              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-secondary mb-4 text-nowrap">
-                Медицинский центр
-              </h1>
-              <div
-                className="fill-secondary absolute left-0 top-1/2 w-full
-                  lg:-translate-y-2 lg:scale-70 z-10"
-              >
-                <Logo />
-              </div>
+              <Logo
+                fillColor="var(--color-secondary)"
+                strokeColor="var(--color-secondary)"
+              />
             </div>
           </div>
 
