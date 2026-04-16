@@ -16,6 +16,11 @@ export interface StrapiResponse<T> {
   meta: StrapiMeta;
 }
 
+export interface StrapiSingleResponse<T> {
+  data: T;
+  meta: Record<string, unknown>;
+}
+
 // ─── Strapi Image ────────────────────────────────────────────────────────────
 
 export interface StrapiImageFormat {
@@ -107,3 +112,30 @@ export interface EmployeeCategory {
 }
 
 export type EmployeeCategoryResponse = StrapiResponse<EmployeeCategory>;
+
+// ─── Contact (/api/contact) ─────────────────────────────────────────────────
+
+export interface ContactPhoneNumbers {
+  INN_line?: string | null;
+  OGRN_line?: string | null;
+  company_description?: string | null;
+}
+
+export interface ContactAddresses {
+  main_mail?: string | null;
+}
+
+export interface ContactEntity {
+  id: number;
+  documentId: string;
+  phone_numbers?: ContactPhoneNumbers | null;
+  adresses?: ContactAddresses | null;
+  emails?: unknown;
+  links?: unknown;
+  coordinates?: unknown;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export type ContactResponse = StrapiSingleResponse<ContactEntity>;

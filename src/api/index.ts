@@ -1,4 +1,5 @@
 import type {
+  ContactResponse,
   Employee,
   EmployeeCategoryResponse,
   EmployeeResponse,
@@ -127,4 +128,14 @@ export async function fetchEmployeeByDocumentId(
     );
   }
   return response.json() as Promise<{ data: Employee }>;
+}
+
+// ─── Contact ─────────────────────────────────────────────────────────────────
+
+export async function fetchContact(): Promise<ContactResponse> {
+  const response = await fetch(`${BASE_URL}/contact`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch contact: ${response.status}`);
+  }
+  return response.json() as Promise<ContactResponse>;
 }

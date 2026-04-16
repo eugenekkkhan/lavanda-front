@@ -4,6 +4,7 @@ import IconButton from "../../molecules/Buttons/IconButton";
 import { contactsData } from "../../organisms/ContactSection/contacts.data";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import TextButton from "../../molecules/Buttons/TextButton";
+import useContactInfo from "../../hooks/useContactInfo";
 
 interface ContactPillProps {
   displayText: boolean;
@@ -14,6 +15,9 @@ const ContactPill: React.FC<ContactPillProps> = ({
   displayText = false,
   displayAddress = false,
 }) => {
+  const { contactInfo, isLoading } = useContactInfo();
+  const email = contactInfo?.email;
+
   return (
     <motion.div
       className="bg-contactPill-primary rounded-[28px] text-contactPill-secondary p-2 overflow-hidden"
@@ -46,16 +50,23 @@ const ContactPill: React.FC<ContactPillProps> = ({
           </div>
 
           <div className="grow min-w-[200px]">
-            <a href="mailto:info@lavandamed.ru" className="block w-full">
-              <IconButton
-                icon={MdOutlineAlternateEmail}
-                size="base"
-                className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center items-center 
-                  !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
+            {isLoading ? (
+              <div className="w-full h-[44px] rounded-[21px] bg-contactPill-secondary/70 animate-pulse" />
+            ) : (
+              <a
+                href={email ? `mailto:${email}` : "#"}
+                className="block w-full"
               >
-                <span className="truncate">info@lavandamed.ru</span>
-              </IconButton>
-            </a>
+                <IconButton
+                  icon={MdOutlineAlternateEmail}
+                  size="base"
+                  className="cursor-pointer !rounded-[21px] !py-[10px] w-full justify-center items-center 
+                    !bg-contactPill-secondary !text-contactPill-primary !ring-contactPill-secondary"
+                >
+                  <span className="truncate">{email || "-"}</span>
+                </IconButton>
+              </a>
+            )}
           </div>
         </div>
       </motion.div>

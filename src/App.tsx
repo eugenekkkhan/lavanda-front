@@ -1,7 +1,12 @@
 import RouterComponent from "./RouterComponent";
+import ContactInfoProvider from "./context/ContactInfoContext";
 
 function App() {
-  return <RouterComponent />;
+  return (
+    <ContactInfoProvider>
+      <RouterComponent />
+    </ContactInfoProvider>
+  );
 }
 
 export default App;
