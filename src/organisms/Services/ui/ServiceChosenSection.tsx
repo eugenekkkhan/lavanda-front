@@ -16,6 +16,8 @@ import { getStrapiImageUrl } from "../../../api/utils";
 import { useBackNavigation } from "../../../hooks/useBackNavigation";
 import LoadingCircle from "../../../atoms/LoadingCircle/LoadingCircle";
 import { ReadinessContext } from "../../../context/ReadinessContext";
+import MarkdownRenderer from "../../../utils/MarkdownRenderer";
+import { useThemeColors } from "../../../hooks/useThemeColors";
 
 const ServiceChosenSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +26,7 @@ const ServiceChosenSection = () => {
   );
   const { serviceId } = useParams<{ serviceId: string }>();
   const { goBack } = useBackNavigation();
+  const themeColors = useThemeColors();
 
   const [section, setSection] = useState<SectionServiceEntity | null>(null);
   const [subsections, setSubsections] = useState<SubsectionServiceEntity[]>([]);
@@ -103,9 +106,13 @@ const ServiceChosenSection = () => {
               {section?.title ?? ""}
             </h2>
           </motion.div>
-          <p className="w-full text-base md:text-lg text-secondary/90 leading-relaxed">
-            {section?.description ?? ""}
-          </p>
+          {section?.description && (
+            <MarkdownRenderer
+              markdown={section.description}
+              themeColors={themeColors}
+              className="w-full text-base md:text-lg text-secondary/90 leading-relaxed prose prose-sm max-w-none"
+            />
+          )}
         </motion.div>
       </div>
 
