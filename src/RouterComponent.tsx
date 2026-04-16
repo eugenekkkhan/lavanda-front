@@ -107,7 +107,7 @@ const RouterComponent = () => {
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.365,
+      threshold: 0.2,
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
