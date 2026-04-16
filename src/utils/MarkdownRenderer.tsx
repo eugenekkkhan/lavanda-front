@@ -40,17 +40,11 @@ function injectSvgThemeColor(
   // Process each shape element type
   shapeElements.forEach((tag) => {
     // Match both self-closing and regular tags
-    const regex = new RegExp(
-      `<${tag}([^>]*?)(\\s*/?\\s*)>`,
-      "g"
-    );
+    const regex = new RegExp(`<${tag}([^>]*?)(\\s*/?\\s*)>`, "g");
 
     result = result.replace(regex, (match, attrs, closingSlash) => {
       // Preserve intentional fill="none"
-      if (
-        attrs.includes('fill="none"') ||
-        attrs.includes("fill='none'")
-      ) {
+      if (attrs.includes('fill="none"') || attrs.includes("fill='none'")) {
         return match;
       }
 
@@ -61,7 +55,7 @@ function injectSvgThemeColor(
         // Replace existing fill
         updated = updated.replace(
           /fill\s*=\s*["']([^"']*)["']/g,
-          `fill="${fillColor}"`
+          `fill="${fillColor}"`,
         );
       } else {
         // Add fill if not present
@@ -72,7 +66,7 @@ function injectSvgThemeColor(
       if (/stroke\s*=/.test(updated)) {
         updated = updated.replace(
           /stroke\s*=\s*["']([^"']*)["']/g,
-          `stroke="${strokeColor}"`
+          `stroke="${strokeColor}"`,
         );
       } else {
         updated += ` stroke="${strokeColor}"`;
@@ -90,15 +84,15 @@ function injectSvgThemeColor(
       // Replace fill color in inline styles
       updatedStyle = updatedStyle.replace(
         /fill\s*:\s*[^;]*/g,
-        `fill: ${fillColor}`
+        `fill: ${fillColor}`,
       );
       // Replace stroke color in inline styles
       updatedStyle = updatedStyle.replace(
         /stroke\s*:\s*[^;]*/g,
-        `stroke: ${strokeColor}`
+        `stroke: ${strokeColor}`,
       );
       return `style="${updatedStyle}"`;
-    }
+    },
   );
 
   // Normalize root svg sizing so it is responsive inside layout containers.
@@ -106,7 +100,10 @@ function injectSvgThemeColor(
     let updated = attrs;
 
     if (/width\s*=/.test(updated)) {
-      updated = updated.replace(/width\s*=\s*["']([^"']*)["']/g, 'width="100%"');
+      updated = updated.replace(
+        /width\s*=\s*["']([^"']*)["']/g,
+        'width="100%"',
+      );
     } else {
       updated += ' width="100%"';
     }
@@ -383,7 +380,10 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     const flushSvgRun = (key: number) => {
       if (!svgRun.length) return;
       rendered.push(
-        <div key={`svg-row-${key}`} className="my-2 flex flex-wrap items-center w-full gap-8">
+        <div
+          key={`svg-row-${key}`}
+          className="my-2 flex flex-wrap items-center w-full gap-8"
+        >
           {svgRun.map((svgNode, svgIndex) => (
             <div
               key={`svg-item-${key}-${svgIndex}`}
@@ -417,11 +417,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     return rendered;
   };
 
-  return (
-    <div className={className}>
-      {renderNodesWithSvgRows()}
-    </div>
-  );
+  return <div className={className}>{renderNodesWithSvgRows()}</div>;
 };
 
 export default MarkdownRenderer;
