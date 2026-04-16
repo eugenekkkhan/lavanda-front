@@ -71,7 +71,11 @@ const ServiceSection = () => {
         <motion.div
           className={`${loading && "flex w-full min-h-[50vh] items-center justify-center"}`}
         >
-          {loading ? <LoadingCircle /> : <InformationList data={cards} />}
+          {loading ? (
+            <LoadingCircle />
+          ) : (
+            <InformationList data={cards.reverse()} />
+          )}
         </motion.div>
       </motion.div>
     </motion.section>
