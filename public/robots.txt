@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+Disallow: /api/
+Disallow: /admin/
+
 Sitemap: https://lavanda-med.com/sitemap.xml

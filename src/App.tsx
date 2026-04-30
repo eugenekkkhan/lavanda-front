@@ -1,11 +1,14 @@
+import { HelmetProvider } from "react-helmet-async";
 import RouterComponent from "./RouterComponent";
 import ContactInfoProvider from "./context/ContactInfoContext";
 
 function App() {
   return (
-    <ContactInfoProvider>
-      <RouterComponent />
-    </ContactInfoProvider>
+    <HelmetProvider>
+      <ContactInfoProvider>
+        <RouterComponent />
+      </ContactInfoProvider>
+    </HelmetProvider>
   );
 }
 

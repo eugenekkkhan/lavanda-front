@@ -3,6 +3,14 @@ import { Route, Routes, useLocation } from "react-router";
 import { scroller } from "react-scroll";
 import usePageTheme from "./hooks/usePageTheme";
 import NavigationTab from "./organisms/NavigationTab/NavigationTab";
+import HomePage from "./pages/HomePage";
+import ServicesPage from "./pages/ServicesPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import DoctorsPage from "./pages/DoctorsPage";
+import DoctorCategoryPage from "./pages/DoctorCategoryPage";
+import DoctorProfilePage from "./pages/DoctorProfilePage";
+import SchedulePage from "./pages/SchedulePage";
+import ContactsPage from "./pages/ContactsPage";
 import MainLayout from "./pages/MainLayout";
 import { ComponentContext } from "./context/ComponentContext";
 import { section, SECTIONS } from "./common/constants";
@@ -147,21 +155,16 @@ const RouterComponent = () => {
       <ReadinessContext.Provider value={readinessContextValue}>
         <NavigationTab />
         <Routes>
-          <Route path="/" element={<MainLayout />} />
-          {SECTIONS.map((section) => (
-            <Route
-              key={section}
-              path={`/${section}`}
-              element={<MainLayout />}
-            />
-          ))}
-
-          <Route path="/services/:serviceId" element={<MainLayout />} />
-          <Route path="/doctors/:categoryId" element={<MainLayout />} />
-          <Route
-            path="/doctors/:categoryId/:doctorId"
-            element={<MainLayout />}
-          />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:serviceId" element={<ServiceDetailPage />} />
+          <Route path="/doctors" element={<DoctorsPage />} />
+          <Route path="/doctors/:categoryId" element={<DoctorCategoryPage />} />
+          <Route path="/doctors/:categoryId/:doctorId" element={<DoctorProfilePage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/footer" element={<MainLayout />} />
         </Routes>
       </ReadinessContext.Provider>
     </ComponentContext.Provider>

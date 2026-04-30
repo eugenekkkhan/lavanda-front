@@ -120,7 +120,7 @@ export const usePageTheme = () => {
         window.clearTimeout(debounceTimeoutRef.current);
       }
     };
-  }, []);
+  }, [pathname]);
   useEffect(() => {
     const currentTheme = THEMES[activeHash] || THEMES["/"];
     const root = document.documentElement;
